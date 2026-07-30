@@ -1,72 +1,61 @@
 import { motion } from "framer-motion";
-import heroImg from "@assets/thai-pearl/food/pad-thai-closeup.jpg";
+import interiorImg from "@assets/thai-pearl/interior.png";
 
 export function Hero() {
-  const scrollTo = (id: string) => {
+  const scrollTo = (id: string) =>
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-  };
 
   return (
     <section className="relative h-screen w-full overflow-hidden">
-      {/* Photo */}
-      <motion.div
-        initial={{ scale: 1.06 }}
+      {/* Interior photo */}
+      <motion.img
+        initial={{ scale: 1.05 }}
         animate={{ scale: 1 }}
-        transition={{ duration: 2.2, ease: "easeOut" }}
-        className="absolute inset-0"
-      >
-        <img
-          src={heroImg}
-          alt="Thai Pearl signature dish"
-          className="w-full h-full object-cover object-center"
-        />
-      </motion.div>
+        transition={{ duration: 2.5, ease: "easeOut" }}
+        src={interiorImg}
+        alt="Thai Pearl interior"
+        className="absolute inset-0 w-full h-full object-cover"
+        style={{ objectPosition: "center 30%" }}
+      />
 
-      {/* Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/85" />
+      {/* Warm dark vignette */}
+      <div className="absolute inset-0 bg-gradient-to-t from-[#130C06]/92 via-[#130C06]/45 to-[#130C06]/55" />
 
-      {/* Big label top-left */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, delay: 0.6 }}
-        className="absolute top-28 left-6 md:left-12"
-      >
-        <p className="font-sans text-[#FFB800] text-xs tracking-[0.35em] uppercase font-semibold">
-          West Asheville, NC
-        </p>
-      </motion.div>
+      {/* Marigold top border */}
+      <div className="absolute top-0 left-0 right-0 h-1 bg-[#D4891A]" />
 
-      {/* Main headline — huge, bottom-anchored */}
-      <div className="absolute bottom-0 left-0 right-0 px-5 md:px-10 pb-10 md:pb-14">
-        <motion.div
-          initial={{ opacity: 0, y: 60 }}
+      {/* Content */}
+      <div className="absolute inset-0 flex flex-col justify-end px-8 md:px-16 pb-14 md:pb-20">
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.7, delay: 0.5 }}
+          className="font-sans text-[#D4891A] text-xs tracking-[0.35em] uppercase mb-5"
         >
-          {/* Display headline — overflows intentionally */}
-          <h1
-            className="font-serif font-light text-white leading-[0.88] mb-6 tracking-tight"
-            style={{ fontSize: "clamp(4.5rem, 14vw, 15rem)" }}
-          >
-            The food that
-            <br />
-            <em className="text-[#FFB800] not-italic" style={{ fontStyle: "italic" }}>
-              made us.
-            </em>
-          </h1>
-        </motion.div>
+          747 Haywood Rd · West Asheville, NC · Tue–Sun
+        </motion.p>
 
-        {/* CTAs */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
+        <motion.h1
+          initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.9 }}
-          className="flex flex-row gap-3 items-center"
+          transition={{ duration: 1, delay: 0.65, ease: [0.16, 1, 0.3, 1] }}
+          className="font-serif font-light text-white leading-[0.9] mb-8"
+          style={{ fontSize: "clamp(3.8rem, 11vw, 11rem)" }}
+        >
+          Your table
+          <br />
+          <em className="text-[#D4891A]">is ready.</em>
+        </motion.h1>
+
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 1 }}
+          className="flex flex-row gap-3"
         >
           <button
             onClick={() => scrollTo("order")}
-            className="bg-[#ED0000] hover:bg-[#c40000] active:scale-95 text-white px-8 md:px-12 py-4 font-sans font-bold text-sm tracking-[0.2em] uppercase transition-all duration-200"
+            className="bg-[#B5311E] hover:bg-[#952A18] active:scale-95 text-white px-9 py-4 font-sans font-semibold text-sm tracking-[0.18em] uppercase transition-all duration-200"
           >
             Order Now
           </button>
@@ -74,29 +63,12 @@ export function Hero() {
             href="https://thaipearlasheville.com/reservations"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-white/60 hover:text-white border border-white/30 hover:border-white/70 px-8 md:px-10 py-4 font-sans text-sm tracking-[0.18em] uppercase transition-all duration-200"
+            className="border border-white/35 hover:border-white/70 text-white/80 hover:text-white px-9 py-4 font-sans text-sm tracking-[0.18em] uppercase transition-all duration-200"
           >
             Reserve
           </a>
         </motion.div>
       </div>
-
-      {/* Scroll hint */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1.4 }}
-        className="absolute bottom-10 right-8 md:right-12 hidden md:flex flex-col items-center gap-2"
-      >
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-          className="w-px h-12 bg-white/30"
-        />
-        <span className="font-sans text-white/30 text-[9px] tracking-[0.3em] uppercase rotate-90 translate-y-6">
-          Scroll
-        </span>
-      </motion.div>
     </section>
   );
 }

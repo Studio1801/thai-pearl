@@ -1,41 +1,97 @@
 import { motion } from "framer-motion";
 import { MapPin, Phone, Clock, Instagram } from "lucide-react";
-import larbImg from "@assets/thai-pearl/food/larb-salad.jpg";
+import cashewImg from "@assets/thai-pearl/food/cashew-stir-fry.jpg";
 
 export function Contact() {
   return (
-    <section id="contact" className="bg-[#0F9E5E] text-white overflow-hidden">
-      <div className="grid grid-cols-1 md:grid-cols-2">
-        {/* Left — text */}
-        <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="px-8 md:px-16 py-20 md:py-28 flex flex-col justify-between"
-        >
-          <div>
-            <p className="font-sans text-white/60 text-xs tracking-[0.35em] uppercase mb-6">
-              Come find us
-            </p>
-            <h2
-              className="font-serif font-light text-white leading-none mb-8"
-              style={{ fontSize: "clamp(3rem, 7vw, 6.5rem)" }}
-            >
-              West Asheville
-              <br />
-              <em>is waiting.</em>
-            </h2>
-            <p className="font-sans text-white/70 text-lg leading-relaxed max-w-sm mb-12">
-              Colorful decor, warm lighting, tables that feel like home. Bring your crew or come alone. Either way, you eat well.
-            </p>
+    <section id="contact" className="bg-[#1E1209] thai-pattern-dark text-white">
+      {/* Top photo strip */}
+      <div className="relative h-56 md:h-72 overflow-hidden">
+        <img
+          src={cashewImg}
+          alt="Thai Pearl kitchen"
+          className="w-full h-full object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#1E1209]/40 to-[#1E1209]" />
+        <div className="absolute bottom-0 left-0 right-0 px-8 md:px-16 pb-8">
+          <p className="font-sans text-[#D4891A] text-xs tracking-[0.35em] uppercase mb-3">
+            Come find us
+          </p>
+          <h2
+            className="font-serif font-light text-white leading-none"
+            style={{ fontSize: "clamp(2.5rem, 7vw, 6rem)" }}
+          >
+            West Asheville
+            <br />
+            <em className="text-[#D4891A]">is waiting.</em>
+          </h2>
+        </div>
+      </div>
 
-            <div className="flex flex-col sm:flex-row gap-4">
+      {/* Info + CTAs */}
+      <div className="container mx-auto px-8 md:px-16 py-16 md:py-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20">
+
+          {/* Info */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="space-y-6"
+          >
+            <div className="flex items-start gap-4">
+              <MapPin className="text-[#D4891A] w-5 h-5 mt-0.5 flex-shrink-0" />
+              <div>
+                <p className="font-sans text-white text-sm leading-relaxed">
+                  747 Haywood Rd<br />
+                  Asheville, NC 28806
+                </p>
+              </div>
+            </div>
+            <div className="flex items-start gap-4">
+              <Clock className="text-[#D4891A] w-5 h-5 mt-0.5 flex-shrink-0" />
+              <div>
+                <p className="font-sans text-white text-sm">Tuesday through Sunday</p>
+                <p className="font-sans text-white/45 text-sm">Closed Mondays</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-4">
+              <Phone className="text-[#D4891A] w-5 h-5 mt-0.5 flex-shrink-0" />
+              <a href="tel:8284125905" className="font-sans text-white text-sm hover:text-[#D4891A] transition-colors">
+                (828) 412-5905
+              </a>
+            </div>
+            <div className="flex items-start gap-4">
+              <Instagram className="text-[#D4891A] w-5 h-5 mt-0.5 flex-shrink-0" />
+              <a
+                href="https://instagram.com/thaipearl_restaurant"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-sans text-white text-sm hover:text-[#D4891A] transition-colors"
+              >
+                @thaipearl_restaurant
+              </a>
+            </div>
+          </motion.div>
+
+          {/* CTAs */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.15 }}
+            className="flex flex-col justify-center gap-5"
+          >
+            <p className="font-sans text-white/50 text-sm leading-relaxed max-w-xs">
+              Walk-ins welcome. We keep a warm seat for you. Reserve ahead if you've got a group.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 mt-2">
               <a
                 href="https://thaipearlasheville.com/reservations"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white text-[#0F9E5E] hover:bg-white/90 px-8 py-4 font-sans text-sm font-bold tracking-[0.18em] uppercase transition-all duration-200 text-center"
+                className="bg-[#D4891A] hover:bg-[#b8751a] text-white px-8 py-4 font-sans font-semibold text-sm tracking-[0.18em] uppercase transition-colors text-center"
               >
                 Reserve a Table
               </a>
@@ -43,63 +99,14 @@ export function Contact() {
                 href="https://thaipearlasheville.com/catering"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="border border-white/50 hover:border-white text-white px-8 py-4 font-sans text-sm tracking-[0.18em] uppercase transition-all duration-200 text-center hover:bg-white/10"
+                className="border border-white/25 hover:border-white/60 text-white/70 hover:text-white px-8 py-4 font-sans text-sm tracking-[0.18em] uppercase transition-all text-center"
               >
                 Catering
               </a>
             </div>
-          </div>
+          </motion.div>
 
-          {/* Info rows */}
-          <div className="mt-16 pt-10 border-t border-white/20 space-y-7">
-            <div className="flex items-start gap-4">
-              <MapPin className="text-white/50 w-5 h-5 mt-0.5 flex-shrink-0" />
-              <div>
-                <p className="font-sans font-semibold text-white text-sm">747 Haywood Rd, Asheville NC 28806</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-4">
-              <Clock className="text-white/50 w-5 h-5 mt-0.5 flex-shrink-0" />
-              <div>
-                <p className="font-sans text-white text-sm">Tuesday through Sunday</p>
-                <p className="font-sans text-white/50 text-sm">Closed Mondays</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-4">
-              <Phone className="text-white/50 w-5 h-5 mt-0.5 flex-shrink-0" />
-              <a href="tel:8284125905" className="font-sans text-white text-sm hover:text-[#FFB800] transition-colors">
-                (828) 412-5905
-              </a>
-            </div>
-            <div className="flex items-start gap-4">
-              <Instagram className="text-white/50 w-5 h-5 mt-0.5 flex-shrink-0" />
-              <a
-                href="https://instagram.com/thaipearl_restaurant"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-sans text-white text-sm hover:text-[#FFB800] transition-colors"
-              >
-                @thaipearl_restaurant
-              </a>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Right — photo fills entire half */}
-        <motion.div
-          initial={{ opacity: 0, scale: 1.04 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
-          className="relative overflow-hidden min-h-[50vh] md:min-h-0"
-        >
-          <img
-            src={larbImg}
-            alt="Larb Salad"
-            className="w-full h-full object-cover object-center"
-          />
-          <div className="absolute inset-0 bg-[#0F9E5E]/20" />
-        </motion.div>
+        </div>
       </div>
     </section>
   );

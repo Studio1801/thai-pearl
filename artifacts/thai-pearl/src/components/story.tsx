@@ -1,121 +1,86 @@
 import { motion } from "framer-motion";
-import chefImg from "@assets/thai-pearl/food/thai-dishes.jpg";
-import wokImg from "@assets/thai-pearl/food/wok-noodles.jpg";
+import padThaiImg from "@assets/thai-pearl/food/pad-thai.jpg";
+import wideNoodlesImg from "@assets/thai-pearl/menu-page.jpg";
 
 export function Story() {
   return (
-    <section id="story" className="bg-[#F5F0EA] overflow-hidden">
-      {/* Top — full-bleed photo with overlapping text */}
-      <div className="relative">
-        <div className="h-[70vh] md:h-[80vh] overflow-hidden">
-          <motion.img
-            initial={{ scale: 1.05 }}
-            whileInView={{ scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.5, ease: "easeOut" }}
-            src={chefImg}
-            alt="Thai Pearl culinary spread"
-            className="w-full h-full object-cover object-center"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#F5F0EA] via-[#F5F0EA]/10 to-transparent md:via-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#F5F0EA] via-transparent to-transparent" />
-        </div>
+    <section id="story" className="relative bg-[#FBF5E8] thai-pattern-light">
+      <div className="container mx-auto px-8 md:px-16 py-20 md:py-28">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 
-        {/* Overlapping label + stat */}
-        <motion.div
-          initial={{ opacity: 0, x: -40 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.9 }}
-          className="absolute top-1/2 -translate-y-1/2 left-6 md:left-16"
-        >
-          <p className="font-sans text-[#ED0000] text-xs tracking-[0.35em] uppercase font-semibold mb-4">
-            The Story
-          </p>
-          <h2
-            className="font-serif font-light text-[#1A1514] leading-[0.9] tracking-tight"
-            style={{ fontSize: "clamp(3.5rem, 10vw, 9rem)" }}
-          >
-            Trained where
-            <br />
-            <em className="text-[#ED0000]">kings eat.</em>
-          </h2>
-        </motion.div>
-      </div>
-
-      {/* Bottom — text + small photo */}
-      <div className="container mx-auto px-6 md:px-12 py-20 md:py-28">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16 items-start">
-
-          {/* Text col — wider */}
+          {/* Text */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.8 }}
-            className="md:col-span-7"
           >
-            <div className="space-y-6 font-sans text-lg text-[#3A3330] leading-relaxed">
+            <p className="font-sans text-[#B5311E] text-xs tracking-[0.35em] uppercase mb-5">
+              The restaurant
+            </p>
+            <h2
+              className="font-serif font-light text-[#1E1209] leading-[0.92] mb-8"
+              style={{ fontSize: "clamp(2.8rem, 7vw, 6rem)" }}
+            >
+              Trained where
+              <br />
+              <em className="text-[#B5311E]">kings eat.</em>
+              <br />
+              Cooking where
+              <br />
+              <em>you live.</em>
+            </h2>
+            <div className="space-y-5 font-sans text-[#3D2B1F] text-base md:text-lg leading-relaxed max-w-md">
               <p>
-                Our chef did not learn from a YouTube video. He trained at the{" "}
-                <strong className="text-[#1A1514] font-semibold">Royal Palace Academy in Bangkok</strong>,
-                one of the most exclusive culinary programs in Southeast Asia.
-                Then worked shoulder to shoulder with a Michelin Star chef in Queensland, Australia.
+                Our chef trained at the Royal Palace Academy in Bangkok and worked alongside
+                a Michelin Star chef in Queensland, Australia. He brought all of it to a
+                warm little room on Haywood Rd.
               </p>
               <p>
-                He brought all of it to North Carolina. First BoonChoo Thai Express in Flat Rock in 2017.
-                Then Thai Pearl in March 2020, right here in West Asheville.{" "}
-                <strong className="text-[#1A1514] font-semibold">We won Best New Restaurant that same year.</strong>
-              </p>
-              <p>
-                Every plate carries that lineage. Every sauce was built from recipes the Royal Palace
-                does not share with just anyone.
+                Thai Pearl opened March 2020 and won Best New Restaurant that same year.
+                Every dish on the menu carries that same care. No shortcuts, no compromises.
               </p>
             </div>
 
-            {/* Credentials row */}
-            <div className="mt-14 pt-10 border-t border-[#DDD5CB] grid grid-cols-3 gap-6">
+            <div className="mt-10 flex gap-8 border-t border-[#D4891A]/30 pt-8">
               {[
                 { n: "2020", l: "Best New Restaurant" },
-                { n: "Royal", l: "Palace Trained" },
+                { n: "Royal Palace", l: "Academy Trained" },
                 { n: "Michelin", l: "Kitchen Mentored" },
               ].map((c, i) => (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 14 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: 0.1 + i * 0.1 }}
                 >
-                  <p
-                    className="font-serif font-light text-[#1A1514] leading-none mb-2"
-                    style={{ fontSize: "clamp(1.6rem, 3.5vw, 2.8rem)" }}
-                  >
-                    {c.n}
-                  </p>
-                  <p className="font-sans text-[#9A8F88] text-xs uppercase tracking-wider leading-snug">{c.l}</p>
+                  <p className="font-serif font-light text-[#1E1209] text-xl md:text-2xl mb-1">{c.n}</p>
+                  <p className="font-sans text-[#8A7060] text-[10px] uppercase tracking-wider leading-snug">{c.l}</p>
                 </motion.div>
               ))}
             </div>
           </motion.div>
 
-          {/* Small wok photo — offset */}
+          {/* Photos — overlapping */}
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, delay: 0.2 }}
-            className="md:col-span-5 md:mt-[-4rem]"
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 1 }}
+            className="relative"
           >
-            <div className="aspect-[3/4] overflow-hidden">
-              <img src={wokImg} alt="Wok on fire" className="w-full h-full object-cover" />
+            <div className="relative z-10 w-[85%] aspect-[3/4] overflow-hidden shadow-2xl">
+              <img src={padThaiImg} alt="Pad Thai" className="w-full h-full object-cover" />
             </div>
-            <div className="bg-[#ED0000] px-5 py-4 mt-0">
-              <p className="font-sans text-white text-xs tracking-[0.3em] uppercase font-semibold">
-                Best New Restaurant 2020
-              </p>
+            <div className="absolute bottom-[-2.5rem] right-0 z-20 w-[52%] aspect-square overflow-hidden shadow-xl border-4 border-[#FBF5E8]">
+              <img src={wideNoodlesImg} alt="Drunken Noodles" className="w-full h-full object-cover" />
+            </div>
+            <div className="absolute top-4 right-[14%] z-30 bg-[#B5311E] text-white font-sans font-semibold text-[10px] tracking-[0.2em] uppercase px-3 py-2 shadow-lg">
+              Best New Restaurant 2020
             </div>
           </motion.div>
+
         </div>
       </div>
     </section>
