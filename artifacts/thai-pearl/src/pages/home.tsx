@@ -2,7 +2,6 @@ import { Navbar } from "@/components/navbar";
 import { Hero } from "@/components/hero";
 import { Marquee } from "@/components/marquee";
 import { Story } from "@/components/story";
-import { QuoteStrip } from "@/components/quote-strip";
 import { OrderNow } from "@/components/order-now";
 import { MenuHighlights } from "@/components/menu-highlights";
 import { Contact } from "@/components/contact";
@@ -17,7 +16,6 @@ export default function Home() {
         <Hero />
         <Marquee />
         <Story />
-        <QuoteStrip />
         <OrderNow />
         <MenuHighlights />
         <Contact />
