@@ -8,158 +8,154 @@ import cashew from "@assets/thai-pearl/food/cashew-stir-fry.jpg";
 
 const dishes = [
   {
-    id: 1,
-    title: "Pad Thai",
-    subtitle: "The dish that won us Best New Restaurant",
-    description:
-      "Rice noodles wok-tossed with egg, bean sprouts, scallions, and crushed peanuts in a tamarind sauce built from a royal recipe. One bite and you will understand why.",
-    image: padThai,
-    badge: "Signature",
-    badgeColor: "bg-[#ED0000]",
-    size: "large",
+    name: "Pad Thai",
+    tag: "Best New Restaurant Dish",
+    desc: "Rice noodles wok-tossed with egg, bean sprouts, scallions, and crushed peanuts in a tamarind sauce built from a royal recipe. This is the one that started everything.",
+    img: padThai,
   },
   {
-    id: 2,
-    title: "Drunken Noodles",
-    subtitle: "Issan style. Not for the timid.",
-    description:
-      "Wide rice noodles thrown into a screaming hot wok with fresh Thai basil, chili, and a sauce that coats every strand. You will not stop eating.",
-    image: drunkenNoodles,
-    badge: "Chef's Pick",
-    badgeColor: "bg-[#FFB800] text-black",
-    size: "medium",
+    name: "Drunken Noodles",
+    tag: "Issan Style",
+    desc: "Wide rice noodles thrown into a screaming-hot wok with Thai basil, chili, and a sauce that coats every strand. You will not stop eating.",
+    img: drunkenNoodles,
   },
   {
-    id: 3,
-    title: "Larb Salad",
-    subtitle: "From the Royal Palace kitchen to your table.",
-    description:
-      "Minced chicken tossed with lime, roasted chili, mint, and toasted rice powder. Bright. Punchy. Impossible to put down.",
-    image: larbSalad,
-    badge: "Royal Classic",
-    badgeColor: "bg-[#0F9E5E]",
-    size: "medium",
+    name: "Larb Salad",
+    tag: "Royal Classic",
+    desc: "Minced chicken with lime, roasted chili, mint, and toasted rice powder. Bright. Punchy. Impossible to put down.",
+    img: larbSalad,
   },
   {
-    id: 4,
-    title: "Spring Rolls",
-    subtitle: "The starter that steals the show.",
-    description:
-      "Crispy golden shells packed with fresh vegetables and glass noodles. Dip them. Eat them. Order more.",
-    image: springRolls,
-    badge: "Fan Favorite",
-    badgeColor: "bg-white/20",
-    size: "small",
+    name: "Spring Rolls",
+    tag: "Fan Favorite",
+    desc: "Crispy golden shells packed with fresh vegetables and glass noodles. Order them first. Order more.",
+    img: springRolls,
   },
   {
-    id: 5,
-    title: "Cashew Nut Stir Fry",
-    subtitle: "Sweet. Savory. Addictive.",
-    description:
-      "Your choice of protein stir-fried with roasted cashews, bell peppers, and a silky savory sauce. Order it once and it becomes your thing.",
-    image: cashew,
-    badge: "Popular",
-    badgeColor: "bg-[#FF6A00]",
-    size: "small",
+    name: "Cashew Stir Fry",
+    tag: "Popular",
+    desc: "Your protein stir-fried with roasted cashews, bell peppers, and a silky savory sauce. Order it once and it becomes your thing.",
+    img: cashew,
   },
 ];
 
 export function MenuHighlights() {
   return (
-    <section id="menu" className="py-24 md:py-32 bg-[#100D0C] text-white">
-      <div className="container mx-auto px-6 md:px-12">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6"
-        >
-          <div>
-            <p className="text-[#FFB800] font-sans tracking-[0.25em] uppercase text-xs font-bold mb-3">
+    <section id="menu" className="bg-[#0D0A09] text-white overflow-hidden">
+      {/* Section header */}
+      <div className="container mx-auto px-6 md:px-12 pt-24 pb-12">
+        <div className="flex items-end justify-between">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <p className="font-sans text-[#FFB800] text-xs tracking-[0.35em] uppercase mb-4">
               What we make
             </p>
-            <h2 className="text-5xl md:text-7xl font-serif leading-tight">
+            <h2
+              className="font-serif font-light text-white leading-none"
+              style={{ fontSize: "clamp(3rem, 9vw, 8rem)" }}
+            >
               Food that makes
               <br />
-              <span className="italic text-[#ED0000]">you come back.</span>
+              <em className="text-[#ED0000]">you come back.</em>
             </h2>
-          </div>
-          <a
+          </motion.div>
+          <motion.a
             href="https://thaipearlasheville.com/menu"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 group text-white/60 hover:text-[#FFB800] font-sans text-sm tracking-[0.15em] uppercase transition-colors flex-shrink-0"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="hidden md:flex items-center gap-2 group text-white/40 hover:text-[#FFB800] font-sans text-xs tracking-[0.2em] uppercase transition-colors mb-2"
           >
             Full Menu
-            <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-          </a>
-        </motion.div>
+            <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+          </motion.a>
+        </div>
+      </div>
 
-        {/* Featured large dish */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
+      {/* Hero dish — spans full width */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.9 }}
+        className="relative group overflow-hidden"
+        style={{ height: "55vh", minHeight: "380px" }}
+      >
+        <img
+          src={dishes[0].img}
+          alt={dishes[0].name}
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 object-center"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/30 to-transparent" />
+        <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-16">
+          <span className="inline-block self-start bg-[#ED0000] text-white font-sans text-xs tracking-[0.2em] uppercase px-3 py-1 mb-4">
+            {dishes[0].tag}
+          </span>
+          <h3
+            className="font-serif font-light text-white leading-none mb-4"
+            style={{ fontSize: "clamp(2.5rem, 7vw, 6.5rem)" }}
+          >
+            {dishes[0].name}
+          </h3>
+          <p className="text-white/60 font-sans text-base max-w-lg leading-relaxed hidden md:block">
+            {dishes[0].desc}
+          </p>
+        </div>
+      </motion.div>
+
+      {/* 4-dish grid */}
+      <div className="grid grid-cols-2 md:grid-cols-4">
+        {dishes.slice(1).map((dish, i) => (
+          <motion.div
+            key={dish.name}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.55, delay: i * 0.08 }}
+            className="group relative overflow-hidden border-t border-l border-white/10 first:border-l-0"
+            style={{ aspectRatio: "3/4" }}
+          >
+            <img
+              src={dish.img}
+              alt={dish.name}
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/10 to-transparent" />
+            <div className="absolute bottom-0 left-0 right-0 p-5">
+              <p className="font-sans text-[#FFB800] text-[9px] tracking-[0.25em] uppercase mb-1">{dish.tag}</p>
+              <h4
+                className="font-serif font-light text-white"
+                style={{ fontSize: "clamp(1.2rem, 2.5vw, 1.8rem)" }}
+              >
+                {dish.name}
+              </h4>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Full menu CTA */}
+      <div className="container mx-auto px-6 md:px-12 py-16">
+        <motion.a
+          href="https://thaipearlasheville.com/menu"
+          target="_blank"
+          rel="noopener noreferrer"
+          initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="group relative overflow-hidden mb-6 cursor-pointer"
+          transition={{ duration: 0.5 }}
+          className="md:hidden flex items-center gap-2 group text-white/50 hover:text-[#FFB800] font-sans text-xs tracking-[0.2em] uppercase transition-colors mb-0"
         >
-          <div className="aspect-[16/7] relative overflow-hidden">
-            <img
-              src={dishes[0].image}
-              alt={dishes[0].title}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
-          </div>
-          <div className="absolute inset-0 flex flex-col justify-center px-10 md:px-16">
-            <span className={`inline-block self-start text-white text-xs font-bold tracking-widest uppercase px-3 py-1 mb-4 font-sans ${dishes[0].badgeColor}`}>
-              {dishes[0].badge}
-            </span>
-            <h3 className="font-serif text-5xl md:text-7xl text-white mb-3">
-              {dishes[0].title}
-            </h3>
-            <p className="text-[#FFB800] font-sans text-sm tracking-wider uppercase mb-4">
-              {dishes[0].subtitle}
-            </p>
-            <p className="text-white/70 font-sans text-base max-w-lg leading-relaxed hidden md:block">
-              {dishes[0].description}
-            </p>
-          </div>
-        </motion.div>
-
-        {/* 4-dish grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {dishes.slice(1).map((dish, i) => (
-            <motion.div
-              key={dish.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.1 }}
-              className="group relative overflow-hidden cursor-pointer"
-            >
-              <div className="aspect-[3/4] overflow-hidden">
-                <img
-                  src={dish.image}
-                  alt={dish.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
-              </div>
-              <div className="absolute bottom-0 left-0 right-0 p-5">
-                <span className={`inline-block text-white text-xs font-bold tracking-widest uppercase px-2 py-0.5 mb-2 font-sans ${dish.badgeColor}`}>
-                  {dish.badge}
-                </span>
-                <h3 className="font-serif text-xl text-white">{dish.title}</h3>
-                <p className="text-white/60 font-sans text-xs mt-1 leading-relaxed hidden md:block line-clamp-2">
-                  {dish.description}
-                </p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+          Full Menu
+          <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+        </motion.a>
       </div>
     </section>
   );
