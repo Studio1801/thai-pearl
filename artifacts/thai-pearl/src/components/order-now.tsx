@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import wokImg from "@assets/thai-pearl/food/wok-noodles.jpg";
+import wokFireImg from "@assets/thai-pearl/wok-fire.jpg";
 
 const platforms = [
   {
@@ -19,36 +19,38 @@ const platforms = [
 
 export function OrderNow() {
   return (
-    <section id="order" className="bg-[#1E1209] thai-pattern-dark overflow-hidden">
-      <div className="grid grid-cols-1 lg:grid-cols-2">
+    <section id="order" className="bg-[#180E06] thai-pattern-dark overflow-hidden">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr]">
 
-        {/* Left — text + platforms */}
+        {/* Left — copy */}
         <motion.div
-          initial={{ opacity: 0, x: -24 }}
+          initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.9 }}
-          className="px-8 md:px-16 py-20 md:py-28 flex flex-col justify-center"
+          className="flex flex-col justify-center px-8 md:px-14 lg:px-16 py-20 md:py-28 order-2 lg:order-1"
         >
-          <p className="font-sans text-[#D4891A] text-xs tracking-[0.35em] uppercase mb-6">
+          <p className="font-sans text-[#E8920E] text-[10px] tracking-[0.4em] uppercase font-semibold mb-6">
             Can't make it in
           </p>
 
           <h2
-            className="font-serif font-light text-white leading-[0.9] mb-4"
-            style={{ fontSize: "clamp(2.8rem, 7vw, 6rem)" }}
+            className="font-serif leading-[0.88] mb-4 tracking-tight"
+            style={{ fontSize: "clamp(3rem, 7vw, 6.5rem)", fontWeight: 500 }}
           >
-            We'll bring
+            <span className="text-white">Get it while</span>
             <br />
-            <em className="text-[#D4891A]">it to you.</em>
+            <em className="text-[#E8920E]" style={{ fontStyle: "italic", fontWeight: 500 }}>
+              it's hot.
+            </em>
           </h2>
 
-          <p className="font-sans text-white/55 text-base leading-relaxed mb-12 max-w-sm">
-            Order on any platform below. Same kitchen, same chef, same food. Pickup or delivery.
+          <p className="font-sans text-white/45 text-sm leading-relaxed mb-12 max-w-xs">
+            Same kitchen. Same chef. Same fire. Delivered anywhere in Asheville.
           </p>
 
-          {/* Platform links */}
-          <div className="border-t border-white/12">
+          {/* Platform list */}
+          <div className="border-t border-white/10">
             {platforms.map((p, i) => (
               <motion.a
                 key={p.name}
@@ -58,55 +60,58 @@ export function OrderNow() {
                 initial={{ opacity: 0, x: -16 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.08 }}
-                className="group flex items-center justify-between py-5 border-b border-white/12 hover:border-[#D4891A]/50 transition-colors duration-300"
+                transition={{ duration: 0.5, delay: 0.1 + i * 0.09 }}
+                className="group flex items-center justify-between py-5 border-b border-white/10 hover:border-[#E8920E]/40 transition-all duration-300"
               >
                 <span
-                  className="font-serif font-light text-white group-hover:text-[#D4891A] transition-colors duration-300"
-                  style={{ fontSize: "clamp(1.5rem, 3.5vw, 2.4rem)" }}
+                  className="font-serif text-white/90 group-hover:text-[#E8920E] transition-colors duration-300"
+                  style={{ fontSize: "clamp(1.6rem, 3.5vw, 2.5rem)", fontWeight: 500 }}
                 >
                   {p.name}
                 </span>
-                <motion.div
-                  whileHover={{ x: 5 }}
-                  className="w-8 h-8 border border-white/20 group-hover:border-[#D4891A]/60 flex items-center justify-center transition-colors duration-300"
-                >
-                  <ArrowRight size={14} className="text-white/50 group-hover:text-[#D4891A] transition-colors" />
-                </motion.div>
+                <div className="w-8 h-8 border border-white/15 group-hover:border-[#E8920E]/50 flex items-center justify-center transition-all duration-300">
+                  <ArrowRight size={13} className="text-white/40 group-hover:text-[#E8920E] transition-colors" />
+                </div>
               </motion.a>
             ))}
           </div>
 
           {/* Phone */}
-          <div className="mt-10">
-            <p className="font-sans text-white/35 text-xs tracking-[0.3em] uppercase mb-2">
-              Or call us
-            </p>
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="mt-10"
+          >
+            <p className="font-sans text-white/30 text-[9px] tracking-[0.35em] uppercase mb-2">Or call us</p>
             <a
               href="tel:8284125905"
-              className="font-serif font-light text-white/80 hover:text-[#D4891A] transition-colors"
-              style={{ fontSize: "clamp(1.6rem, 3.5vw, 2.6rem)" }}
+              className="font-serif text-white/75 hover:text-[#E8920E] transition-colors duration-300"
+              style={{ fontSize: "clamp(1.6rem, 3.5vw, 2.6rem)", fontWeight: 500 }}
             >
               (828) 412-5905
             </a>
-          </div>
+          </motion.div>
         </motion.div>
 
-        {/* Right — full photo */}
+        {/* Right — wok fire photo */}
         <motion.div
-          initial={{ opacity: 0, scale: 1.04 }}
-          whileInView={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
-          className="relative overflow-hidden min-h-[50vh] lg:min-h-0"
+          transition={{ duration: 1.4, ease: "easeOut" }}
+          className="relative overflow-hidden min-h-[50vh] lg:min-h-0 order-1 lg:order-2"
         >
           <img
-            src={wokImg}
-            alt="Wok on fire"
+            src={wokFireImg}
+            alt="Wok fire in Thai Pearl kitchen"
             className="w-full h-full object-cover"
+            style={{ objectPosition: "center 40%" }}
           />
-          {/* Warm overlay tying it to the section */}
-          <div className="absolute inset-0 bg-[#1E1209]/30" />
+          {/* Gradient bleed into section */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#180E06] via-transparent to-transparent lg:block hidden" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#180E06]/60 via-transparent to-transparent" />
         </motion.div>
 
       </div>

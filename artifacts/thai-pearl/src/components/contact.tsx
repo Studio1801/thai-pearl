@@ -4,91 +4,86 @@ import exteriorImg from "@assets/thai-pearl/exterior.png";
 
 export function Contact() {
   return (
-    <section id="contact" className="bg-[#1E1209] thai-pattern-dark text-white overflow-hidden">
-      {/* Full-bleed exterior photo with overlay headline */}
-      <div className="relative h-64 md:h-80 overflow-hidden">
+    <section id="contact" className="bg-[#180E06] thai-pattern-dark text-white overflow-hidden">
+      {/* Exterior photo strip fading into dark */}
+      <div className="relative h-72 md:h-96 overflow-hidden">
         <img
           src={exteriorImg}
-          alt="Thai Pearl exterior — 747 Haywood Rd"
-          className="w-full h-full object-cover object-center"
+          alt="Thai Pearl — 747 Haywood Rd, West Asheville"
+          className="w-full h-full object-cover"
+          style={{ objectPosition: "center 55%" }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#1E1209]/30 to-[#1E1209]" />
-        <div className="absolute bottom-0 left-0 px-8 md:px-16 pb-8">
-          <p className="font-sans text-[#D4891A] text-xs tracking-[0.35em] uppercase mb-3">
+        <div className="absolute inset-0 bg-gradient-to-b from-[#180E06]/20 via-[#180E06]/50 to-[#180E06]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#180E06]/60 via-transparent to-transparent" />
+
+        {/* Headline riding in from photo */}
+        <div className="absolute bottom-0 left-0 px-8 md:px-16 pb-10">
+          <p className="font-sans text-[#E8920E] text-[10px] tracking-[0.4em] uppercase font-semibold mb-4">
             Come find us
           </p>
           <h2
-            className="font-serif font-light text-white leading-none"
-            style={{ fontSize: "clamp(2.5rem, 6vw, 5.5rem)" }}
+            className="font-serif leading-[0.9] tracking-tight"
+            style={{ fontSize: "clamp(2.8rem, 7vw, 6rem)", fontWeight: 500 }}
           >
-            West Asheville
+            <span className="text-white">West Asheville</span>
             <br />
-            <em className="text-[#D4891A]">is waiting.</em>
+            <em className="text-[#E8920E]" style={{ fontStyle: "italic" }}>
+              is waiting.
+            </em>
           </h2>
         </div>
       </div>
 
-      {/* Info grid */}
+      {/* Info + CTAs */}
       <div className="container mx-auto px-8 md:px-16 py-16 md:py-20">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20">
 
-          {/* Info */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
             className="space-y-6"
           >
-            <div className="flex items-start gap-4">
-              <MapPin className="text-[#D4891A] w-5 h-5 mt-0.5 flex-shrink-0" />
-              <p className="font-sans text-white text-sm leading-relaxed">
-                747 Haywood Rd<br />Asheville, NC 28806
-              </p>
-            </div>
-            <div className="flex items-start gap-4">
-              <Clock className="text-[#D4891A] w-5 h-5 mt-0.5 flex-shrink-0" />
-              <div>
-                <p className="font-sans text-white text-sm">Tuesday through Sunday</p>
-                <p className="font-sans text-white/45 text-sm">Closed Mondays</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-4">
-              <Phone className="text-[#D4891A] w-5 h-5 mt-0.5 flex-shrink-0" />
-              <a href="tel:8284125905" className="font-sans text-white text-sm hover:text-[#D4891A] transition-colors">
-                (828) 412-5905
-              </a>
-            </div>
-            <div className="flex items-start gap-4">
-              <Instagram className="text-[#D4891A] w-5 h-5 mt-0.5 flex-shrink-0" />
-              <a
-                href="https://instagram.com/thaipearl_restaurant"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-sans text-white text-sm hover:text-[#D4891A] transition-colors"
-              >
-                @thaipearl_restaurant
-              </a>
-            </div>
+            {[
+              { Icon: MapPin, lines: ["747 Haywood Rd", "Asheville, NC 28806"], href: undefined },
+              { Icon: Clock, lines: ["Tuesday through Sunday", "Closed Mondays"], href: undefined },
+              { Icon: Phone, lines: ["(828) 412-5905"], href: "tel:8284125905" },
+              { Icon: Instagram, lines: ["@thaipearl_restaurant"], href: "https://instagram.com/thaipearl_restaurant" },
+            ].map(({ Icon, lines, href }, i) => {
+              const inner = (
+                <div className="flex items-start gap-4">
+                  <Icon className="text-[#E8920E] w-5 h-5 mt-0.5 flex-shrink-0" />
+                  <div>
+                    {lines.map((l, j) => (
+                      <p key={j} className={`font-sans text-sm leading-relaxed ${j === 1 ? "text-white/40" : "text-white/75"}`}>{l}</p>
+                    ))}
+                  </div>
+                </div>
+              );
+              return href ? (
+                <a key={i} href={href} target={href.startsWith("http") ? "_blank" : undefined}
+                  rel="noopener noreferrer" className="block hover:opacity-75 transition-opacity">{inner}</a>
+              ) : <div key={i}>{inner}</div>;
+            })}
           </motion.div>
 
-          {/* CTAs */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.15 }}
-            className="flex flex-col justify-center gap-5"
+            className="flex flex-col justify-center"
           >
-            <p className="font-sans text-white/50 text-base leading-relaxed max-w-xs">
-              Walk-ins welcome. We keep a warm seat for you. Reserve ahead if you've got a group.
+            <p className="font-sans text-white/40 text-sm leading-relaxed max-w-xs mb-8">
+              Walk-ins always welcome. Reserve ahead for groups. Private parties and catering available for any occasion.
             </p>
-            <div className="flex flex-col sm:flex-row gap-3 mt-2">
+            <div className="flex flex-col sm:flex-row gap-3">
               <a
                 href="https://thaipearlasheville.com/reservations"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-[#D4891A] hover:bg-[#b8751a] text-white px-8 py-4 font-sans font-semibold text-sm tracking-[0.18em] uppercase transition-colors text-center"
+                className="bg-[#E8920E] hover:bg-[#c87a0c] text-white px-8 py-4 font-sans font-bold text-[11px] tracking-[0.25em] uppercase transition-colors text-center"
               >
                 Reserve a Table
               </a>
@@ -96,11 +91,17 @@ export function Contact() {
                 href="https://thaipearlasheville.com/catering"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="border border-white/25 hover:border-white/60 text-white/70 hover:text-white px-8 py-4 font-sans text-sm tracking-[0.18em] uppercase transition-all text-center"
+                className="border border-white/20 hover:border-[#E8920E]/50 text-white/55 hover:text-white px-8 py-4 font-sans text-[11px] tracking-[0.22em] uppercase transition-all text-center"
               >
                 Catering
               </a>
             </div>
+
+            {/* Thai script decorative accent */}
+            <p className="mt-10 font-serif text-white/10 text-3xl tracking-widest select-none" style={{ fontWeight: 400 }}>
+              ยินดีต้อนรับ
+            </p>
+            <p className="font-sans text-white/18 text-[9px] tracking-[0.3em] uppercase mt-1">Welcome</p>
           </motion.div>
 
         </div>
