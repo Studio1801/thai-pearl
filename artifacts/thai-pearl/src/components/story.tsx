@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import basketsImg from "@assets/thai-pearl/interior-baskets.png";
-import larbImg from "@assets/thai-pearl/food/larb-salad.jpg";
 
 export function Story() {
   return (
@@ -20,7 +19,6 @@ export function Story() {
             alt="Thai Pearl dining room"
             className="w-full h-full object-cover"
           />
-          {/* Award badge */}
           <div className="absolute top-6 left-6 bg-[#C4281A] text-white font-sans font-bold text-[9px] tracking-[0.25em] uppercase px-3 py-2">
             Best New Restaurant 2020
           </div>
@@ -58,17 +56,19 @@ export function Story() {
 
           <div className="space-y-4 font-sans text-[#3A2A1E] text-[15px] leading-relaxed max-w-sm">
             <p>
-              Our chef trained at the <strong className="font-semibold text-[#180E06]">Royal Palace Academy in Bangkok</strong> and worked alongside a Michelin Star chef in Queensland, Australia.
+              The chef didn't open Thai Pearl to serve the version of Thai food you've had before.
+              He trained at the <strong className="font-semibold text-[#180E06]">Royal Palace Academy in Bangkok</strong>, worked a <strong className="font-semibold text-[#180E06]">Michelin Star kitchen</strong> in Australia, and brought all of it to a room on Haywood Rd.
             </p>
             <p>
-              He brought every bit of it to a warm little room on Haywood Rd. Thai Pearl opened March 2020 and won Best New Restaurant that same year. Every dish carries that lineage.
+              Thai Pearl opened March 2020 — the worst possible month — and won Best New Restaurant anyway.
+              That hasn't changed anything about how the food is made.
             </p>
           </div>
 
           {/* Stats */}
           <div className="mt-10 pt-8 border-t border-[#E8920E]/25 flex flex-row gap-0">
             {[
-              { n: "2020", thai: null,       l: "Best New Restaurant" },
+              { n: "2020",         thai: null,        l: "Best New Restaurant" },
               { n: "Royal Palace", thai: "พระราชวัง", l: "Academy Trained" },
               { n: "Michelin",     thai: "มิชลิน",    l: "Kitchen Mentored" },
             ].map((c, i) => (

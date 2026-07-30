@@ -1,12 +1,12 @@
 import { motion } from "framer-motion";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
-import { Link } from "wouter";
 import menuBgImg from "@assets/thai-pearl/menu-page.jpg";
 
 const categories = [
   {
     name: "Appetizers",
+    thai: "เมนูเรียกน้ำย่อย",
     note: "Vegan and Gluten-Free options available",
     items: [
       { name: "Edamame (V)", price: "$8", desc: "Steamed whole soybeans with sea salt and garlic" },
@@ -22,6 +22,7 @@ const categories = [
   },
   {
     name: "Thai Salads",
+    thai: "สลัดไทย",
     note: "Served on romaine lettuce",
     items: [
       { name: "Thai Pearl House Salad (V avail.)", price: "$9", desc: "Romaine, cabbage, carrot, tomato, red onion, bean sprout, peanut, Thai basil, scallion, cilantro, mint, chili-lime dressing" },
@@ -33,6 +34,7 @@ const categories = [
   },
   {
     name: "Soups and Noodle Soups",
+    thai: "ซุปและก๋วยเตี๋ยวน้ำ",
     note: "All soups handmade to order, GF unless noted",
     items: [
       { name: "Tom Yum", price: "$8 cup / $15 bowl", desc: "Tomato, galangal, lemongrass, kaffir lime leaf, mushroom, carrot, snap pea, onion, cilantro, scallion" },
@@ -47,6 +49,7 @@ const categories = [
   },
   {
     name: "Noodle Dishes",
+    thai: "เมนูก๋วยเตี๋ยว",
     note: "Vegan and GF available",
     items: [
       { name: "Thai Pearl Pad Thai", price: "$17", desc: "Stir-fried rice noodles in our old-school Pad Thai sauce with egg, onion, scallion, cabbage, bean sprouts, crushed peanuts" },
@@ -57,6 +60,7 @@ const categories = [
   },
   {
     name: "Stir Frys with Jasmine Rice",
+    thai: "ผัดกับข้าวหอมมะลิ",
     note: "GF available",
     items: [
       { name: "Eggplant Basil", price: "$21", desc: "Japanese eggplant, carrot, mushroom, onion, garlic, snap pea, bell pepper, Thai basil in basil sauce" },
@@ -70,6 +74,7 @@ const categories = [
   },
   {
     name: "Chef Specials",
+    thai: "เมนูพิเศษของเชฟ",
     note: null,
     items: [
       { name: "Pad Ped 'Spicy Stir Fry'", price: "$28", desc: "Shrimp and Pork with Japanese eggplant, carrot, mushroom, snap pea, bell pepper, bamboo, and peppercorn in red curry paste sauce with Jasmine rice" },
@@ -81,6 +86,7 @@ const categories = [
   },
   {
     name: "Curries",
+    thai: "แกงกะทิ",
     note: "Served with Jasmine Rice. All curries start at level 1 / naturally spicy",
     items: [
       { name: "Red Curry", price: "$23", desc: "Coconut milk with dry chili paste, peppercorn, mushroom, bell pepper, bamboo shoots, carrot, onion, broccoli, snap pea, and Thai basil" },
@@ -93,6 +99,7 @@ const categories = [
   },
   {
     name: "Kids Menu",
+    thai: "เมนูเด็ก",
     note: null,
     items: [
       { name: "Kids Noodles", price: "$10", desc: "Chicken, onion, egg, broccoli, and carrot" },
@@ -101,6 +108,7 @@ const categories = [
   },
   {
     name: "Sides",
+    thai: "เครื่องเคียง",
     note: null,
     items: [
       { name: "White Rice", price: "$3", desc: null },
@@ -114,41 +122,49 @@ const categories = [
   },
 ];
 
-const proteins = [
-  { type: "Chicken, Pork, Tofu, or Veggies", price: "$5" },
-  { type: "Beef or Shrimp", price: "$6" },
-  { type: "Mussels, Calamari, or Eggplant", price: "$4" },
+const spiceLevels = [
+  { en: "1 — Mild", thai: "เผ็ดน้อย" },
+  { en: "2 — Medium", thai: "เผ็ดกลาง" },
+  { en: "3 — Hot!", thai: "เผ็ด!" },
+  { en: "4 — Very Hot!!", thai: "เผ็ดมาก!!" },
+  { en: "5 — Thai Hot!!!", thai: "เผ็ดไทยแท้!!!" },
 ];
-
-const spiceLevels = ["1 — Mild", "2 — Medium", "3 — Hot!", "4 — Very Hot!!", "5 — Thai Hot!!!"];
 
 export default function MenuPage() {
   return (
-    <div className="bg-[#FBF5E8] min-h-screen font-sans selection:bg-[#B5311E] selection:text-white">
+    <div className="bg-[#FDF7EC] min-h-screen font-sans selection:bg-[#C4281A] selection:text-white">
       <Navbar />
 
       {/* Hero */}
       <div className="relative h-72 md:h-96 overflow-hidden">
         <img src={menuBgImg} alt="Thai Pearl Menu" className="w-full h-full object-cover object-center" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#1E1209]/70 via-[#1E1209]/50 to-[#FBF5E8]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#180E06]/75 via-[#180E06]/50 to-[#FDF7EC]" />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 pt-16">
-          <p className="font-sans text-[#D4891A] text-xs tracking-[0.35em] uppercase mb-4">Thai Pearl</p>
+          <p className="font-sans text-[#E8920E] text-[10px] tracking-[0.4em] uppercase font-semibold mb-1">
+            Thai Pearl
+          </p>
+          <p className="font-serif text-[#E8920E]/50 text-base tracking-widest mb-4" style={{ fontWeight: 400 }}>
+            ไทยเพิร์ล
+          </p>
           <h1
-            className="font-serif font-light text-white leading-none"
-            style={{ fontSize: "clamp(3rem, 8vw, 7rem)" }}
+            className="font-serif text-white leading-none"
+            style={{ fontSize: "clamp(3rem, 8vw, 7rem)", fontWeight: 500 }}
           >
             Our Menu
           </h1>
+          <p className="font-serif text-white/30 mt-2" style={{ fontSize: "clamp(1.1rem, 2vw, 1.6rem)", fontWeight: 400 }}>
+            เมนูอาหาร
+          </p>
         </div>
       </div>
 
       {/* Ordering note */}
-      <div className="bg-[#1E1209] thai-pattern-dark py-5 px-8 text-center">
-        <p className="font-sans text-white/60 text-sm">
-          <span className="text-[#D4891A] font-semibold">Protein add-ons:</span>
+      <div className="bg-[#180E06] thai-pattern-dark py-5 px-8 text-center">
+        <p className="font-sans text-white/55 text-sm">
+          <span className="text-[#E8920E] font-semibold">Protein add-ons:</span>
           {" "}Chicken / Pork / Tofu / Veggies +$5 &nbsp;|&nbsp; Beef / Shrimp +$6 &nbsp;|&nbsp; Mussels / Calamari +$4
           &nbsp;&nbsp;
-          <span className="text-[#D4891A] font-semibold">Spice:</span>
+          <span className="text-[#E8920E] font-semibold">Spice:</span>
           {" "}1 Mild → 5 Thai Hot
         </p>
       </div>
@@ -165,27 +181,32 @@ export default function MenuPage() {
             className="mb-16"
           >
             {/* Category header */}
-            <div className="flex items-baseline gap-5 mb-2 pb-4 border-b-2 border-[#1E1209]">
-              <h2
-                className="font-serif font-light text-[#1E1209] leading-none"
-                style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)" }}
-              >
-                {cat.name}
-              </h2>
+            <div className="mb-4 pb-4 border-b-2 border-[#180E06]">
+              <div className="flex items-baseline gap-5 flex-wrap">
+                <h2
+                  className="font-serif text-[#180E06] leading-none"
+                  style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)", fontWeight: 500 }}
+                >
+                  {cat.name}
+                </h2>
+                <span
+                  className="font-serif text-[#C4281A]/50 leading-none"
+                  style={{ fontSize: "clamp(1rem, 2vw, 1.5rem)", fontWeight: 400 }}
+                >
+                  {cat.thai}
+                </span>
+              </div>
               {cat.note && (
-                <p className="font-sans text-[#8A7060] text-xs italic hidden md:block">{cat.note}</p>
+                <p className="font-sans text-[#8A7060] text-xs mt-2">{cat.note}</p>
               )}
             </div>
-            {cat.note && (
-              <p className="font-sans text-[#8A7060] text-xs italic mb-4 md:hidden">{cat.note}</p>
-            )}
 
             {/* Items */}
             <div className="divide-y divide-[#E8DCC8]">
               {cat.items.map((item, ii) => (
                 <div key={ii} className="py-4 flex items-start justify-between gap-6">
                   <div className="flex-1">
-                    <p className="font-sans font-semibold text-[#1E1209] text-base leading-snug">
+                    <p className="font-sans font-semibold text-[#180E06] text-base leading-snug">
                       {item.name}
                     </p>
                     {item.desc && (
@@ -194,7 +215,10 @@ export default function MenuPage() {
                       </p>
                     )}
                   </div>
-                  <p className="font-serif font-light text-[#B5311E] text-lg flex-shrink-0 mt-0.5">
+                  <p
+                    className="font-serif text-[#C4281A] flex-shrink-0 mt-0.5"
+                    style={{ fontSize: "1.1rem", fontWeight: 500 }}
+                  >
                     {item.price}
                   </p>
                 </div>
@@ -204,24 +228,37 @@ export default function MenuPage() {
         ))}
 
         {/* Spice levels */}
-        <div className="mt-4 mb-16 bg-[#1E1209] thai-pattern-dark p-8 md:p-10">
-          <p className="font-sans text-[#D4891A] text-xs tracking-[0.3em] uppercase mb-4">Spice Levels</p>
-          <div className="flex flex-wrap gap-x-8 gap-y-2">
+        <div className="mt-4 mb-16 bg-[#180E06] thai-pattern-dark p-8 md:p-10">
+          <div className="flex items-baseline gap-3 mb-5">
+            <p className="font-sans text-[#E8920E] text-[10px] tracking-[0.3em] uppercase font-semibold">
+              Spice Levels
+            </p>
+            <p className="font-serif text-[#E8920E]/40 text-sm" style={{ fontWeight: 400 }}>
+              ระดับความเผ็ด
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-x-8 gap-y-3">
             {spiceLevels.map((s, i) => (
-              <span key={i} className="font-sans text-white/70 text-sm">{s}</span>
+              <div key={i} className="flex items-baseline gap-2">
+                <span className="font-sans text-white/70 text-sm">{s.en}</span>
+                <span className="font-serif text-[#E8920E]/40 text-sm" style={{ fontWeight: 400 }}>{s.thai}</span>
+              </div>
             ))}
           </div>
         </div>
 
         {/* Order CTA */}
         <div className="text-center pb-8">
-          <p className="font-sans text-[#8A7060] text-sm mb-6">Ready to order?</p>
+          <p className="font-sans text-[#8A7060] text-sm mb-1">Ready to order?</p>
+          <p className="font-serif text-[#8A7060]/60 text-base mb-6" style={{ fontWeight: 400 }}>
+            พร้อมสั่งแล้วหรือยัง
+          </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="https://www.grubhub.com/search?locationQuery=747+Haywood+Rd+Asheville+NC&queryText=Thai+Pearl"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-[#B5311E] hover:bg-[#952A18] text-white px-10 py-4 font-sans font-semibold text-sm tracking-[0.18em] uppercase transition-colors text-center"
+              className="bg-[#C4281A] hover:bg-[#a42016] text-white px-10 py-4 font-sans font-bold text-[11px] tracking-[0.25em] uppercase transition-colors text-center"
             >
               Order Delivery
             </a>
@@ -229,7 +266,7 @@ export default function MenuPage() {
               href="https://thaipearlasheville.com/reservations"
               target="_blank"
               rel="noopener noreferrer"
-              className="border border-[#1E1209]/40 hover:border-[#1E1209] text-[#1E1209] px-10 py-4 font-sans text-sm tracking-[0.18em] uppercase transition-colors text-center"
+              className="border border-[#180E06]/40 hover:border-[#180E06] text-[#180E06] px-10 py-4 font-sans text-[11px] tracking-[0.22em] uppercase transition-colors text-center"
             >
               Reserve a Table
             </a>

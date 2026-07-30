@@ -17,6 +17,12 @@ const platforms = [
   },
 ];
 
+const facts = [
+  { th: "ไฟจริง", en: "Real wok fire. Every order." },
+  { th: "พระราชวัง", en: "Royal Palace trained." },
+  { th: "สดทุกวัน", en: "Made fresh. Never frozen." },
+];
+
 export function OrderNow() {
   return (
     <section id="order" className="bg-[#180E06] thai-pattern-dark overflow-hidden">
@@ -50,9 +56,28 @@ export function OrderNow() {
             </em>
           </h2>
 
-          <p className="font-sans text-white/45 text-sm leading-relaxed mb-12 max-w-xs">
-            Same kitchen. Same chef. Same fire. Delivered anywhere in Asheville.
+          <p className="font-sans text-white/40 text-sm leading-relaxed mb-8 max-w-xs">
+            Same kitchen. Same chef. Same fire that won Best New Restaurant.
+            Delivered anywhere in Asheville.
           </p>
+
+          {/* Quick facts — personality */}
+          <div className="flex flex-col gap-2 mb-10">
+            {facts.map((f, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, x: -10 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.08 }}
+                className="flex items-center gap-3"
+              >
+                <span className="font-serif text-[#E8920E]/50 text-sm" style={{ fontWeight: 400 }}>{f.th}</span>
+                <span className="w-px h-3 bg-white/15 flex-shrink-0" />
+                <span className="font-sans text-white/55 text-xs tracking-wide">{f.en}</span>
+              </motion.div>
+            ))}
+          </div>
 
           {/* Platform list */}
           <div className="border-t border-white/10">
@@ -89,7 +114,9 @@ export function OrderNow() {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="mt-10"
           >
-            <p className="font-sans text-white/30 text-[9px] tracking-[0.35em] uppercase mb-2">Or call us</p>
+            <p className="font-sans text-white/25 text-[9px] tracking-[0.35em] uppercase mb-2">
+              Or just call us like a normal person
+            </p>
             <a
               href="tel:8284125905"
               className="font-serif text-white/75 hover:text-[#E8920E] transition-colors duration-300"
@@ -114,7 +141,6 @@ export function OrderNow() {
             className="w-full h-full object-cover"
             style={{ objectPosition: "center 40%" }}
           />
-          {/* Gradient bleed into section */}
           <div className="absolute inset-0 bg-gradient-to-r from-[#180E06] via-transparent to-transparent lg:block hidden" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#180E06]/60 via-transparent to-transparent" />
         </motion.div>

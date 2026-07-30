@@ -16,7 +16,6 @@ export function Contact() {
         <div className="absolute inset-0 bg-gradient-to-b from-[#180E06]/20 via-[#180E06]/50 to-[#180E06]" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#180E06]/60 via-transparent to-transparent" />
 
-        {/* Headline riding in from photo */}
         <div className="absolute bottom-0 left-0 px-8 md:px-16 pb-10">
           <p className="font-sans text-[#E8920E] text-[10px] tracking-[0.4em] uppercase font-semibold mb-4">
             Come find us
@@ -25,10 +24,10 @@ export function Contact() {
             className="font-serif leading-[0.9] tracking-tight"
             style={{ fontSize: "clamp(2.8rem, 7vw, 6rem)", fontWeight: 500 }}
           >
-            <span className="text-white">West Asheville</span>
+            <span className="text-white">The warmest room</span>
             <br />
             <em className="text-[#E8920E]" style={{ fontStyle: "italic" }}>
-              is waiting.
+              on Haywood Rd.
             </em>
           </h2>
         </div>
@@ -46,17 +45,17 @@ export function Contact() {
             className="space-y-6"
           >
             {[
-              { Icon: MapPin, lines: ["747 Haywood Rd", "Asheville, NC 28806"], href: undefined },
-              { Icon: Clock, lines: ["Tuesday through Sunday", "Closed Mondays"], href: undefined },
-              { Icon: Phone, lines: ["(828) 412-5905"], href: "tel:8284125905" },
-              { Icon: Instagram, lines: ["@thaipearl_restaurant"], href: "https://instagram.com/thaipearl_restaurant" },
+              { Icon: MapPin,    lines: ["747 Haywood Rd", "Asheville, NC 28806"],        href: undefined },
+              { Icon: Clock,     lines: ["Tuesday through Sunday", "Closed Mondays"],     href: undefined },
+              { Icon: Phone,     lines: ["(828) 412-5905"],                               href: "tel:8284125905" },
+              { Icon: Instagram, lines: ["@thaipearl_restaurant"],                        href: "https://instagram.com/thaipearl_restaurant" },
             ].map(({ Icon, lines, href }, i) => {
               const inner = (
                 <div className="flex items-start gap-4">
                   <Icon className="text-[#E8920E] w-5 h-5 mt-0.5 flex-shrink-0" />
                   <div>
                     {lines.map((l, j) => (
-                      <p key={j} className={`font-sans text-sm leading-relaxed ${j === 1 ? "text-white/40" : "text-white/75"}`}>{l}</p>
+                      <p key={j} className={`font-sans text-sm leading-relaxed ${j === 1 ? "text-white/35" : "text-white/70"}`}>{l}</p>
                     ))}
                   </div>
                 </div>
@@ -75,8 +74,12 @@ export function Contact() {
             transition={{ duration: 0.7, delay: 0.15 }}
             className="flex flex-col justify-center"
           >
-            <p className="font-sans text-white/40 text-sm leading-relaxed max-w-xs mb-8">
-              Walk-ins always welcome. Reserve ahead for groups. Private parties and catering available for any occasion.
+            <p className="font-sans text-white/35 text-sm leading-relaxed max-w-xs mb-2">
+              Walk-ins always welcome. We keep a table warm for you.
+              Reserve ahead if you're bringing the whole family.
+            </p>
+            <p className="font-sans text-white/20 text-xs mb-8 italic">
+              Yes, we're dog-friendly on the patio.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <a
@@ -91,14 +94,14 @@ export function Contact() {
                 href="https://thaipearlasheville.com/catering"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="border border-white/20 hover:border-[#E8920E]/50 text-white/55 hover:text-white px-8 py-4 font-sans text-[11px] tracking-[0.22em] uppercase transition-all text-center"
+                className="border border-white/20 hover:border-[#E8920E]/50 text-white/50 hover:text-white px-8 py-4 font-sans text-[11px] tracking-[0.22em] uppercase transition-all text-center"
               >
                 Catering
               </a>
             </div>
 
-            {/* Thai script decorative accent */}
-            <p className="mt-10 font-serif text-white/10 text-3xl tracking-widest select-none" style={{ fontWeight: 400 }}>
+            {/* Thai welcome */}
+            <p className="mt-10 font-serif text-white/8 text-4xl tracking-widest select-none" style={{ fontWeight: 400 }}>
               ยินดีต้อนรับ
             </p>
             <p className="font-sans text-white/18 text-[9px] tracking-[0.3em] uppercase mt-1">Welcome</p>
