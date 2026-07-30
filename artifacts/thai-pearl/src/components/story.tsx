@@ -20,16 +20,6 @@ export function Story() {
             alt="Thai Pearl dining room"
             className="w-full h-full object-cover"
           />
-          {/* Accent inset food photo */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="absolute bottom-6 right-6 w-36 md:w-44 aspect-square overflow-hidden shadow-2xl border-[5px] border-[#FDF7EC]"
-          >
-            <img src={larbImg} alt="Larb Salad" className="w-full h-full object-cover" />
-          </motion.div>
           {/* Award badge */}
           <div className="absolute top-6 left-6 bg-[#C4281A] text-white font-sans font-bold text-[9px] tracking-[0.25em] uppercase px-3 py-2">
             Best New Restaurant 2020
@@ -44,9 +34,14 @@ export function Story() {
           transition={{ duration: 0.9, delay: 0.1 }}
           className="flex flex-col justify-center px-8 md:px-14 lg:px-16 py-16 md:py-20"
         >
-          <p className="font-sans text-[#C4281A] text-[10px] tracking-[0.4em] uppercase font-semibold mb-6">
-            The restaurant
-          </p>
+          <div className="mb-6">
+            <p className="font-sans text-[#C4281A] text-[10px] tracking-[0.4em] uppercase font-semibold">
+              The restaurant
+            </p>
+            <p className="font-serif text-[#C4281A]/50 text-sm tracking-wider mt-0.5" style={{ fontWeight: 400 }}>
+              อาหารไทยแท้
+            </p>
+          </div>
 
           <h2
             className="font-serif leading-[0.9] mb-8 tracking-tight"
@@ -71,11 +66,11 @@ export function Story() {
           </div>
 
           {/* Stats */}
-          <div className="mt-10 pt-8 border-t border-[#E8920E]/25 grid grid-cols-3 gap-4">
+          <div className="mt-10 pt-8 border-t border-[#E8920E]/25 flex flex-row gap-0">
             {[
-              { n: "2020", l: "Best New Restaurant" },
-              { n: "Royal Palace", l: "Academy Trained" },
-              { n: "Michelin", l: "Kitchen Mentored" },
+              { n: "2020", thai: null,       l: "Best New Restaurant" },
+              { n: "Royal Palace", thai: "พระราชวัง", l: "Academy Trained" },
+              { n: "Michelin",     thai: "มิชลิน",    l: "Kitchen Mentored" },
             ].map((c, i) => (
               <motion.div
                 key={i}
@@ -83,11 +78,17 @@ export function Story() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.1 + i * 0.1 }}
+                className={`flex-1 min-w-0 ${i > 0 ? "pl-5 border-l border-[#E8920E]/18" : ""}`}
               >
-                <p className="font-serif text-[#180E06] leading-none mb-2"
-                  style={{ fontSize: "clamp(1.1rem, 2.5vw, 1.6rem)", fontWeight: 500 }}>
+                <p className="font-serif text-[#180E06] leading-none mb-1 truncate"
+                  style={{ fontSize: "clamp(1rem, 2.2vw, 1.4rem)", fontWeight: 500 }}>
                   {c.n}
                 </p>
+                {c.thai && (
+                  <p className="font-serif text-[#C4281A]/45 leading-none mb-1.5 text-sm" style={{ fontWeight: 400 }}>
+                    {c.thai}
+                  </p>
+                )}
                 <p className="font-sans text-[#8A7060] text-[9px] uppercase tracking-widest leading-snug">{c.l}</p>
               </motion.div>
             ))}

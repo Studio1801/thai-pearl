@@ -33,6 +33,7 @@ export function Navbar() {
           ? "bg-[#100907]/96 backdrop-blur-md py-3 border-b border-white/8"
           : "bg-transparent py-5"
       }`}
+      style={!isScrolled ? { textShadow: "0 1px 6px rgba(0,0,0,0.7)" } : {}}
     >
       {/* Gradient top border */}
       {!isScrolled && (

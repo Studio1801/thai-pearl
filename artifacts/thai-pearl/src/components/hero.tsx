@@ -17,23 +17,17 @@ export function Hero() {
         style={{ objectPosition: "center 38%" }}
       />
 
-      {/* Layered warm vignette */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#180E06]/96 via-[#180E06]/38 to-[#180E06]/48" />
-      <div className="absolute inset-0 bg-gradient-to-r from-[#180E06]/55 via-[#180E06]/10 to-transparent" />
+      {/* Bottom-up vignette — deep for text legibility */}
+      <div className="absolute inset-0 bg-gradient-to-t from-[#180E06]/97 via-[#180E06]/45 to-transparent" />
+      {/* Left darkening so headline pops */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[#180E06]/60 via-[#180E06]/10 to-transparent" />
+      {/* TOP darkening — navbar legibility over the bright flowers */}
+      <div className="absolute top-0 left-0 right-0 h-28 bg-gradient-to-b from-[#180E06]/80 to-transparent" />
 
       {/* Saffron top border */}
       <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#C4281A] via-[#E8920E] to-[#C4281A]" />
 
       <div className="absolute inset-0 flex flex-col justify-end px-8 md:px-16 pb-16 md:pb-24">
-        <motion.p
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.6 }}
-          className="font-sans text-[#E8920E] text-[10px] tracking-[0.4em] uppercase font-semibold mb-6"
-        >
-          Authentic Thai · 747 Haywood Rd · West Asheville · Tue–Sun
-        </motion.p>
-
         {/* Thai script atmospheric accent */}
         <motion.p
           initial={{ opacity: 0 }}
