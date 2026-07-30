@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import interiorImg from "@assets/thai-pearl/interior.png";
+import catImg from "@assets/thai-pearl/interior-cat.png";
 
 export function Hero() {
   const scrollTo = (id: string) =>
@@ -7,19 +7,21 @@ export function Hero() {
 
   return (
     <section className="relative h-screen w-full overflow-hidden">
-      {/* Interior photo */}
+      {/* Lucky cat interior photo */}
       <motion.img
         initial={{ scale: 1.05 }}
         animate={{ scale: 1 }}
         transition={{ duration: 2.5, ease: "easeOut" }}
-        src={interiorImg}
+        src={catImg}
         alt="Thai Pearl interior"
         className="absolute inset-0 w-full h-full object-cover"
-        style={{ objectPosition: "center 30%" }}
+        style={{ objectPosition: "center 40%" }}
       />
 
-      {/* Warm dark vignette */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#130C06]/92 via-[#130C06]/45 to-[#130C06]/55" />
+      {/* Warm vignette — bottom heavy so text reads clean */}
+      <div className="absolute inset-0 bg-gradient-to-t from-[#130C06]/94 via-[#130C06]/40 to-[#130C06]/30" />
+      {/* Slight left darkening so text pops */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[#130C06]/50 via-transparent to-transparent" />
 
       {/* Marigold top border */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-[#D4891A]" />
