@@ -4,23 +4,25 @@ import { MapPin, Phone, Instagram, Clock } from "lucide-react";
 export function Contact() {
   return (
     <section id="contact" className="relative py-24 md:py-32 bg-[#0F9E5E] text-white overflow-hidden">
-      {/* Decorative texture/pattern could go here */}
-      <div className="absolute inset-0 opacity-10 mix-blend-overlay bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]" />
-      
       <div className="container relative z-10 mx-auto px-6 md:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-          
+
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
+            <p className="font-sans tracking-[0.25em] uppercase text-xs font-bold text-white/70 mb-5">
+              Come in. Sit down.
+            </p>
             <h2 className="text-5xl md:text-6xl font-serif mb-8 leading-tight">
-              Join us in <br/> West Asheville.
+              West Asheville
+              <br />
+              <span className="italic">is waiting.</span>
             </h2>
-            <p className="text-white/90 font-sans text-lg mb-12 max-w-md leading-relaxed">
-              Experience the warmth of Thai hospitality and the boldness of authentic flavors. Whether for a casual dinner or a private celebration.
+            <p className="text-white/80 font-sans text-lg mb-12 max-w-md leading-relaxed">
+              Colorful decor, warm lighting, wood accents, and tables that feel like home. Come in for dinner or bring your whole crew.
             </p>
 
             <div className="flex flex-wrap gap-4">
@@ -28,7 +30,7 @@ export function Contact() {
                 href="https://thaipearlasheville.com/reservations"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white text-[#0F9E5E] hover:bg-white/90 px-8 py-4 font-sans text-sm font-bold tracking-[0.15em] uppercase transition-all duration-300 transform hover:-translate-y-1"
+                className="bg-white text-[#0F9E5E] hover:bg-white/90 px-8 py-4 font-sans text-sm font-black tracking-[0.15em] uppercase transition-all duration-300 hover:-translate-y-1"
               >
                 Reserve a Table
               </a>
@@ -36,9 +38,9 @@ export function Contact() {
                 href="https://thaipearlasheville.com/catering"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-transparent border border-white hover:bg-white hover:text-[#0F9E5E] text-white px-8 py-4 font-sans text-sm font-bold tracking-[0.15em] uppercase transition-all duration-300 transform hover:-translate-y-1"
+                className="bg-transparent border border-white hover:bg-white hover:text-[#0F9E5E] text-white px-8 py-4 font-sans text-sm font-bold tracking-[0.15em] uppercase transition-all duration-300 hover:-translate-y-1"
               >
-                Catering & Events
+                Catering and Events
               </a>
             </div>
           </motion.div>
@@ -52,36 +54,38 @@ export function Contact() {
           >
             <div className="space-y-8">
               <div className="flex items-start gap-4">
-                <MapPin className="text-secondary w-6 h-6 mt-1 flex-shrink-0" />
+                <MapPin className="text-[#FFB800] w-6 h-6 mt-1 flex-shrink-0" />
                 <div>
-                  <h4 className="font-sans font-bold uppercase tracking-widest text-sm mb-2 text-secondary">Location</h4>
-                  <p className="font-serif text-xl">747 Haywood Rd,<br/>Asheville, NC 28806</p>
+                  <h4 className="font-sans font-bold uppercase tracking-widest text-sm mb-2 text-[#FFB800]">Location</h4>
+                  <p className="font-serif text-xl">747 Haywood Rd,<br />Asheville, NC 28806</p>
                 </div>
               </div>
 
               <div className="flex items-start gap-4">
-                <Clock className="text-secondary w-6 h-6 mt-1 flex-shrink-0" />
+                <Clock className="text-[#FFB800] w-6 h-6 mt-1 flex-shrink-0" />
                 <div>
-                  <h4 className="font-sans font-bold uppercase tracking-widest text-sm mb-2 text-secondary">Hours</h4>
-                  <p className="font-sans text-lg">Tuesday – Sunday<br/><span className="text-white/70 text-base">Closed Mondays</span></p>
+                  <h4 className="font-sans font-bold uppercase tracking-widest text-sm mb-2 text-[#FFB800]">Hours</h4>
+                  <p className="font-sans text-lg">Tuesday through Sunday</p>
+                  <p className="text-white/60 text-base">Closed Mondays</p>
                 </div>
               </div>
 
               <div className="flex items-start gap-4">
-                <Phone className="text-secondary w-6 h-6 mt-1 flex-shrink-0" />
+                <Phone className="text-[#FFB800] w-6 h-6 mt-1 flex-shrink-0" />
                 <div>
-                  <h4 className="font-sans font-bold uppercase tracking-widest text-sm mb-2 text-secondary">Contact</h4>
-                  <p className="font-sans text-lg mb-1"><a href="tel:8284125905" className="hover:text-secondary transition-colors">(828)-412-5905</a></p>
-                  <p className="font-sans text-base"><a href="mailto:thaipearlasheville@gmail.com" className="hover:text-secondary transition-colors">thaipearlasheville@gmail.com</a></p>
+                  <h4 className="font-sans font-bold uppercase tracking-widest text-sm mb-2 text-[#FFB800]">Call Us</h4>
+                  <a href="tel:8284125905" className="font-sans text-xl hover:text-[#FFB800] transition-colors">
+                    (828) 412-5905
+                  </a>
                 </div>
               </div>
 
               <div className="pt-8 border-t border-white/20">
-                <a 
-                  href="https://instagram.com/thaipearl_restaurant" 
-                  target="_blank" 
+                <a
+                  href="https://instagram.com/thaipearl_restaurant"
+                  target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 hover:text-secondary transition-colors font-sans uppercase tracking-widest text-sm font-bold"
+                  className="flex items-center gap-3 hover:text-[#FFB800] transition-colors font-sans uppercase tracking-widest text-sm font-bold"
                 >
                   <Instagram className="w-5 h-5" />
                   Follow @thaipearl_restaurant

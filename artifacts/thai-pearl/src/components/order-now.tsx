@@ -1,133 +1,156 @@
 import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 import wokImg from "@assets/thai-pearl/food/wok-noodles.jpg";
+import drunkenImg from "@assets/thai-pearl/food/drunken-noodles.jpg";
+import padThaiImg from "@assets/thai-pearl/food/pad-thai.jpg";
+import cashewImg from "@assets/thai-pearl/food/cashew-stir-fry.jpg";
 
 const platforms = [
   {
     name: "Grubhub",
-    description: "Order delivery or pickup",
+    tagline: "Delivery and pickup",
     url: "https://www.grubhub.com/search?locationQuery=747+Haywood+Rd+Asheville+NC&queryText=Thai+Pearl",
-    color: "#F63440",
-    logo: (
-      <svg viewBox="0 0 120 40" className="w-28 h-auto" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <text x="0" y="30" fontSize="28" fontWeight="bold" fill="white" fontFamily="Arial, sans-serif">Grubhub</text>
-      </svg>
-    ),
+    bg: "bg-[#F63440]",
+    accent: "#FF6B6B",
   },
   {
     name: "Uber Eats",
-    description: "Fast delivery to your door",
-    url: "https://www.ubereats.com/search?q=Thai+Pearl&pl=JTdCJTIyYWRkcmVzcyUyMiUzQSUyMkFzaGV2aWxsZSUyQyUyME5DJTIyJTdE",
-    color: "#06C167",
-    logo: (
-      <svg viewBox="0 0 140 40" className="w-32 h-auto" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <text x="0" y="30" fontSize="26" fontWeight="bold" fill="white" fontFamily="Arial, sans-serif">Uber Eats</text>
-      </svg>
-    ),
+    tagline: "Fast delivery to your door",
+    url: "https://www.ubereats.com/search?q=Thai+Pearl+Asheville",
+    bg: "bg-[#06C167]",
+    accent: "#00D98B",
   },
   {
     name: "DoorDash",
-    description: "Schedule or order now",
+    tagline: "Order now or schedule ahead",
     url: "https://www.doordash.com/search/store/Thai%20Pearl%20Asheville/",
-    color: "#FF3008",
-    logo: (
-      <svg viewBox="0 0 140 40" className="w-32 h-auto" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <text x="0" y="30" fontSize="26" fontWeight="bold" fill="white" fontFamily="Arial, sans-serif">DoorDash</text>
-      </svg>
-    ),
+    bg: "bg-[#FF3008]",
+    accent: "#FF6040",
   },
+];
+
+const scrollingDishes = [
+  { src: drunkenImg, label: "Drunken Noodles" },
+  { src: padThaiImg, label: "Pad Thai" },
+  { src: cashewImg, label: "Cashew Stir Fry" },
+  { src: drunkenImg, label: "Drunken Noodles" },
+  { src: padThaiImg, label: "Pad Thai" },
+  { src: cashewImg, label: "Cashew Stir Fry" },
 ];
 
 export function OrderNow() {
   return (
-    <section
-      id="order"
-      className="relative py-24 md:py-32 bg-[#0D0A09] overflow-hidden"
-    >
-      {/* Background food image with heavy overlay */}
-      <div className="absolute inset-0 z-0">
+    <section id="order" className="relative bg-[#0D0A09] overflow-hidden">
+      {/* Full-bleed wok fire image */}
+      <div className="relative h-[55vh] min-h-[400px] overflow-hidden">
         <img
           src={wokImg}
-          alt="Wok cooking"
-          className="w-full h-full object-cover opacity-20"
+          alt="Wok on fire"
+          className="w-full h-full object-cover object-center scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0D0A09] via-transparent to-[#0D0A09]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-[#0D0A09]" />
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="font-sans text-[#FFB800] tracking-[0.3em] uppercase text-xs font-bold mb-4"
+          >
+            It is ready. Are you?
+          </motion.p>
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+            className="font-serif text-white text-6xl md:text-8xl lg:text-9xl leading-none mb-6"
+          >
+            Order.
+            <br />
+            <span className="italic text-[#FFB800]">Right Now.</span>
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="text-white/80 font-sans text-lg max-w-lg"
+          >
+            Royal Palace trained. Delivered to your door. No excuses.
+          </motion.p>
+        </div>
       </div>
 
-      <div className="relative z-10 container mx-auto px-6 md:px-12">
-        {/* Heading */}
+      {/* Scrolling food strip */}
+      <div className="overflow-hidden py-4 bg-[#111]">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="text-center mb-16"
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
+          className="flex gap-4 w-max"
         >
-          <p className="font-sans text-[#FFB800] tracking-[0.25em] uppercase text-sm font-semibold mb-4">
-            Craving Thai Pearl?
-          </p>
-          <h2 className="text-5xl md:text-7xl font-serif text-white leading-tight mb-6">
-            Order Now.
-            <br />
-            <span className="italic text-[#FFB800]/90">Delivered Fresh.</span>
-          </h2>
-          <p className="text-white/70 font-sans text-lg max-w-xl mx-auto">
-            Skip the wait — get authentic Royal Palace Thai delivered straight to your door through your favorite platform.
-          </p>
+          {[...scrollingDishes, ...scrollingDishes].map((dish, i) => (
+            <div key={i} className="relative w-48 h-32 flex-shrink-0 overflow-hidden">
+              <img src={dish.src} alt={dish.label} className="w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-black/30" />
+              <span className="absolute bottom-2 left-3 text-white font-sans text-xs tracking-widest uppercase opacity-80">
+                {dish.label}
+              </span>
+            </div>
+          ))}
         </motion.div>
+      </div>
 
-        {/* Platform Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {platforms.map((platform, i) => (
+      {/* Platform cards */}
+      <div className="px-6 md:px-12 py-16 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {platforms.map((p, i) => (
             <motion.a
-              key={platform.name}
-              href={platform.url}
+              key={p.name}
+              href={p.url}
               target="_blank"
               rel="noopener noreferrer"
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.12 }}
-              whileHover={{ y: -6, scale: 1.02 }}
-              className="group block relative overflow-hidden cursor-pointer"
-              style={{ background: platform.color }}
+              transition={{ duration: 0.55, delay: i * 0.1 }}
+              whileHover={{ y: -8, scale: 1.03 }}
+              whileTap={{ scale: 0.98 }}
+              className={`${p.bg} group relative overflow-hidden p-8 flex flex-col justify-between min-h-[160px] cursor-pointer`}
             >
-              {/* Sheen effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-              <div className="relative z-10 p-8 flex flex-col gap-6">
-                {/* Platform name as bold text */}
-                <div>
-                  <p className="text-white font-sans font-black text-3xl tracking-tight">{platform.name}</p>
-                  <p className="text-white/80 font-sans text-sm mt-1">{platform.description}</p>
-                </div>
-
-                <div className="flex items-center justify-between mt-auto">
-                  <span className="font-sans text-white text-xs font-bold tracking-[0.15em] uppercase">
-                    Order →
-                  </span>
-                  <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors">
-                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                  </div>
+              <div className="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-colors duration-300" />
+              <div className="relative z-10">
+                <p className="text-white font-sans font-black text-2xl md:text-3xl tracking-tight mb-1">
+                  {p.name}
+                </p>
+                <p className="text-white/75 font-sans text-sm">{p.tagline}</p>
+              </div>
+              <div className="relative z-10 flex items-center justify-between mt-6">
+                <span className="text-white font-sans font-bold text-xs tracking-[0.2em] uppercase">
+                  Order here
+                </span>
+                <div className="w-9 h-9 rounded-full bg-white/25 group-hover:bg-white/40 flex items-center justify-center transition-colors duration-300">
+                  <ArrowRight size={16} className="text-white" />
                 </div>
               </div>
             </motion.a>
           ))}
         </div>
 
-        {/* Or call in */}
+        {/* Call option */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.4 }}
-          className="text-center mt-14"
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="text-center mt-14 pb-4"
         >
-          <p className="text-white/50 font-sans text-sm mb-3 tracking-wider uppercase">Prefer to call it in?</p>
+          <p className="text-white/40 font-sans text-sm mb-3 tracking-[0.2em] uppercase">
+            Prefer to call it in
+          </p>
           <a
             href="tel:8284125905"
-            className="text-[#FFB800] font-serif text-3xl md:text-4xl hover:text-white transition-colors duration-300"
+            className="text-[#FFB800] font-serif text-4xl md:text-5xl hover:text-white transition-colors duration-300 tracking-tight"
           >
             (828) 412-5905
           </a>
