@@ -1,0 +1,27 @@
+kind = "web"
+previewPath = "/"
+title = "Thai Pearl Restaurant"
+version = "1.0.0"
+id = "artifacts/thai-pearl"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 18433
+
+[services.development]
+run = "pnpm --filter @workspace/thai-pearl run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/thai-pearl", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/thai-pearl/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18433"
+BASE_PATH = "/"

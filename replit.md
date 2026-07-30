@@ -1,6 +1,6 @@
-# [Project name]
+# Thai Pearl Restaurant Website
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+A stunning custom restaurant website for Thai Pearl in West Asheville, NC — a chef-driven Thai restaurant whose owner trained at the Royal Palace Academy in Bangkok and won Best New Restaurant 2020.
 
 ## Run & Operate
 
@@ -30,7 +30,7 @@ _Populate as you build — non-obvious choices a reader couldn't infer from the 
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+A presentation-first single-page restaurant website for Thai Pearl. Leads with the chef's Royal Palace Academy and Michelin Star credentials, Best New Restaurant 2020 award, and vibrant Thai food photography. Sections: hero, chef story, signature dishes, gallery, contact/hours/location. CTAs: Reserve a Table, Order Online, View Menu.
 
 ## User preferences
 
