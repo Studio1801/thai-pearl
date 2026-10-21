@@ -3,6 +3,14 @@
 
 export const RESTAURANT_TZ = "America/New_York";
 
+/* The clock everything reads. Always real time on the server; the offline
+   preview can shift it so the demo always lands during service hours. */
+let clockOffsetMs = 0;
+export const clock = () => new Date(Date.now() + clockOffsetMs);
+export const setClockOffset = (ms: number) => {
+  clockOffsetMs = ms;
+};
+
 export type Size = { label: string; price: number };
 
 export type MenuItem = {
@@ -84,7 +92,7 @@ export const SPICE = ["Mild", "Medium", "Hot", "Very hot", "Thai hot"];
 
 /* ---------- time helpers (always restaurant time) ---------- */
 
-export function restaurantNow(at: Date = new Date()) {
+export function restaurantNow(at: Date = clock()) {
   const parts = new Intl.DateTimeFormat("en-US", {
     timeZone: RESTAURANT_TZ,
     year: "numeric",
@@ -158,7 +166,7 @@ export type LiveStatus = {
   close: number;
 };
 
-export function liveStatus(s: Settings, at: Date = new Date()): LiveStatus {
+export function liveStatus(s: Settings, at: Date = clock()): LiveStatus {
   const now = restaurantNow(at);
   const today = s.hours[now.dow];
   const open = today.closed ? 0 : toMinutes(today.open);
@@ -192,7 +200,7 @@ export function liveStatus(s: Settings, at: Date = new Date()): LiveStatus {
 }
 
 /** Pickup choices for today, 15 minute steps. Values are minutes after midnight. */
-export function pickupSlots(s: Settings, at: Date = new Date()) {
+export function pickupSlots(s: Settings, at: Date = clock()) {
   const st = liveStatus(s, at);
   if (st.ordering !== "open") return [];
   const slots: number[] = [];
@@ -207,7 +215,7 @@ export function minutesToClock(mins: number) {
 }
 
 /** Restaurant-time minutes today -> ISO instant */
-export function minutesToISO(mins: number, at: Date = new Date()) {
+export function minutesToISO(mins: number, at: Date = clock()) {
   const now = restaurantNow(at);
   const minuteStart = Math.floor(at.getTime() / 60_000) * 60_000;
   return new Date(minuteStart + (mins - now.minutes) * 60_000).toISOString();
@@ -215,7 +223,7 @@ export function minutesToISO(mins: number, at: Date = new Date()) {
 
 /* ---------- menu helpers ---------- */
 
-export const isSoldOut = (item: MenuItem, at: Date = new Date()) =>
+export const isSoldOut = (item: MenuItem, at: Date = clock()) =>
   !!item.soldOutOn && item.soldOutOn === restaurantNow(at).day;
 
 export function money(n: number) {

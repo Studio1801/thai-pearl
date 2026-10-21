@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState, useSyncExternalStore } from "react";
 import type { PublicOrder, Settings } from "@shared/model";
+import { clock } from "@shared/model";
 import { SEED } from "@shared/seed";
 
 /* ---------- live site content ---------- */
@@ -26,9 +27,9 @@ export function useSite() {
 
 /** Re-render every so often so "open now" and pickup times stay honest. */
 export function useNow(ms = 30_000) {
-  const [now, setNow] = useState(() => new Date());
+  const [now, setNow] = useState(() => clock());
   useEffect(() => {
-    const t = setInterval(() => setNow(new Date()), ms);
+    const t = setInterval(() => setNow(clock()), ms);
     return () => clearInterval(t);
   }, [ms]);
   return now;

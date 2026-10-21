@@ -1,6 +1,6 @@
 import { useEffect, useState, type FormEvent } from "react";
 import logo from "@assets/thai-pearl/logo.png";
-import { liveStatus, formatTime } from "@shared/model";
+import { clock, liveStatus, formatTime } from "@shared/model";
 import { useNow } from "@/lib/live";
 import { checkPin, pinStore, useOrders, useSaveSettings, useSettings } from "@/dashboard/api";
 import { OrdersTab, chime } from "@/dashboard/orders-tab";
@@ -119,7 +119,7 @@ function Shell() {
               {tab === t.id && <span className="absolute left-3 right-3 md:left-4 md:right-4 bottom-0 h-[3px] bg-[#E8920E]" />}
             </button>
           ))}
-          <a href="/" target="_blank" rel="noreferrer" className="ml-auto self-center hidden sm:block font-sans text-sm text-white/50 hover:text-white px-3">
+          <a href={import.meta.env.VITE_PREVIEW === "1" ? "#/" : "/"} target="_blank" rel="noreferrer" className="ml-auto self-center hidden sm:block font-sans text-sm text-white/50 hover:text-white px-3">
             View website
           </a>
         </nav>
@@ -186,7 +186,7 @@ function OrderingControl() {
       </span>
       {s.ordering === "open" && (
         <button
-          onClick={() => set({ pausedUntil: new Date(Date.now() + 15 * 60_000).toISOString() }, "Paused for 15 minutes")}
+          onClick={() => set({ pausedUntil: new Date(clock().getTime() + 15 * 60_000).toISOString() }, "Paused for 15 minutes")}
           className="rounded-md bg-white/10 hover:bg-white/20 font-sans text-sm font-semibold px-3 py-2"
         >
           Pause 15 min

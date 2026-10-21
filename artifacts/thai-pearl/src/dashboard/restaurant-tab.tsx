@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { Settings } from "@shared/model";
-import { DAY_NAMES, formatTime, liveStatus } from "@shared/model";
+import { DAY_NAMES, clock, formatTime, liveStatus } from "@shared/model";
 import { useNow } from "@/lib/live";
 import { useSaveSettings } from "./api";
 import { Btn, Chips, SectionTitle, Switch, TextField, useToast } from "./ui";
@@ -68,7 +68,7 @@ export function RestaurantTab({ site }: { site: Settings }) {
                 <Chips
                   options={[15, 30, 60]}
                   onChange={(m) =>
-                    setOrdering({ pausedUntil: new Date(Date.now() + m * 60_000).toISOString() }, `Paused for ${m === 60 ? "an hour" : `${m} minutes`}`)
+                    setOrdering({ pausedUntil: new Date(clock().getTime() + m * 60_000).toISOString() }, `Paused for ${m === 60 ? "an hour" : `${m} minutes`}`)
                   }
                   render={(m) => (m === 60 ? "1 hour" : `${m} min`)}
                 />

@@ -8,7 +8,7 @@ import { LiveBanner } from "@/components/live-banner";
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [location] = useLocation();
+  const [location, navigate] = useLocation();
   const isHome = location === "/";
 
   useEffect(() => {
@@ -20,7 +20,11 @@ export function Navbar() {
 
   const scrollTo = (id: string) => {
     setIsMobileMenuOpen(false);
-    if (!isHome) { window.location.href = `/#${id}`; return; }
+    if (!isHome) {
+      navigate("/");
+      setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }), 450);
+      return;
+    }
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 

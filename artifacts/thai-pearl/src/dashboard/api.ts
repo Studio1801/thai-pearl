@@ -9,9 +9,10 @@ const PIN_KEY = "tp-pin";
 export const pinStore = {
   get: () => {
     try {
-      return localStorage.getItem(PIN_KEY) ?? "";
+      // the offline preview opens straight into the dashboard
+      return localStorage.getItem(PIN_KEY) ?? (import.meta.env.VITE_PREVIEW === "1" ? "1801" : "");
     } catch {
-      return "";
+      return import.meta.env.VITE_PREVIEW === "1" ? "1801" : "";
     }
   },
   set: (pin: string) => {

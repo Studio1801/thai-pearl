@@ -3,6 +3,9 @@ import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import NotFound from '@/pages/not-found';
 import { Route, Switch, Router as WouterRouter, useLocation } from 'wouter';
+import { useHashLocation } from 'wouter/use-hash-location';
+
+const PREVIEW = import.meta.env.VITE_PREVIEW === '1';
 import { lazy, Suspense, useEffect } from 'react';
 import Home from '@/pages/home';
 import MenuPage from '@/pages/menu';
@@ -44,7 +47,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}>
+        <WouterRouter {...(PREVIEW ? { hook: useHashLocation } : { base: import.meta.env.BASE_URL.replace(/\/$/, '') })}>
           <Router />
         </WouterRouter>
         <Toaster />
