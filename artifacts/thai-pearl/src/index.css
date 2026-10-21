@@ -124,3 +124,9 @@
 .marquee-track:hover {
   animation-play-state: paused;
 }
+
+/* Kitchen ticket: torn paper edge along the bottom */
+.chit {
+  -webkit-mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / 14px 100%;
+  mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / 14px 100%;
+}

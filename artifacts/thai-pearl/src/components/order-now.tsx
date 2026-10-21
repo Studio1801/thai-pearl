@@ -1,6 +1,9 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import wokFireImg from "@assets/thai-pearl/wok-fire.jpg";
+import { Link } from "wouter";
+import { liveStatus } from "@shared/model";
+import { useNow, useSite } from "@/lib/live";
 
 const platforms = [
   {
@@ -24,6 +27,15 @@ const facts = [
 ];
 
 export function OrderNow() {
+  const site = useSite();
+  const now = useNow();
+  const status = liveStatus(site, now);
+  const pickupNote =
+    status.ordering === "open"
+      ? `Order here, ready in about ${site.ordering.prepMinutes} min`
+      : status.ordering === "paused"
+        ? "Paused for a few minutes, call us"
+        : "Opens again when the kitchen does";
   return (
     <section id="order" className="bg-[#180E06] thai-pattern-dark overflow-hidden">
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr]">
@@ -79,8 +91,25 @@ export function OrderNow() {
             ))}
           </div>
 
-          {/* Platform list */}
+          {/* Platform list: direct pickup first, then the delivery apps */}
           <div className="border-t border-white/10">
+            <Link
+              href="/menu"
+              className="group flex items-center justify-between gap-4 py-5 border-b border-white/10 hover:border-[#E8920E]/40 transition-colors duration-300"
+            >
+              <span className="flex flex-col">
+                <span
+                  className="font-serif text-[#E8920E] transition-colors duration-300"
+                  style={{ fontSize: "clamp(1.6rem, 3.5vw, 2.5rem)", fontWeight: 500 }}
+                >
+                  Pickup
+                </span>
+                <span className="font-sans text-white/45 text-xs mt-1">{pickupNote}</span>
+              </span>
+              <span className="bg-[#C4281A] group-hover:bg-[#a42016] text-white font-sans font-semibold text-xs px-4 py-2.5 transition-colors flex-shrink-0">
+                Start an order
+              </span>
+            </Link>
             {platforms.map((p, i) => (
               <motion.a
                 key={p.name}
@@ -118,11 +147,11 @@ export function OrderNow() {
               Or just call us like a normal person
             </p>
             <a
-              href="tel:8284125905"
+              href={`tel:${site.phone.replace(/\D/g, "")}`}
               className="font-serif text-white/75 hover:text-[#E8920E] transition-colors duration-300"
               style={{ fontSize: "clamp(1.6rem, 3.5vw, 2.6rem)", fontWeight: 500 }}
             >
-              (828) 412-5905
+              {site.phone}
             </a>
           </motion.div>
         </motion.div>

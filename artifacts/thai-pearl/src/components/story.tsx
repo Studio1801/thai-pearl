@@ -60,7 +60,7 @@ export function Story() {
               He trained at the <strong className="font-semibold text-[#180E06]">Royal Palace Academy in Bangkok</strong>, worked a <strong className="font-semibold text-[#180E06]">Michelin Star kitchen</strong> in Australia, and brought all of it to a room on Haywood Rd.
             </p>
             <p>
-              Thai Pearl opened March 2020 — the worst possible month — and won Best New Restaurant anyway.
+              Thai Pearl opened in March 2020, the worst possible month, and won Best New Restaurant anyway.
               That hasn't changed anything about how the food is made.
             </p>
           </div>

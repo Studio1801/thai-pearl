@@ -3,6 +3,7 @@ import logo from "@assets/thai-pearl/logo.png";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Link, useLocation } from "wouter";
+import { LiveBanner } from "@/components/live-banner";
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -30,8 +31,8 @@ export function Navbar() {
       transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-400 ${
         isScrolled
-          ? "bg-[#100907]/96 backdrop-blur-md py-3 border-b border-white/8"
-          : "bg-transparent py-5"
+          ? "bg-[#100907]/96 backdrop-blur-md border-b border-white/8"
+          : "bg-transparent"
       }`}
       style={!isScrolled ? { textShadow: "0 1px 6px rgba(0,0,0,0.7)" } : {}}
     >
@@ -40,7 +41,9 @@ export function Navbar() {
         <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#C4281A] via-[#E8920E] to-[#C4281A]" />
       )}
 
-      <div className="container mx-auto px-8 md:px-16 flex items-center justify-between">
+      <LiveBanner />
+
+      <div className={`container mx-auto px-8 md:px-16 flex items-center justify-between transition-all duration-300 ${isScrolled ? "py-3" : "py-5"}`}>
         <Link href="/" className="flex-shrink-0 cursor-pointer">
           <img src={logo} alt="Thai Pearl" className="h-11 w-auto object-contain" />
         </Link>

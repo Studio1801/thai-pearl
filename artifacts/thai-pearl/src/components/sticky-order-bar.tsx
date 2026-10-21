@@ -34,7 +34,7 @@ export function StickyOrderBar() {
             className="w-full bg-[#ED0000] text-white flex items-center justify-center gap-3 py-5 font-sans font-black text-base tracking-[0.2em] uppercase shadow-2xl"
           >
             <ShoppingBag size={20} />
-            Order Now — Delivery &amp; Pickup
+            Order pickup or delivery
           </button>
         </motion.div>
       )}

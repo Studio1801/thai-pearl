@@ -1,15 +1,22 @@
 import { motion } from "framer-motion";
 import { MapPin, Phone, Clock, Instagram } from "lucide-react";
 import exteriorImg from "@assets/thai-pearl/exterior.png";
+import { hoursSummary, liveStatus } from "@shared/model";
+import { useNow, useSite } from "@/lib/live";
 
 export function Contact() {
+  const site = useSite();
+  const now = useNow();
+  const status = liveStatus(site, now);
+  const hours = hoursSummary(site.hours).map((g) => `${g.label}, ${g.value}`);
+  const tel = `tel:${site.phone.replace(/\D/g, "")}`;
   return (
     <section id="contact" className="bg-[#180E06] thai-pattern-dark text-white overflow-hidden">
       {/* Exterior photo strip fading into dark */}
       <div className="relative h-72 md:h-96 overflow-hidden">
         <img
           src={exteriorImg}
-          alt="Thai Pearl — 747 Haywood Rd, West Asheville"
+          alt="Thai Pearl at 747 Haywood Rd, West Asheville"
           className="w-full h-full object-cover"
           style={{ objectPosition: "center 55%" }}
         />
@@ -46,8 +53,8 @@ export function Contact() {
           >
             {[
               { Icon: MapPin,    lines: ["747 Haywood Rd", "Asheville, NC 28806"],        href: undefined },
-              { Icon: Clock,     lines: ["Tuesday through Sunday", "Closed Mondays"],     href: undefined },
-              { Icon: Phone,     lines: ["(828) 412-5905"],                               href: "tel:8284125905" },
+              { Icon: Clock,     lines: [status.label, ...hours],                         href: undefined },
+              { Icon: Phone,     lines: [site.phone],                                     href: tel },
               { Icon: Instagram, lines: ["@thaipearl_restaurant"],                        href: "https://instagram.com/thaipearl_restaurant" },
             ].map(({ Icon, lines, href }, i) => {
               const inner = (
@@ -55,7 +62,7 @@ export function Contact() {
                   <Icon className="text-[#E8920E] w-5 h-5 mt-0.5 flex-shrink-0" />
                   <div>
                     {lines.map((l, j) => (
-                      <p key={j} className={`font-sans text-sm leading-relaxed ${j === 1 ? "text-white/35" : "text-white/70"}`}>{l}</p>
+                      <p key={j} className={`font-sans text-sm leading-relaxed ${j >= 1 ? "text-white/40" : "text-white/70"}`}>{l}</p>
                     ))}
                   </div>
                 </div>

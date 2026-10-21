@@ -2,8 +2,13 @@ import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import catImg from "@assets/thai-pearl/interior-cat.png";
 import heroVideo from "@assets/thai-pearl/hero-video.mp4";
+import { liveStatus } from "@shared/model";
+import { useNow, useSite } from "@/lib/live";
 
 export function Hero() {
+  const site = useSite();
+  const now = useNow();
+  const status = liveStatus(site, now);
   const scrollTo = (id: string) =>
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
@@ -87,6 +92,22 @@ export function Hero() {
             Reserve
           </a>
         </motion.div>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.7, delay: 1.3 }}
+          className="mt-6 font-sans text-sm text-white/60 flex items-center gap-2.5"
+        >
+          <span
+            className={`inline-block w-2 h-2 rounded-full ${status.openNow ? "bg-[#5DBB63]" : "bg-white/30"}`}
+            aria-hidden
+          />
+          {status.label}
+          {status.ordering === "open" && (
+            <span className="text-white/40">, pickup in about {site.ordering.prepMinutes} min</span>
+          )}
+        </motion.p>
       </div>
 
       {/* Scroll indicator */}
