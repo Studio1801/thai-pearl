@@ -1,3 +1,4 @@
+/// <reference types="node" />
 /// <reference lib="dom" />
 import crypto from "node:crypto";
 import { SEED } from "../../shared/seed";
