@@ -49,7 +49,7 @@ export default function CateringPage({ initial = "catering" }: { initial?: Kind 
               setOccasion(OCCASIONS[k][0]);
               document.getElementById("inquiry")?.scrollIntoView({ behavior: "smooth", block: "start" });
             }}
-            className={`group text-left rounded-lg overflow-hidden bg-white border transition-colors ${kind === k ? "border-[#180E06]" : "border-[#E8DCC8] hover:border-[#180E06]/40"}`}
+            className={`lift group text-left rounded-lg overflow-hidden bg-white border ${kind === k ? "border-[#180E06]" : "border-[#E8DCC8] hover:border-[#180E06]/40"}`}
           >
             <div className="h-40 overflow-hidden">
               <img src={img} alt="" className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700" />

@@ -1,3 +1,4 @@
+import { AnimatePresence, motion } from "framer-motion";
 import { useMemo, useState } from "react";
 import wok from "@assets/thai-pearl/food/cashew-stir-fry.jpg";
 import { DAY_NAMES, money } from "@shared/model";
@@ -119,7 +120,15 @@ export default function MealPrepPage() {
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><path d="M6 9l6 6 6-6" /></svg>
                     </span>
                   </button>
+                  <AnimatePresence initial={false}>
                   {on && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                      className="overflow-hidden"
+                    >
                     <div className="px-5 pb-6 space-y-5 border-t border-[#F0E6D6] pt-5">
                       <Pick label="Protein" options={MP.proteins} value={m.protein} onChange={(v) => setMeal(i, { protein: v })} />
                       <Pick label="Veggie" options={MP.veggies} value={m.veggie} onChange={(v) => setMeal(i, { veggie: v })} />
@@ -135,7 +144,9 @@ export default function MealPrepPage() {
                         </button>
                       )}
                     </div>
+                    </motion.div>
                   )}
+                  </AnimatePresence>
                 </div>
               );
             })}
@@ -172,7 +183,11 @@ export default function MealPrepPage() {
           <Row l={how === "Delivery" ? "Delivery" : "Pickup"} r={how === "Pickup" || free ? "Free" : "Confirmed by text"} />
           <div className="flex justify-between items-baseline pt-4 mt-3 border-t border-[#F0E6D6]">
             <span className="font-sans font-semibold">Total</span>
-            <span className="font-serif text-3xl" style={{ fontWeight: 500 }}>{money(total)}</span>
+            <AnimatePresence mode="popLayout" initial={false}>
+              <motion.span key={total} className="font-serif text-3xl" style={{ fontWeight: 500 }} initial={{ y: 14, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -14, opacity: 0 }} transition={{ type: "spring", stiffness: 420, damping: 32 }}>
+                {money(total)}
+              </motion.span>
+            </AnimatePresence>
           </div>
         </div>
       </RequestForm>

@@ -337,6 +337,30 @@
     .wstats { grid-template-columns: 1fr 1fr; padding: 20px 0; row-gap: 18px; } .wstats div { padding: 0 18px; } .wstats div:nth-child(3) { grid-column: 1 / -1; border-left: 0; border-top: 1px solid var(--line); padding-top: 16px; } .wstats b { font-size: 30px; }
     .wadd { grid-template-columns: 1fr; } .wadd .btn { width: 100%; }
   }
+  .wtag { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 0; color: var(--green); background: rgba(47, 107, 87, 0.1); padding: 2px 8px; border-radius: 8px; margin-right: 8px; vertical-align: 1px; }
+  .thread { display: flex; align-items: center; gap: 14px; width: 100%; text-align: left; padding: 14px 0; border-radius: 0; transition: background .2s; }
+  .thread + .thread { border-top: 1px solid var(--line); }
+  .thread .av { width: 44px; height: 44px; border-radius: 50%; background: var(--wash); display: grid; place-items: center; font-weight: 600; font-size: 15px; flex-shrink: 0; }
+  .thread.unread .av { background: var(--ink); color: #fff; }
+  .thread .tb { flex: 1; min-width: 0; } .thread b { display: block; font-size: 16px; font-weight: 600; } .thread b .wtag { margin: 0 0 0 8px; }
+  .thread .tb small { display: block; color: var(--muted); font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
+  .thread.unread .tb small { color: var(--ink); font-weight: 500; }
+  .thread .tm { flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; font-size: 12px; color: var(--muted); }
+  .thread .tm i { font-style: normal; min-width: 20px; height: 20px; padding: 0 6px; border-radius: 10px; background: #F0C93C; color: var(--ink); font-weight: 700; display: grid; place-items: center; }
+  .thread:active { background: var(--wash); }
+  .thead { display: flex; align-items: center; justify-content: space-between; gap: 12px; } .thead h2 { margin: 0; }
+  .tsub { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
+  .tmsgs { display: flex; flex-direction: column; gap: 8px; margin: 18px -4px 0; padding: 4px; max-height: 46vh; max-height: 46dvh; overflow-y: auto; overscroll-behavior: contain; }
+  .tmsg { margin: 0; max-width: 82%; padding: 10px 14px; border-radius: 18px; font-size: 15px; line-height: 1.4; animation: rise .35s var(--ease) both; }
+  .tmsg small { display: block; font-size: 11px; opacity: .55; margin-top: 3px; }
+  .tmsg.guest { background: var(--wash); border-bottom-left-radius: 6px; align-self: flex-start; }
+  .tmsg.owner { background: var(--ink); color: #fff; border-bottom-right-radius: 6px; align-self: flex-end; }
+  .tquick { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; margin: 14px -24px 0; padding: 0 24px; } .tquick::-webkit-scrollbar { display: none; }
+  .tquick .link { flex-shrink: 0; background: var(--wash); border-radius: 16px; padding: 8px 14px; color: var(--ink); font-size: 14px; min-height: 40px; }
+  .treply { display: flex; gap: 10px; align-items: flex-end; margin-top: 12px; }
+  .treply textarea { flex: 1; min-width: 0; resize: none; font: inherit; font-size: 16px; padding: 13px 14px; border: 0; border-radius: 14px; background: var(--wash); outline: none; max-height: 120px; }
+  .treply textarea:focus { box-shadow: 0 0 0 2px var(--ink); }
+  @keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
   .legend { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 16px; font-size: 13px; color: var(--muted); }
   .legend i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 7px; } .legend .g { background: var(--green); } .legend .o { background: var(--deliv); } .legend .y { background: #E0B01D; } .legend .r { margin-left: auto; color: var(--ink-2); }
   .dayh { margin: 34px 0 0; font-size: 24px; letter-spacing: -0.04em; }
@@ -705,7 +729,16 @@
     const mp = [genMP(day, r, "new"), genMP(day, r, "new"), genMP(day, r, "confirmed"), genMP(day, r, "confirmed"), genMP(day, r, "confirmed")];
     const jobs = [genJob(day, r, "new"), genJob(day, r, "confirmed"), genJob(day, r, "confirmed")];
     const subs = [...Array(6)].map(() => `${pick(r, FIRST).toLowerCase()}.${pick(r, LAST).toLowerCase()}@${pick(r, ["gmail.com", "yahoo.com", "icloud.com", "outlook.com"])}`);
-    return { mp, jobs, subs, subCount: 146, banner: { on: false, text: "" },
+    const ago = (m) => new Date(Date.now() - m * 60000).toISOString();
+    const chat = [
+      { id: "c1", sample: true, name: `${pick(r, FIRST)} ${pick(r, LAST)}`, phone: "", createdAt: ago(6), updatedAt: ago(4), unread: 2, msgs: [
+        { from: "guest", text: "Hi! Is the green curry gluten free?", at: ago(6) },
+        { from: "guest", text: "Ordering for my mom, she's celiac", at: ago(4) } ] },
+      { id: "c2", sample: true, name: `${pick(r, FIRST)} ${pick(r, LAST)}`, phone: "(828) 555-3341", createdAt: ago(95), updatedAt: ago(80), unread: 0, msgs: [
+        { from: "guest", text: "Can we bring our dog on the patio tonight?", at: ago(95) },
+        { from: "owner", text: "Of course! Patio is dog friendly. See you tonight.", at: ago(80) } ] },
+    ];
+    return { mp, jobs, subs, chat, subCount: 146, banner: { on: false, text: "" },
       specials: [{ id: "s1", title: "Weekday lunch special", when: "Monday to Friday, lunch", detail: "$13.99 with chicken, veggies, pork or tofu. Beef, shrimp, calamari or mussels for a little extra." }],
       wev: [{ id: "w1", date: day.slice(0, 4) + "-12-31", title: "New Year's Eve", time: "11 AM to 9 PM" }] };
   }
@@ -719,6 +752,7 @@
   S = store.load() || seedToday();
   if (!S.menu) S.menu = JSON.parse(JSON.stringify(MENU));
   if (!S.mp) Object.assign(S, webSeed(S.day));
+  if (!S.chat) S.chat = webSeed(S.day).chat;
 
   /* ---------- state ---------- */
   const V = { tab: "orders", day: now().day, rday: now().day, type: "all", range: "7", mode: "week", zoom: null, dir: 0, evMonth: null, evDay: null, cat: "all", q: "", photoFor: null, edit: null, fresh: null, noteFor: null, flash: null, armed: null, doneOpen: false, open: new Set(), anim: true };
@@ -739,7 +773,8 @@
   const noteBox = (k, x) => V.noteFor === x.id
     ? `<form class="nform" data-k="${k}" data-id="${x.id}"><input name="n" value="${esc(x.note || "")}" placeholder="Add a note" autocomplete="off"><button class="btn quiet" type="submit">Save</button></form>`
     : `${x.note ? `<p class="c-note">${esc(x.note)}</p>` : ""}<button class="link nlink" data-act="note" ${attr(k, x.id)}>${x.note ? "Edit note" : "Add note"}</button>`;
-  const foot = (k, x) => `<p class="c-foot">${esc(x.phone)}${x.num ? ` &middot; #${x.num}` : ""}</p>`;
+  const liveTag = (x) => (x.live ? `<span class="wtag">From your website</span>` : "");
+  const foot = (k, x) => `<p class="c-foot">${liveTag(x)}${esc(x.phone)}${x.num ? ` &middot; #${x.num}` : ""}</p>`;
   function orderCard(o) {
     const needs = o.status === "new";
     const act = needs ? confirmRow("o", o, "Confirm order")
@@ -813,11 +848,11 @@
       <div class="rtime"><b class="num">${hm[0]}</b><small>${hm[1]}</small></div>
       <div class="rbody">
         <div class="rhead"><h3 class="c-name">${esc(x.name)}</h3><span class="party"><b class="num">${x.party}</b><small>${x.party === 1 ? "guest" : "guests"}</small></span></div>
-        <p class="rtags"><span>${esc(x.table || "Table 4")}</span><span>${esc(x.src || "Website")}</span></p>
+        <p class="rtags">${x.table ? `<span>${esc(x.table)}</span>` : ""}<span>${esc(x.src || "Website")}</span></p>
         ${noteBox("r", x)}
         ${x.status === "new" ? `<div class="c-act"><button class="btn big" data-act="confirm" ${attr("r", x.id)}>Confirm table</button><button class="link ${V.armed === x.id ? "armed" : ""}" data-act="decline" ${attr("r", x.id)}>${V.armed === x.id ? "Tap again" : "Decline"}</button></div>`
           : `<div class="c-act"><span class="ok">${CHECK}Confirmed</span><span class="sp"></span><a class="link" href="tel:${x.phone.replace(/\D/g, "")}">Call</a></div>`}
-        <p class="c-foot">${esc(x.phone)}</p>
+        <p class="c-foot">${liveTag(x)}${esc(x.phone)}</p>
       </div></article>`;
   }
   function resView() {
@@ -923,7 +958,7 @@
       <ul class="c-lines">${x.groups.map((g) => `<li>${g.q}&times; ${g.p}<span>${g.v}, ${g.b}, ${g.f}</span></li>`).join("")}</ul>
       ${x.addr ? `<p class="c-meta">Deliver to ${esc(x.addr)}</p>` : ""}${noteBox("m", x)}
       ${x.status === "new" ? confirmRow("m", x, "Confirm order") : `<div class="c-act"><span class="ok">${CHECK}Confirmed</span></div>`}
-      <p class="c-foot">${esc(x.phone)}</p></article>`;
+      <p class="c-foot">${liveTag(x)}${esc(x.phone)}</p></article>`;
   }
   function jobCard(x) {
     const tel = x.phone.replace(/\D/g, "");
@@ -932,17 +967,22 @@
       <p class="c-note" style="color:var(--ink-2)">${esc(x.exp)}</p><p class="c-meta">Available ${esc(x.when.toLowerCase())}</p>
       ${x.status === "new" ? `<div class="c-act"><a class="btn big" href="tel:${tel}" data-act="jcall" data-id="${x.id}">Call ${first(x)}</a><a class="btn quiet" href="sms:${tel}">Text</a><button class="link ${V.armed === x.id ? "armed" : ""}" data-act="decline" ${attr("j", x.id)}>${V.armed === x.id ? "Tap again" : "Pass"}</button></div>`
         : `<div class="c-act"><span class="ok">${CHECK}Contacted</span><span class="sp"></span><a class="link" href="tel:${tel}">Call</a></div>`}
-      <p class="c-foot">${esc(x.phone)}</p></article>`;
+      <p class="c-foot">${liveTag(x)}${esc(x.phone)}</p></article>`;
   }
   function webView() {
     const T = now().day, sec = V.wsec || "in";
     const mp = S.mp.filter((x) => x.status !== "declined").sort((a, b) => (a.status === "new" ? 0 : 1) - (b.status === "new" ? 0 : 1) || a.date.localeCompare(b.date));
     const jobs = S.jobs.filter((x) => x.status !== "declined").sort((a, b) => (a.status === "new" ? 0 : 1) - (b.status === "new" ? 0 : 1));
     const nNew = S.mp.filter((x) => x.status === "new").length + S.jobs.filter((x) => x.status === "new").length;
+    const nMsg = S.chat.filter((x) => x.unread).length;
     const mpMeals = mp.reduce((t, x) => t + x.meals, 0), mpTot = mp.reduce((t, x) => t + x.total, 0);
     const seg = `<div class="tools" style="margin-top:24px"><div class="seg" role="group" aria-label="Section">${[["in", "Inbox"], ["show", "On your website"]].map(([v, l]) => `<button aria-pressed="${sec === v}" data-act="wsec" data-v="${v}">${l}</button>`).join("")}</div></div>`;
-    const head = `<h1 class="title">Website</h1><p class="sub">${sec === "in" ? "Meal prep, job applications and newsletter sign-ups from your website." : "What guests see. Changes go live as soon as you save."}</p>${sec === "in" ? `<p class="chips">${needChip(nNew, "request")}</p>` : ""}${seg}`;
+    const head = `<h1 class="title">Website</h1><p class="sub">${sec === "in" ? "Messages, meal prep, job applications and newsletter sign-ups from your website." : "What guests see. Changes go live as soon as you save."}</p>${sec === "in" ? `<p class="chips">${nMsg ? `<button class="alert" data-act="tomsg"><span class="ct">${nMsg}</span><span class="tx"><b>${nMsg === 1 ? "guest is" : "guests are"} waiting on a reply</b><small>Tap to open</small></span><svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M7 4l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>` : needChip(nNew, "request")}</p>` : ""}${seg}`;
+    const threads = [...S.chat].sort((a, b) => (b.unread ? 1 : 0) - (a.unread ? 1 : 0) || b.updatedAt.localeCompare(a.updatedAt));
+    const msgSec = `<div class="rsec" id="msgs"><h2 class="h3">Messages <span>${threads.filter((x) => x.unread).length ? `${threads.filter((x) => x.unread).length} waiting` : "All answered"}</span></h2>
+      <div class="card wlist">${threads.map((th) => { const last = th.msgs[th.msgs.length - 1] || { text: "", at: th.updatedAt }; return `<button class="thread ${th.unread ? "unread" : ""} ${V.fresh === th.id ? "arrive" : ""}" data-act="thread" data-id="${th.id}"><span class="av">${esc(th.name.split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase())}</span><span class="tb"><b>${esc(th.name)}${th.live ? '<span class="wtag">Website</span>' : ""}</b><small>${last.from === "owner" ? "You: " : ""}${esc(last.text)}</small></span><span class="tm">${agoStr(last.at)}${th.unread ? `<i>${th.unread}</i>` : ""}</span></button>`; }).join("") || `<p class="wempty">No messages yet. Guests can chat from any page of your website.</p>`}</div></div>`;
     if (sec === "in") return `${head}
+      ${msgSec}
       <div class="wstats">
         <div><small>Meal prep this week</small><b class="num"><span data-cu="${mpTot}" data-f="money">${money(mpTot)}</span></b><em>${mpMeals} meals, ${mp.length} orders</em></div>
         <div><small>Job applications</small><b class="num">${jobs.length}</b><em>${S.jobs.filter((x) => x.status === "new").length} waiting on you</em></div>
@@ -953,7 +993,7 @@
       <div class="rsec"><h2 class="h3">Newsletter <span>${S.subCount} subscribers</span></h2>
         <div class="card"><ul class="subs">${S.subs.slice(0, 5).map((e, i) => `<li><span>${esc(e)}</span><small>${i === 0 ? "Today" : i + 1 + " days ago"}</small></li>`).join("")}</ul>
         <div class="c-act"><button class="btn quiet" data-act="csv">Download all ${S.subCount} emails</button></div></div></div>
-      <div class="tools"><span></span><span><button class="link" data-act="test" data-k="m">Send a test meal prep order</button> <button class="link" data-act="test" data-k="j">Send a test application</button></span></div>`;
+      <div class="tools"><span></span><span><button class="link" data-act="test" data-k="m">Send a test meal prep order</button> <button class="link" data-act="test" data-k="j">Send a test application</button>${SYNC.mode === "none" ? ` <button class="link" data-act="test" data-k="c">Send a test message</button>` : ""}</span></div>`;
     const evs = S.wev.filter((e) => e.date >= T).sort((a, b) => a.date.localeCompare(b.date));
     return `${head}
       <div class="rsec"><h2 class="h3">Announcement <span>A strip across the top of every page</span></h2>
@@ -997,7 +1037,7 @@
     setB($("#b-orders"), S.orders.filter((o) => o.status === "new").length);
     setB($("#b-res"), S.res.filter((x) => x.status === "new").length);
     setB($("#b-ev"), S.ev.filter((x) => x.status === "new").length);
-    setB($("#b-web"), S.mp.filter((x) => x.status === "new").length + S.jobs.filter((x) => x.status === "new").length);
+    setB($("#b-web"), S.mp.filter((x) => x.status === "new").length + S.jobs.filter((x) => x.status === "new").length + S.chat.filter((x) => x.unread).length);
     $("#fab").classList.toggle("off", V.tab !== "orders"); $("#fab").lastChild.textContent = V.tab === "menu" ? "Add dish" : "Add order";
     $("#online").setAttribute("aria-checked", String(!S.paused));
     $("#onlineText").innerHTML = S.paused ? "Online orders <b>paused</b>" : "Online orders <b>on</b>";
@@ -1059,7 +1099,7 @@
     root.querySelectorAll(".card, .list, .day, .done, .bks").forEach((el) => { if (el.getBoundingClientRect().top > innerHeight * 0.92) { el.classList.add("pre", "rvl"); io.observe(el); } });
   }
   const smooth = (fn) => (document.startViewTransition && !calm ? document.startViewTransition(fn) : fn());
-  const commit = () => { store.save(); smooth(render); };
+  const commit = () => { store.save(); smooth(render); if (typeof pushSite === "function") pushSite(); };
   addEventListener("scroll", () => $(".top").classList.toggle("scrolled", scrollY > 4), { passive: true });
   addEventListener("resize", fit);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
@@ -1101,10 +1141,12 @@
       const { day } = now(), d = V.rday, x = { id: "r" + Date.now(), day: d, at: +$("#rTime").value, party: M.party, name: $("#rName").value.trim() || "Walk-in", phone: $("#rPhone").value.trim() || "No phone", note: $("#mNote").value.trim(), status: "confirmed", table: "Table " + (1 + Math.floor(Math.random() * 8)), src: "Added by you" };
       S.res.push(x); V.flash = x.id; closeSheet(); toast(`Booked ${x.name} for ${clockStr(x.at)}`); commit();
     },
+    thread(el) { openThread(el.dataset.id); },
+    tomsg() { const th = S.chat.find((x) => x.unread); if (th) openThread(th.id); },
     wsec(el) { V.wsec = el.dataset.v; V.armed = null; V.anim = true; commit(); },
     wban() { S.banner.on = !S.banner.on; toast(S.banner.on ? (S.banner.text ? "Announcement is live on your website" : "Write the announcement, then save") : "Announcement is off"); V.anim = false; commit(); },
     wdel(el) { const id = el.dataset.id, k = el.dataset.k; if (V.armed !== id) { V.armed = id; commit(); return; } S[k] = S[k].filter((x) => x.id !== id); V.armed = null; toast("Removed from your website"); commit(); },
-    jcall(el) { const x = S.jobs.find((y) => y.id === el.dataset.id); if (x) { x.status = "confirmed"; setTimeout(commit, 300); } },
+    jcall(el) { const x = S.jobs.find((y) => y.id === el.dataset.id); if (x) { x.status = "confirmed"; liveWrite("j", x); setTimeout(commit, 300); } },
     csv() {
       const rows = ["email", ...S.subs, ...[...Array(Math.max(0, S.subCount - S.subs.length))].map((_, i) => `guest${i + 1}@example.com`)];
       const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([rows.join("\n")], { type: "text/csv" })); a.download = "thai-pearl-newsletter.csv"; a.click(); toast(`Downloaded ${S.subCount} emails`);
@@ -1123,14 +1165,14 @@
     range(el) { V.range = el.dataset.v; V.open = new Set(); V.anim = true; commit(); },
     confirm(el) {
       const x = find(el); if (!x) return;
-      x.status = "confirmed"; V.flash = x.id;
+      x.status = "confirmed"; V.flash = x.id; liveWrite(el.dataset.k, x);
       toast(`Confirmed. ${first(x)} gets a text.`); commit();
     },
-    done(el) { const x = find(el); if (x) { x.status = "done"; toast(`${first(x)}'s order is ${x.type === "delivery" ? "delivered" : "picked up"}`); commit(); } },
+    done(el) { const x = find(el); if (x) { x.status = "done"; liveWrite("o", x); toast(`${first(x)}'s order is ${x.type === "delivery" ? "delivered" : "picked up"}`); commit(); } },
     decline(el) {
       const id = el.dataset.id;
       if (V.armed !== id) { V.armed = id; commit(); setTimeout(() => { if (V.armed === id) { V.armed = null; commit(); } }, 4000); return; }
-      const x = find(el); if (x) x.status = "declined"; V.armed = null; toast(`${first(x)} is let know`); commit();
+      const x = find(el); if (x) { x.status = "declined"; liveWrite(el.dataset.k, x); } V.armed = null; toast(`${first(x)} is let know`); commit();
     },
     online() { S.paused = !S.paused; toast(S.paused ? "Online orders paused" : "Online orders are back on"); commit(); },
     test(el) {
@@ -1142,6 +1184,10 @@
         V.fresh = o.id; V.day = day; V.mode = "day"; V.type = "all"; V.tab = "orders"; toast(`New order from ${o.name}`);
       } else if (k === "m") {
         const x = genMP(day, r, "new"); S.mp.unshift(x); V.fresh = x.id; V.tab = "web"; V.wsec = "in"; toast(`New meal prep order from ${x.name}`);
+      } else if (k === "c") {
+        const th = { id: "c" + Date.now(), sample: true, name: `${pick(r, FIRST)} ${pick(r, LAST)}`, phone: "", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(), unread: 1,
+          msgs: [{ from: "guest", text: pick(r, ["Do you have any tables for 4 around 7?", "Is the pad thai spicy?", "Can I pick up 10 minutes early?", "Do you do birthday desserts?"]), at: new Date().toISOString() }] };
+        S.chat.unshift(th); V.fresh = th.id; V.tab = "web"; V.wsec = "in"; toast(`New message from ${th.name}`);
       } else if (k === "j") {
         const x = genJob(day, r, "new"); S.jobs.unshift(x); V.fresh = x.id; V.tab = "web"; V.wsec = "in"; toast(`New application from ${x.name}`);
       } else if (k === "r") {
@@ -1192,7 +1238,7 @@
       <div class="c-act"><button class="btn big" data-act="rsave">Add booking</button><button class="link" data-act="close">Cancel</button></div>`;
     $("#scrim").classList.add("on"); $("#scrim").setAttribute("aria-hidden", "false"); setTimeout(() => $("#rName").focus(), 300);
   }
-  function closeSheet() { $("#scrim").classList.remove("on"); $("#scrim").setAttribute("aria-hidden", "true"); }
+  function closeSheet() { V.thread = null; $("#scrim").classList.remove("on"); $("#scrim").setAttribute("aria-hidden", "true"); }
   function saveManual() {
     const lines = getItems().filter((i) => M.q[i.id]).map((i) => ({ q: M.q[i.id], n: i.n, s: "", p: i.p }));
     if (!lines.length) return toast("Pick at least one item");
@@ -1269,6 +1315,209 @@
     if (!e.target.classList || !e.target.classList.contains("tab")) return;
     if (e.key === "ArrowRight" || e.key === "ArrowLeft") { const o = ["orders", "res", "ev", "menu", "web", "money"], i = o.indexOf(V.tab) + (e.key === "ArrowRight" ? 1 : 5), t = $("#t-" + o[i % 6]); t.click(); t.focus(); }
   });
+
+  /* ---------- live sync with the website ----------
+     On the website's own domain (/kitchen) this dashboard reads real orders, bookings, requests and
+     messages, and writes back confirmations, replies, sold-out dishes, specials, events and the banner.
+     With storage connected it talks to /api. Without it, both run on this browser's storage, so a
+     website tab and this tab stay in step for demos. Opened anywhere else, it's the sample demo. */
+  const SYNC = { mode: "none", pin: "1801", site: null, sig: "", busy: false, seen: new Set(), first: true };
+  const agoStr = (iso) => { const m = Math.max(0, Math.round((Date.now() - new Date(iso).getTime()) / 60000)); return m < 1 ? "now" : m < 60 ? m + "m" : m < 1440 ? Math.round(m / 60) + "h" : Math.round(m / 1440) + "d"; };
+  const lsGet = (k, d) => { try { const v = JSON.parse(localStorage.getItem(k)); return v == null ? d : v; } catch (e) { return d; } };
+  const lsSet = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
+  const OKEY = () => "tp-demo-orders-" + now().day;
+  const RKEY = "tp-demo-requests", CKEY = "tp-demo-chat", SKEY = "tp-demo-settings";
+  async function call(method, path, body) {
+    const r = await fetch(path, { method, cache: "no-store", headers: { "content-type": "application/json", "x-pin": SYNC.pin }, body: body ? JSON.stringify(body) : undefined });
+    if (!r.ok) throw new Error("sync " + r.status);
+    return r.json();
+  }
+  const remote = {
+    async orders() { return SYNC.mode === "api" ? (await call("GET", "/api/orders?day=" + now().day)).orders : lsGet(OKEY(), []); },
+    async requests() { return SYNC.mode === "api" ? (await call("GET", "/api/requests")).requests : lsGet(RKEY, []); },
+    async chat() { return SYNC.mode === "api" ? (await call("GET", "/api/chat")).threads : lsGet(CKEY, []); },
+    async site() { return SYNC.mode === "api" ? call("GET", "/api/site?fresh=1") : lsGet(SKEY, null); },
+    async orderStatus(id, status) {
+      if (SYNC.mode === "api") return call("PATCH", "/api/orders", { id, status });
+      const l = lsGet(OKEY(), []), o = l.find((y) => y.id === id); if (o) { o.status = status; o.updatedAt = new Date().toISOString(); lsSet(OKEY(), l); }
+    },
+    async requestStatus(id, status) {
+      if (SYNC.mode === "api") return call("PATCH", "/api/requests", { id, status });
+      const l = lsGet(RKEY, []), o = l.find((y) => y.id === id); if (o) { o.status = status; lsSet(RKEY, l); }
+    },
+    async reply(thread, text) {
+      if (SYNC.mode === "api") return call("PUT", "/api/chat", { thread, text });
+      const l = lsGet(CKEY, []), th = l.find((y) => y.id === thread); if (th) { th.msgs.push({ from: "owner", text, at: new Date().toISOString() }); th.unread = 0; th.updatedAt = new Date().toISOString(); lsSet(CKEY, l); }
+    },
+    async read(thread) {
+      if (SYNC.mode === "api") return call("PATCH", "/api/chat", { thread });
+      const l = lsGet(CKEY, []), th = l.find((y) => y.id === thread); if (th) { th.unread = 0; lsSet(CKEY, l); }
+    },
+    async saveSite(s) { if (SYNC.mode === "api") return call("PUT", "/api/site", s); lsSet(SKEY, { ...s, updatedAt: new Date().toISOString() }); },
+  };
+  const SPICE_N = ["Mild", "Medium", "Hot", "Very hot", "Thai hot"];
+  const nyMin = (iso) => { const p = nyParts(new Date(iso).getTime()); return p.min; };
+  const parseT = (s) => { const m = /^(\d{1,2})(?::(\d{2}))?\s*(AM|PM)?/i.exec(s || ""); if (!m) return 0; let h = +m[1] % 12; if ((m[3] || "").toUpperCase() === "PM") h += 12; return h * 60 + (+m[2] || 0); };
+  const det = (r, label) => (r.details.find((d) => d.label === label) || {}).value || "";
+  const fromOrder = (o) => ({ id: "w:" + o.id, rid: o.id, live: true, num: o.number, name: o.name, phone: o.phone, type: "pickup", due: nyMin(o.pickupAt), total: o.subtotal, note: o.note || "",
+    lines: o.lines.map((l) => ({ q: l.qty, n: l.name, s: [l.size, l.protein, l.spice != null ? SPICE_N[l.spice] : ""].filter(Boolean).join(", ") })),
+    status: { new: "new", cooking: "confirmed", ready: "confirmed", done: "done", cancelled: "declined" }[o.status] || "new" });
+  const rStat = (s) => (s === "done" ? "confirmed" : s);
+  const fromRequest = (r) => {
+    const base = { id: "w:" + r.id, rid: r.id, live: true, name: r.name, phone: r.phone || r.email, note: r.note || "", status: rStat(r.status) };
+    if (r.kind === "reservation") return ["res", { ...base, day: r.date, at: parseT(r.time), party: r.guests || 2, table: "", src: "Website" }];
+    if (r.kind === "catering" || r.kind === "party") {
+      const svc = det(r, "Service"), occ = det(r, "Occasion");
+      return ["ev", { ...base, type: r.kind, date: r.date, at: parseT(r.time) || 720, guests: r.guests || 10, how: r.kind === "catering" ? (svc.startsWith("Delivery") ? "Delivery" : "Pickup") : "", dep: "Pending", note: [occ, r.note].filter(Boolean).join(". ") }];
+    }
+    if (r.kind === "mealprep") {
+      const groups = r.details.filter((d) => /^\d+ x /.test(d.value)).map((d) => { const [q, rest] = d.value.split(" x "); const [p, v, b, f] = rest.split(", "); return { q: +q, p, v: v || "", b: b || "", f: f || "" }; });
+      const del = r.details.find((d) => d.label === "Delivery");
+      return ["mp", { ...base, date: r.date, meals: r.guests || groups.reduce((t, g) => t + g.q, 0), groups, total: r.total || 0, how: del ? "Delivery" : "Pickup", addr: del ? del.value : "" }];
+    }
+    if (r.kind === "job") return ["jobs", { ...base, roles: det(r, "Roles").split(", ").filter(Boolean), hours: det(r, "Hours"), when: det(r, "Available") || "Flexible", exp: r.note || "No experience notes", at: r.createdAt.slice(0, 10) }];
+    return ["sub", r.email];
+  };
+  function liveWrite(k, x) {
+    if (!x || !x.live || SYNC.mode === "none") return;
+    const go = k === "o" ? remote.orderStatus(x.rid, { confirmed: "cooking", done: "done", declined: "cancelled" }[x.status]) : remote.requestStatus(x.rid, x.status);
+    Promise.resolve(go).catch(() => toast("Couldn't reach the website. It'll retry."));
+  }
+  const upsert = (list, item) => { const i = list.findIndex((y) => y.id === item.id); if (i < 0) { list.unshift(item); return true; } const keepNote = list[i].note && !item.note ? list[i].note : item.note; list[i] = { ...list[i], ...item, note: keepNote }; return false; };
+
+  function siteSig() { return JSON.stringify([S.paused, S.banner, S.specials.map((s) => [s.id, s.title, s.when, s.detail]), S.wev.map((e) => [e.id, e.date, e.title, e.time]), S.menu.map((c) => c.items.map((i) => [i.id, i.name, i.price, i.desc, !!i.off, (i.sizes || []).map((z) => z.price)]))]); }
+  function applySite(s) {
+    S.paused = !s.ordering.enabled;
+    S.banner = { on: !!s.banner.on, text: s.banner.text || "" };
+    S.specials = (s.specials || []).map((x) => ({ id: x.id, title: x.title, when: x.when, detail: x.detail }));
+    S.wev = (s.events || []).map((x) => ({ id: x.id, date: x.date, title: x.title, time: x.time }));
+    const today = now().day;
+    for (const c of S.menu) {
+      const sc = s.menu.find((y) => y.id === c.id); if (!sc) continue;
+      for (const i of c.items) { const si = sc.items.find((y) => y.id === i.id); if (!si) continue; i.off = si.soldOutOn === today || !!si.hidden; i.name = si.name; i.desc = si.desc || ""; if (si.sizes && i.sizes) i.sizes.forEach((z, k) => { if (si.sizes[k]) z.price = si.sizes[k].price; }); else i.price = si.price; }
+    }
+  }
+  function buildSite() {
+    const s = JSON.parse(JSON.stringify(SYNC.site)), today = now().day;
+    s.ordering.enabled = !S.paused; if (S.paused) s.ordering.pausedUntil = null;
+    s.banner = { on: !!S.banner.on, text: S.banner.text };
+    s.specials = S.specials.map((x) => ({ id: x.id, title: x.title, when: x.when || "", detail: x.detail || "" }));
+    const prev = new Map((s.events || []).map((e) => [e.id, e]));
+    s.events = S.wev.map((x) => ({ id: x.id, date: x.date, title: x.title, time: x.time || "", detail: (prev.get(x.id) || {}).detail || "" }));
+    s.menu = s.menu.map((sc) => {
+      const c = S.menu.find((y) => y.id === sc.id); if (!c) return sc;
+      const items = c.items.map((i) => {
+        const si = sc.items.find((y) => y.id === i.id) || { id: i.id };
+        const out = { ...si, name: i.name, desc: i.desc || undefined, soldOutOn: i.off ? today : null, hidden: false };
+        if (i.sizes && si.sizes) out.sizes = si.sizes.map((z, k) => ({ ...z, price: i.sizes[k] ? i.sizes[k].price : z.price })); else out.price = i.price;
+        return out;
+      });
+      return { ...sc, items };
+    });
+    return s;
+  }
+  let pushT;
+  function pushSite() {
+    if (SYNC.mode === "none" || !SYNC.site) return;
+    const sig = siteSig(); if (sig === SYNC.sig) return;
+    SYNC.sig = sig; clearTimeout(pushT);
+    pushT = setTimeout(async () => {
+      try { const next = buildSite(); const saved = await remote.saveSite(next); SYNC.site = saved && saved.menu ? saved : lsGet(SKEY, next); }
+      catch (e) { toast("Couldn't save to the website. Check the connection."); }
+      pushT = null;
+    }, 350);
+  }
+
+  async function pull() {
+    if (SYNC.busy) return; SYNC.busy = true;
+    const look = () => JSON.stringify([S.orders, S.res, S.ev, S.mp, S.jobs, S.chat, S.subs, S.paused, S.banner, S.specials, S.wev, S.menu.map((c) => c.items.map((i) => [i.off, i.price, i.name]))]);
+    const before = look();
+    try {
+      const [orders, reqs, chats, site] = await Promise.all([remote.orders(), remote.requests(), remote.chat(), remote.site()]);
+      let news = [];
+      for (const o of orders) { const x = fromOrder(o); if (upsert(S.orders, x) && !SYNC.first && x.status === "new") news.push(["o", x, `New order from ${x.name}`]); }
+      const subs = [];
+      for (const r of reqs) {
+        const [where, x] = fromRequest(r);
+        if (where === "sub") { subs.push(x); continue; }
+        if (upsert(S[where], x) && !SYNC.first && x.status === "new") news.push([where, x, `New ${({ res: "booking", ev: x.type === "party" ? "party inquiry" : "catering inquiry", mp: "meal prep order", jobs: "job application" })[where]} from ${x.name}`]);
+      }
+      if (subs.length) { const sample = S.subs.filter((e) => !SYNC.seen.has("sub:" + e)); subs.forEach((e) => SYNC.seen.add("sub:" + e)); S.subs = [...new Set([...subs, ...sample])]; S.subCount = 146 + subs.length; }
+      for (const th of chats) {
+        const prev = S.chat.find((y) => y.id === th.id), x = { ...th, live: true };
+        const grew = !prev || th.msgs.filter((m) => m.from === "guest").length > prev.msgs.filter((m) => m.from === "guest").length;
+        upsert(S.chat, x);
+        if (grew && !SYNC.first && th.unread) news.push(["c", x, `New message from ${th.name}`]);
+      }
+      if (site && !pushT) {
+        const changed = !SYNC.site || site.updatedAt !== SYNC.site.updatedAt;
+        SYNC.site = site;
+        if (changed) { applySite(site); SYNC.sig = siteSig(); }
+      }
+      SYNC.first = false;
+      if (news.length) {
+        const [k, x, msg] = news[news.length - 1];
+        V.fresh = x.id; chime(); toast(msg);
+        if (k === "o") { V.tab === "orders" && V.mode === "day" && (V.day = now().day); }
+        if (k === "res") V.rday = x.day;
+        if (k === "ev") { V.evMonth = x.date.slice(0, 7); V.evDay = x.date; }
+      }
+      if (V.thread) { const th = S.chat.find((y) => y.id === V.thread); if (th) drawThread(th); }
+      if (look() !== before) {
+        store.save();
+        const typing = document.activeElement && document.activeElement.closest && document.activeElement.closest("#view form");
+        if (!typing) smooth(render);
+      }
+    } catch (e) { /* the website is out of reach for a moment; keep the last picture */ }
+    SYNC.busy = false;
+  }
+  (async () => {
+    if (!/^https?:$/.test(location.protocol)) return;
+    try {
+      const r = await fetch("/api/health", { cache: "no-store" });
+      if (!r.ok) return;
+      const h = await r.json(); if (typeof h.live !== "boolean") return;
+      SYNC.mode = h.live ? "api" : "local";
+    } catch (e) { return; }
+    // real conversations replace the sample ones
+    S.chat = S.chat.filter((x) => !x.sample);
+    document.body.classList.add("synced");
+    $("#syncNote") && ($("#syncNote").hidden = false);
+    await pull(); setInterval(pull, 4000);
+  })();
+
+  /* ---------- a conversation, in the bottom sheet ---------- */
+  function drawThread(th) {
+    const box = $("#sheet .tmsgs"); if (!box) return;
+    const html = th.msgs.map((m) => `<p class="tmsg ${m.from}">${esc(m.text)}<small>${agoStr(m.at)}</small></p>`).join("");
+    if (box.dataset.n !== String(th.msgs.length)) { box.innerHTML = html; box.dataset.n = th.msgs.length; box.scrollTop = box.scrollHeight; }
+  }
+  function openThread(id) {
+    const th = S.chat.find((x) => x.id === id); if (!th) return;
+    V.thread = id;
+    const quick = ["Yes, see you soon!", "Let me check with the kitchen and text you back.", "Sorry, we're full at that time. Could you do 30 minutes later?"];
+    const tel = (th.phone || "").replace(/\D/g, "");
+    $("#sheet").innerHTML = `<div class="thead"><h2>${esc(th.name)}</h2>${tel ? `<a class="link" href="tel:${tel}">Call</a>` : ""}</div><p class="tsub">${th.live ? "Chatting from your website" : "Sample conversation"}${th.phone ? " &middot; " + esc(th.phone) : ""}</p>
+      <div class="tmsgs"></div>
+      <div class="tquick">${quick.map((q) => `<button class="link" data-act="tq">${esc(q)}</button>`).join("")}</div>
+      <form class="treply" id="treply"><textarea name="t" rows="1" placeholder="Reply to ${esc(th.name.split(" ")[0])}" autocomplete="off"></textarea><button class="btn" type="submit" aria-label="Send">Send</button></form>`;
+    drawThread(th);
+    $("#scrim").classList.add("on"); $("#scrim").setAttribute("aria-hidden", "false");
+    if (th.unread) { th.unread = 0; if (th.live) remote.read(th.id).catch(() => {}); commit(); }
+    setTimeout(() => { const i = $("#treply textarea"); if (i && matchMedia("(hover: hover)").matches) i.focus(); }, 300);
+  }
+  acts.tq = (el) => { const i = $("#treply textarea"); i.value = el.textContent; i.focus(); };
+  document.addEventListener("submit", async (e) => {
+    const f = e.target.closest("#treply"); if (!f) return;
+    e.preventDefault(); e.stopImmediatePropagation();
+    const text = f.t.value.trim(), th = S.chat.find((x) => x.id === V.thread); if (!text || !th) return;
+    th.msgs.push({ from: "owner", text, at: new Date().toISOString() }); th.unread = 0; th.updatedAt = new Date().toISOString();
+    f.t.value = ""; drawThread(th); store.save();
+    if (th.live) { try { await remote.reply(th.id, text); toast(`Sent to ${th.name.split(" ")[0]} on your website`); } catch (err) { toast("Didn't send. Check the connection."); } }
+    else toast("Sent");
+    render();
+  }, true);
+  document.addEventListener("keydown", (e) => { if (e.key === "Enter" && !e.shiftKey && e.target.closest && e.target.closest("#treply textarea")) { e.preventDefault(); e.target.form.requestSubmit(); } });
 
   render();
 })();

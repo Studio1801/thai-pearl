@@ -7,6 +7,7 @@ import { useHashLocation } from 'wouter/use-hash-location';
 
 const PREVIEW = import.meta.env.VITE_PREVIEW === '1';
 import { lazy, Suspense, useEffect } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import Home from '@/pages/home';
 import MenuPage from '@/pages/menu';
 import OrderStatusPage from '@/pages/order-status';
@@ -16,6 +17,7 @@ import CateringPage from '@/pages/catering';
 import EventsPage from '@/pages/events';
 import JobsPage from '@/pages/jobs';
 import PressPage from '@/pages/press';
+import { Chat } from '@/components/chat';
 
 // The owner dashboard is its own bundle so guests never download it.
 const Dashboard = lazy(() => import('@/pages/dashboard'));
@@ -31,10 +33,23 @@ function ScrollToTop() {
 }
 
 function Router() {
+  const [location] = useLocation();
+  const base = location.split('?')[0];
   return (
     <>
       <ScrollToTop />
-      <Switch>
+      <AnimatePresence>
+        <motion.div
+          key={'bar' + base}
+          className="route-bar"
+          initial={{ scaleX: 0, opacity: 1 }}
+          animate={{ scaleX: 1, opacity: [1, 1, 0] }}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], opacity: { duration: 0.9, times: [0, 0.7, 1] } }}
+        />
+      </AnimatePresence>
+      {/* opacity only: a transform here would break the fixed navbar and order bars */}
+      <motion.div key={base} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.45, ease: 'easeOut' }}>
+      <Switch location={base}>
         <Route path="/" component={Home} />
         <Route path="/menu" component={MenuPage} />
         <Route path="/reserve" component={ReservePage} />
@@ -53,6 +68,7 @@ function Router() {
         </Route>
         <Route component={NotFound} />
       </Switch>
+      </motion.div>
     </>
   );
 }
@@ -63,6 +79,7 @@ function App() {
       <TooltipProvider>
         <WouterRouter {...(PREVIEW ? { hook: useHashLocation } : { base: import.meta.env.BASE_URL.replace(/\/$/, '') })}>
           <Router />
+          <Chat />
         </WouterRouter>
         <Toaster />
       </TooltipProvider>

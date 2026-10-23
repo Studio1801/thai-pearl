@@ -16,7 +16,7 @@ export default function PressPage() {
         <p className="font-sans text-sm text-[#8A7060] mt-1.5">Five-star reviews on Google</p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
           {REVIEWS.map((r, i) => (
-            <Reveal key={r.name} delay={i * 0.06} className="bg-white rounded-lg border border-[#E8DCC8] p-7">
+            <Reveal key={r.name} delay={i * 0.06} className="lift bg-white rounded-lg border border-[#E8DCC8] p-7">
               <p className="text-[#E8920E] tracking-[0.2em] text-sm" aria-label="5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</p>
               <p className="font-serif text-2xl leading-snug mt-3" style={{ fontWeight: 500 }}>&ldquo;{r.quote}&rdquo;</p>
               <p className="font-sans text-sm mt-4">

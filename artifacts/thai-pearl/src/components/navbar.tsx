@@ -35,7 +35,7 @@ export function Navbar() {
       transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-400 ${
         isScrolled
-          ? "bg-[#100907]/96 backdrop-blur-md border-b border-white/8"
+          ? "bg-[#100907]/88 backdrop-blur-xl backdrop-saturate-150 border-b border-white/8 shadow-[0_10px_30px_-18px_rgba(0,0,0,0.8)]"
           : "bg-transparent"
       }`}
       style={!isScrolled ? { textShadow: "0 1px 6px rgba(0,0,0,0.7)" } : {}}
@@ -64,9 +64,12 @@ export function Navbar() {
               <Link
                 key={item.label}
                 href={item.href}
-                className="font-sans text-[10px] font-semibold tracking-[0.28em] uppercase text-white/60 hover:text-[#E8920E] transition-colors duration-200"
+                className={`relative py-2 font-sans text-[10px] font-semibold tracking-[0.28em] uppercase transition-colors duration-200 ${location === item.href ? "text-white" : "text-white/60 hover:text-[#E8920E]"}`}
               >
                 {item.label}
+                {location === item.href && (
+                  <motion.span layoutId="nav-active" className="absolute left-0 right-[0.28em] -bottom-0.5 h-[2px] bg-[#E8920E]" transition={{ type: "spring", stiffness: 420, damping: 36 }} />
+                )}
               </Link>
             ) : (
               <button
@@ -102,8 +105,9 @@ export function Navbar() {
 
       {isMobileMenuOpen && (
         <motion.div
-          initial={{ opacity: 0, y: -8 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, clipPath: "inset(0 0 100% 0)" }}
+          animate={{ opacity: 1, clipPath: "inset(0 0 0% 0)" }}
+          transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
           className="lg:hidden bg-[#100907] border-t border-white/8"
         >
           <div className="flex flex-col px-6 py-4 max-h-[calc(100dvh-80px)] overflow-y-auto">

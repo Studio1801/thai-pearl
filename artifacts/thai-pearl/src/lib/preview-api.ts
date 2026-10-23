@@ -4,6 +4,7 @@
 
 import type { GuestRequest, Order, OrderLine, OrderStatus, PublicOrder, RequestStatus, Settings } from "@shared/model";
 import { cleanRequest } from "@shared/requests";
+import { guestSay, guestView, ownerSay, type ChatThread } from "@shared/chat";
 import {
   clock,
   findItem,
@@ -45,7 +46,14 @@ const json = (data: unknown, status = 200) =>
   new Response(JSON.stringify(data), { status, headers: { "content-type": "application/json" } });
 const fail = (error: string, status = 400) => json({ error }, status);
 const owner = (init?: RequestInit) => new Headers(init?.headers).get("x-pin") === PIN;
-const settings = () => load<Settings>(SETTINGS, () => structuredClone(SEED));
+const settings = () => {
+  const s = load<Settings | null>(SETTINGS, () => null);
+  if (s) return s;
+  // keep a copy so the kitchen dashboard in the next tab can read and edit it
+  const seed = structuredClone(SEED);
+  save(SETTINGS, seed);
+  return seed;
+};
 
 async function handle(path: string, url: URL, init: RequestInit = {}): Promise<Response> {
   const method = (init.method ?? "GET").toUpperCase();
@@ -129,6 +137,39 @@ async function handle(path: string, url: URL, init: RequestInit = {}): Promise<R
     orders.push(order);
     save(ordersKey(day), orders);
     return json({ id: order.id, number: order.number }, 201);
+  }
+
+  if (path === "health") return json({ live: false, demo: true });
+
+  if (path === "chat") {
+    const KEY = "tp-demo-chat";
+    const list = load<ChatThread[]>(KEY, () => []);
+    const id = url.searchParams.get("thread");
+    const stamp = clock().toISOString();
+    if (method === "GET") {
+      if (id) {
+        const t = list.find((x) => x.id === id);
+        return json(t ? guestView(t) : { id, msgs: [] });
+      }
+      return owner(init) ? json({ threads: list }) : fail("Wrong PIN", 401);
+    }
+    if (method === "PUT" || method === "PATCH") {
+      if (!owner(init)) return fail("Wrong PIN", 401);
+      if (method === "PATCH") {
+        const t = list.find((x) => x.id === (body() as { thread?: string }).thread);
+        if (t) t.unread = 0;
+        save(KEY, list);
+        return json({ ok: true });
+      }
+      const r = ownerSay(list, body(), stamp);
+      if (typeof r === "string") return fail(r);
+      save(KEY, list);
+      return json(r);
+    }
+    const r = guestSay(list, body(), stamp);
+    if (typeof r === "string") return fail(r);
+    save(KEY, list);
+    return json(guestView(r), 201);
   }
 
   if (path === "requests") {

@@ -26,7 +26,7 @@ export default function EventsPage() {
         {specials.length ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
             {specials.map((s, i) => (
-              <Reveal key={s.id} delay={i * 0.06} className="bg-[#180E06] thai-pattern-dark text-white rounded-lg p-7">
+              <Reveal key={s.id} delay={i * 0.06} className="lift bg-[#180E06] thai-pattern-dark grain overflow-hidden text-white rounded-lg p-7">
                 <p className="font-sans text-sm text-[#E8920E] font-semibold">{s.when}</p>
                 <p className="font-serif text-2xl md:text-3xl mt-2 leading-tight" style={{ fontWeight: 500 }}>{s.title}</p>
                 <p className="font-sans text-white/65 leading-relaxed mt-3">{s.detail}</p>

@@ -3,6 +3,10 @@
   "outputDirectory": "artifacts/thai-pearl/dist/public",
   "rewrites": [
     {
+      "source": "/kitchen",
+      "destination": "/kitchen.html"
+    },
+    {
       "source": "/((?!api/).*)",
       "destination": "/index.html"
     }
