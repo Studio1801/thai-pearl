@@ -116,6 +116,12 @@
   .hs { display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin: 18px -20px 0; padding: 6px 20px 30px; scroll-padding: 0 20px; overscroll-behavior-x: contain; align-items: flex-start; }
   .hs::-webkit-scrollbar { display: none; }
   .hs .day-tile { flex: 0 0 min(86%, 360px); scroll-snap-align: start; min-height: 240px; }
+  .hs .day-tile.past { background: #F1EEE8; box-shadow: inset 0 0 0 1px rgba(22, 20, 18, 0.04); }
+  .hs .day-tile.past .c-name, .hs .day-tile.past .c-total, .hs .day-tile.past .c-lines b, .hs .day-tile.past .am, .hs .day-tile.past .tfoot b { color: var(--muted); }
+  .hs .day-tile.past .spark i { background: rgba(22, 20, 18, 0.07); } .hs .day-tile.past .spark .pk i { background: #A9A298; }
+  .hs .day-tile.past .av { filter: grayscale(1); opacity: 0.7; }
+  .hs .day-tile.past .split, .hs .day-tile.past .facts2 i { filter: grayscale(1); opacity: 0.6; }
+  .hs .day-tile.past:hover { transform: translateY(-3px); }
   .tt { text-align: right; }
   .tt small { color: var(--muted); font-size: 13px; }
   .day-tile .c-total { font-size: 30px; }
@@ -250,6 +256,7 @@
   .pip { position: absolute; bottom: 8px; width: 6px; height: 6px; border-radius: 50%; background: var(--green); } .pip.nw { background: #E0B01D; box-shadow: 0 0 0 3px rgba(224, 176, 29, 0.3); }
   .evs { display: none; }
   @media (min-width: 700px) { .cell { aspect-ratio: auto; height: 96px; align-items: stretch; padding: 8px 8px 0; } .cell b { align-self: flex-start; } .pip { display: none; } .evs { display: flex; flex-direction: column; gap: 3px; margin-top: 6px; } .evs em { font-style: normal; display: block; padding: 3px 7px; border-radius: 7px; font-size: 11px; font-weight: 600; text-align: left; background: rgba(47, 107, 87, 0.14); color: var(--green); } .evs em.party { background: rgba(201, 161, 90, 0.22); color: #8A6420; } .evs em.nw { background: #FFE27A; color: #4A3300; } .cell.sel .evs em { background: rgba(255, 255, 255, 0.16); color: #fff; } .evs u { text-decoration: none; } }
+  .cell.pst { color: #B5AEA3; } .cell.pst .pip, .cell.pst .evs { opacity: 0.45; } .cell.pst.sel { color: #fff; }
   .legend { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 16px; font-size: 13px; color: var(--muted); }
   .legend i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 7px; } .legend .g { background: var(--green); } .legend .o { background: var(--deliv); } .legend .y { background: #E0B01D; } .legend .r { margin-left: auto; color: var(--ink-2); }
   .dayh { margin: 34px 0 0; font-size: 24px; letter-spacing: -0.04em; }
@@ -625,7 +632,7 @@
     const dayName = d === T ? "Today" : noon(d).toLocaleDateString("en-US", { timeZone: "UTC", weekday: "long" });
     const hr = [12, 13, 14, 15, 16, 17, 18, 19, 20], cnt = hr.map((h) => (hrs[h] || 0)), mx = Math.max(1, ...cnt);
     const ini = (n) => n.split(" ").map((w) => w[0]).join("").slice(0, 2);
-    return `<button class="card day-tile ${np ? "needs" : ""} ${d === T ? "is-today" : ""}" data-act="zoom" data-d="${d}" data-zoom="${d}">
+    return `<button class="card day-tile ${np ? "needs" : ""} ${d === T ? "is-today" : ""} ${d < T ? "past" : ""}" data-act="zoom" data-d="${d}" data-zoom="${d}">
       <div class="c-top"><div><h3 class="c-name">${dayName}</h3><p class="c-kind">${noon(d).toLocaleDateString("en-US", { timeZone: "UTC", month: "long", day: "numeric" })}</p></div><div class="tt"><p class="c-total num">${l.length ? money(tot) : "$0"}</p><small>${l.length} ${l.length === 1 ? "order" : "orders"}${l.length ? ` &middot; ${money2(tot / l.length)} avg` : ""}</small></div></div>
       ${np ? `<p class="mini"><span class="ct">${np}</span><span class="tx"><b>${np === 1 ? "order" : "orders"} to confirm</b><small>Tap to review</small></span></p>` : ""}
       ${l.length ? `<div class="spark" aria-hidden="true">${cnt.map((c, i) => `<span class="${hr[i] == peak ? "pk" : ""}"><i style="height:${Math.max(6, (c / mx) * 100)}%"></i></span>`).join("")}</div>
@@ -692,7 +699,7 @@
       <div class="calhead"><h2>${MONTHS[Mo - 1]} <span>${Y}</span></h2><div class="calnav"><button data-act="evgo" data-v="${prev}" aria-label="Previous month">&lsaquo;</button><button class="td" data-act="evgo" data-v="${T.slice(0, 7)}" data-d="${T}">Today</button><button data-act="evgo" data-v="${next}" aria-label="Next month">&rsaquo;</button></div></div>
       <div class="cal" role="grid"><div class="dows">${["S", "M", "T", "W", "T", "F", "S"].map((d) => `<span>${d}</span>`).join("")}</div>
         <div class="days7">${cells.map((d, k) => { if (!d) return `<span class="cell void"></span>`; const ev = live.filter((x) => x.date === d), hasNew = ev.some((x) => x.status === "new");
-          return `<button class="cell ${d === T ? "tdy" : ""} ${d === V.evDay ? "sel" : ""} ${ev.length ? "has" : ""}" data-act="evday" data-d="${d}" style="--j:${k}" aria-label="${d}${ev.length ? ", " + ev.length + " events" : ""}"><b>${+d.slice(8)}</b>${ev.length ? `<span class="evs">${ev.slice(0, 2).map((x) => `<em class="${x.status === "new" ? "nw" : x.type}"><u>${x.type === "catering" ? "Catering" : "Party"}</u></em>`).join("")}</span><i class="pip ${hasNew ? "nw" : ""}"></i>` : ""}</button>`; }).join("")}</div></div>
+          return `<button class="cell ${d < T ? "pst" : ""} ${d === T ? "tdy" : ""} ${d === V.evDay ? "sel" : ""} ${ev.length ? "has" : ""}" data-act="evday" data-d="${d}" style="--j:${k}" aria-label="${d}${ev.length ? ", " + ev.length + " events" : ""}"><b>${+d.slice(8)}</b>${ev.length ? `<span class="evs">${ev.slice(0, 2).map((x) => `<em class="${x.status === "new" ? "nw" : x.type}"><u>${x.type === "catering" ? "Catering" : "Party"}</u></em>`).join("")}</span><i class="pip ${hasNew ? "nw" : ""}"></i>` : ""}</button>`; }).join("")}</div></div>
       <div class="legend"><span><i class="g"></i>Catering</span><span><i class="o"></i>Party</span><span><i class="y"></i>Needs reply</span><span class="r">${booked} booked</span></div>
       <h2 class="h3 dayh">${noon(V.evDay).toLocaleDateString("en-US", { timeZone: "UTC", weekday: "long", month: "long", day: "numeric" })}</h2>
       ${sel.length ? `<div class="stack" style="margin-top:12px">${sel.map((x) => evCard(x, T)).join("")}</div>` : `<p class="none" style="margin:36px 0 12px">Nothing booked. Free day.</p>`}
