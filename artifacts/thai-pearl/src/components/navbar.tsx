@@ -64,18 +64,18 @@ export function Navbar() {
               <Link
                 key={item.label}
                 href={item.href}
-                className={`relative py-2 font-sans text-[10px] font-semibold tracking-[0.28em] uppercase transition-colors duration-200 ${location === item.href ? "text-white" : "text-white/60 hover:text-[#E8920E]"}`}
+                className={`relative py-2 font-sans text-[14px] font-medium transition-colors duration-200 ${location === item.href ? "text-white" : "text-white/60 hover:text-[#E8920E]"}`}
               >
                 {item.label}
                 {location === item.href && (
-                  <motion.span layoutId="nav-active" className="absolute left-0 right-[0.28em] -bottom-0.5 h-[2px] bg-[#E8920E]" transition={{ type: "spring", stiffness: 420, damping: 36 }} />
+                  <motion.span layoutId="nav-active" className="absolute left-0 right-0 -bottom-0.5 h-[2px] rounded-full bg-[#E8920E]" transition={{ type: "spring", stiffness: 420, damping: 36 }} />
                 )}
               </Link>
             ) : (
               <button
                 key={item.label}
                 onClick={item.action}
-                className="font-sans text-[10px] font-semibold tracking-[0.28em] uppercase text-white/60 hover:text-[#E8920E] transition-colors duration-200"
+                className="relative py-2 font-sans text-[14px] font-medium text-white/60 hover:text-[#E8920E] transition-colors duration-200"
               >
                 {item.label}
               </button>
@@ -86,15 +86,15 @@ export function Navbar() {
         <div className="hidden lg:flex items-center gap-4">
           <Link
             href="/reserve"
-            className="font-sans text-[10px] font-semibold tracking-[0.28em] uppercase text-white/45 hover:text-white/80 transition-colors duration-200"
+            className="btn btn-glass btn-sm"
           >
-            Reserve
+            Book a table
           </Link>
           <button
             onClick={() => scrollTo("order")}
-            className="bg-[#C4281A] hover:bg-[#a42016] text-white px-6 py-2.5 font-sans text-[10px] font-bold tracking-[0.28em] uppercase transition-colors duration-200"
+            className="btn btn-red btn-sm"
           >
-            Order Now
+            Order now
           </button>
         </div>
 
@@ -141,13 +141,13 @@ export function Navbar() {
               <Link
                 href="/reserve"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="text-center font-sans text-base font-semibold text-white py-4 rounded-lg bg-white/10"
+                className="btn btn-glass"
               >
                 Book a table
               </Link>
               <button
                 onClick={() => { setIsMobileMenuOpen(false); scrollTo("order"); }}
-                className="bg-[#C4281A] text-white text-center py-4 rounded-lg font-sans text-base font-bold"
+                className="btn btn-red"
               >
                 Order pickup
               </button>

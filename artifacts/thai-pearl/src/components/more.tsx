@@ -31,7 +31,7 @@ export function More() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-10">
           {tiles.map((t, i) => (
             <Reveal key={t.href} delay={i * 0.08}>
-              <Link href={t.href} className="lift group block bg-white rounded-lg overflow-hidden border border-[#E8DCC8] hover:border-[#180E06]/30 h-full">
+              <Link href={t.href} className="lift group block bg-[#FFFDF8] rounded-[22px] overflow-hidden border border-[#180E06]/8 shadow-[0_18px_40px_-30px_rgba(24,14,6,0.5)] h-full">
                 <div className="h-48 overflow-hidden">
                   <img src={t.img} alt="" className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-700" />
                 </div>

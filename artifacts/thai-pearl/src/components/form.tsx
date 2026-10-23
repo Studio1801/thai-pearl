@@ -3,7 +3,7 @@ import { useId, useState, type FormEvent, type InputHTMLAttributes, type ReactNo
 import { sendRequest, type RequestPayload } from "@/lib/requests";
 
 export const inputCls =
-  "w-full bg-white border border-[#E2D3BC] rounded-lg px-4 py-3.5 font-sans text-base text-[#180E06] placeholder:text-[#B3A190] outline-none focus:border-[#180E06] transition-colors";
+  "w-full bg-[#FFFDF8] border border-[#180E06]/12 rounded-xl px-4 py-3.5 font-sans text-base text-[#180E06] placeholder:text-[#B3A190] outline-none shadow-[inset_0_1px_2px_rgba(24,14,6,0.04)] hover:border-[#180E06]/25 focus:border-[#180E06]/60 focus:bg-white transition-colors";
 
 export function Field({ label, hint, children }: { label: string; hint?: string; children: ReactNode }) {
   return (
@@ -50,17 +50,31 @@ export function Choice<T extends string | number>({
             onClick={() => onChange(o)}
             aria-pressed={on}
             whileTap={{ scale: 0.96 }}
-            className={`relative isolate rounded-lg px-4 py-3 min-h-[48px] font-sans text-[15px] text-left transition-colors duration-300 border ${
-              on ? "text-white border-transparent" : "bg-white text-[#180E06] border-[#E2D3BC] hover:border-[#180E06]/45"
+            className={`relative isolate rounded-xl pl-4 pr-9 py-3 min-h-[52px] font-sans text-[15px] text-left transition-[color,border-color,box-shadow,transform] duration-300 border ${
+              on
+                ? "text-white border-transparent"
+                : "bg-[#FFFDF8] text-[#180E06] border-[#180E06]/10 shadow-[0_1px_2px_rgba(24,14,6,0.05)] hover:border-[#180E06]/30 hover:shadow-[0_10px_22px_-16px_rgba(24,14,6,0.5)] hover:-translate-y-px"
             }`}
           >
             {on && (
               <motion.span
                 layoutId={group}
-                className="absolute inset-0 -z-10 bg-[#180E06] rounded-lg shadow-[0_10px_24px_-12px_rgba(24,14,6,0.7)]"
+                className="absolute inset-0 -z-10 rounded-xl bg-gradient-to-b from-[#2A1B10] to-[#140B05] shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_14px_28px_-14px_rgba(24,14,6,0.8)]"
                 transition={{ type: "spring", stiffness: 420, damping: 34 }}
               />
             )}
+            <span
+              aria-hidden
+              className={`absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full grid place-items-center transition-all duration-300 ${
+                on ? "bg-[#E8920E] scale-100 opacity-100" : "border border-[#180E06]/15 scale-90 opacity-70"
+              }`}
+            >
+              {on && (
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#180E06" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 12.5l4.5 4.5L19 7.5" />
+                </svg>
+              )}
+            </span>
             <span className="font-semibold">{render ? render(o) : String(o)}</span>
             {sub && <span className={`block text-xs mt-0.5 transition-colors ${on ? "text-white/60" : "text-[#8A7060]"}`}>{sub(o)}</span>}
           </motion.button>
@@ -71,7 +85,7 @@ export function Choice<T extends string | number>({
 }
 
 export function Stepper({ value, onChange, min = 1, max = 99, label }: { value: number; onChange: (v: number) => void; min?: number; max?: number; label: string }) {
-  const btn = "w-12 h-12 rounded-full bg-white border border-[#E2D3BC] text-xl font-sans hover:border-[#180E06] hover:bg-[#180E06] hover:text-white disabled:opacity-30 disabled:hover:bg-white disabled:hover:text-[#180E06] transition-colors";
+  const btn = "w-12 h-12 rounded-full bg-[#FFFDF8] border border-[#180E06]/12 shadow-[0_1px_2px_rgba(24,14,6,0.06)] text-xl font-sans hover:border-[#180E06] hover:bg-[#180E06] hover:text-white active:scale-95 disabled:opacity-30 disabled:hover:bg-[#FFFDF8] disabled:hover:text-[#180E06] transition-all";
   return (
     <div className="flex items-center gap-4" role="group" aria-label={label}>
       <button type="button" className={btn} onClick={() => onChange(Math.max(min, value - 1))} disabled={value <= min} aria-label={`Fewer ${label}`}>
@@ -135,7 +149,7 @@ export function RequestForm({
           initial={{ opacity: 0, y: 14, scale: 0.98 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="bg-[#180E06] thai-pattern-dark grain overflow-hidden text-white rounded-lg p-8 md:p-12"
+          className="bg-[#180E06] thai-pattern-dark grain overflow-hidden text-white rounded-[22px] p-8 md:p-12 shadow-[0_30px_60px_-30px_rgba(24,14,6,0.7)]"
         >
           <motion.div
             className="w-14 h-14 rounded-full bg-[#0F7A6B] grid place-items-center mb-7 shadow-[0_0_0_10px_rgba(15,122,107,0.15)]"
@@ -176,7 +190,7 @@ export function RequestForm({
           )}
           <button
             disabled={busy}
-            className="group mt-8 w-full sm:w-auto bg-[#C4281A] hover:bg-[#a42016] disabled:opacity-70 text-white rounded-lg px-10 py-4 min-h-[56px] font-sans font-bold text-base inline-flex items-center justify-center gap-3"
+            className="btn btn-red mt-8 w-full sm:w-auto !min-h-[58px] !px-9 text-base"
           >
             {busy ? (
               <>
@@ -186,7 +200,7 @@ export function RequestForm({
             ) : (
               <>
                 {submit}
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-300 group-hover:translate-x-1">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" className="arr">
                   <path d="M5 12h14M13 6l6 6-6 6" />
                 </svg>
               </>

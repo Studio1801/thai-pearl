@@ -49,7 +49,7 @@ export function OrderNow() {
           className="flex flex-col justify-center px-8 md:px-14 lg:px-16 py-20 md:py-28 order-2 lg:order-1"
         >
           <div className="mb-6">
-            <p className="font-sans text-[#E8920E] text-[10px] tracking-[0.4em] uppercase font-semibold">
+            <p className="font-sans text-[#E8920E] text-[13px] font-semibold">
               Can't make it in
             </p>
             <p className="font-serif text-[#E8920E]/40 text-sm tracking-wider mt-0.5" style={{ fontWeight: 400 }}>
@@ -143,7 +143,7 @@ export function OrderNow() {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="mt-10"
           >
-            <p className="font-sans text-white/25 text-[9px] tracking-[0.35em] uppercase mb-2">
+            <p className="font-sans text-white/25 text-[13px] font-semibold mb-2">
               Or just call us like a normal person
             </p>
             <a

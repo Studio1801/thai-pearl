@@ -87,7 +87,7 @@ function DishCard({
 
       {/* Text */}
       <div className="absolute bottom-0 left-0 p-6 md:p-8">
-        <p className="font-sans text-[#E8920E] text-[9px] tracking-[0.35em] uppercase font-semibold mb-2">
+        <p className="font-sans text-[#E8920E] text-[13px] font-semibold mb-2">
           {dish.badge}
         </p>
         <h3
@@ -124,7 +124,7 @@ export function MenuHighlights() {
         >
           <div>
             <div className="mb-5">
-              <p className="font-sans text-[#C4281A] text-[10px] tracking-[0.4em] uppercase font-semibold">
+              <p className="font-sans text-[#C4281A] text-[13px] font-semibold">
                 What we cook
               </p>
               <p className="font-serif text-[#C4281A]/45 text-sm tracking-wider mt-0.5" style={{ fontWeight: 400 }}>
@@ -144,7 +144,7 @@ export function MenuHighlights() {
           </div>
           <Link
             href="/menu"
-            className="hidden md:flex items-center gap-2 font-sans text-[#8A7060] hover:text-[#C4281A] text-[10px] tracking-[0.25em] uppercase transition-colors group font-semibold mb-1 flex-shrink-0"
+            className="hidden md:flex items-center gap-2 font-sans text-[#8A7060] hover:text-[#C4281A] text-[13px] font-semibold transition-colors group font-semibold mb-1 flex-shrink-0"
           >
             Full Menu
             <ArrowRight size={11} className="group-hover:translate-x-1 transition-transform" />
@@ -179,7 +179,7 @@ export function MenuHighlights() {
           </div>
           <Link
             href="/menu"
-            className="flex items-center gap-3 bg-[#180E06] hover:bg-[#2D1A0E] text-white px-10 py-4 font-sans font-bold text-[11px] tracking-[0.25em] uppercase transition-colors flex-shrink-0"
+            className="btn btn-ink flex-shrink-0"
           >
             See Full Menu
             <ArrowRight size={14} />

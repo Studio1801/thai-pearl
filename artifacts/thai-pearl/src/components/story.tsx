@@ -19,7 +19,7 @@ export function Story() {
             alt="Cashew stir fry, pad thai and a crispy taco on the table at Thai Pearl"
             className="w-full h-full object-cover"
           />
-          <div className="absolute top-6 left-6 bg-[#C4281A] text-white font-sans font-bold text-[9px] tracking-[0.25em] uppercase px-3 py-2">
+          <div className="absolute top-6 left-6 bg-[#C4281A] text-white font-sans font-bold text-[13px] font-semibold px-3 py-2">
             Best New Restaurant 2020
           </div>
         </motion.div>
@@ -33,7 +33,7 @@ export function Story() {
           className="flex flex-col justify-center px-8 md:px-14 lg:px-16 py-16 md:py-20"
         >
           <div className="mb-6">
-            <p className="font-sans text-[#C4281A] text-[10px] tracking-[0.4em] uppercase font-semibold">
+            <p className="font-sans text-[#C4281A] text-[13px] font-semibold">
               The restaurant
             </p>
             <p className="font-serif text-[#C4281A]/50 text-sm tracking-wider mt-0.5" style={{ fontWeight: 400 }}>
@@ -89,7 +89,7 @@ export function Story() {
                     {c.thai}
                   </p>
                 )}
-                <p className="font-sans text-[#8A7060] text-[9px] uppercase tracking-widest leading-snug">{c.l}</p>
+                <p className="font-sans text-[#8A7060] text-[12px] leading-snug">{c.l}</p>
               </motion.div>
             ))}
           </div>

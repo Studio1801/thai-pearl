@@ -79,8 +79,10 @@ export default function ReservePage() {
                       setTime(undefined);
                     }}
                     aria-pressed={on}
-                    className={`w-[68px] flex-shrink-0 rounded-lg py-3 text-center transition-colors disabled:opacity-30 ${
-                      on ? "bg-[#180E06] text-white" : "bg-white border border-[#E2D3BC] hover:border-[#180E06]/50"
+                    className={`w-[70px] flex-shrink-0 rounded-2xl py-3 text-center transition-all duration-300 disabled:opacity-30 active:scale-95 ${
+                      on
+                        ? "bg-gradient-to-b from-[#2A1B10] to-[#140B05] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_14px_28px_-14px_rgba(24,14,6,0.8)]"
+                        : "bg-[#FFFDF8] border border-[#180E06]/10 shadow-[0_1px_2px_rgba(24,14,6,0.05)] hover:border-[#180E06]/30 hover:-translate-y-px"
                     }`}
                   >
                     <span className={`block text-xs ${on ? "text-white/60" : "text-[#8A7060]"}`}>{d.isToday ? "Today" : d.short}</span>

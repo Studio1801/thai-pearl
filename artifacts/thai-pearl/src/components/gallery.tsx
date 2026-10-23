@@ -41,7 +41,7 @@ export function Gallery() {
           className="flex flex-col md:flex-row md:items-end justify-between gap-4"
         >
           <div>
-            <p className="font-sans text-[#FFB800] text-xs tracking-[0.35em] uppercase mb-3">
+            <p className="font-sans text-[#FFB800] text-[13px] font-semibold mb-3">
               Straight from the kitchen
             </p>
             <h2
@@ -57,7 +57,7 @@ export function Gallery() {
             href="https://instagram.com/thaipearl_restaurant"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-sans text-white/40 hover:text-[#FFB800] text-xs tracking-[0.25em] uppercase transition-colors self-end mb-1"
+            className="font-sans text-white/40 hover:text-[#FFB800] text-[13px] font-semibold transition-colors self-end mb-1"
           >
             @thaipearl_restaurant
           </a>

@@ -41,7 +41,7 @@ export function QuoteStrip() {
           <div className="mt-8 flex items-center gap-6">
             <div className="h-[1px] w-12 bg-white/30" />
             <div>
-              <p className="font-sans text-white/80 text-[11px] tracking-[0.3em] uppercase font-semibold">
+              <p className="font-sans text-white/80 text-[13px] font-semibold">
                 The Chef, Thai Pearl
               </p>
               <p className="font-serif text-white/40 text-sm mt-0.5" style={{ fontWeight: 400 }}>

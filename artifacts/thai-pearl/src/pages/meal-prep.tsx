@@ -5,7 +5,7 @@ import { DAY_NAMES, money } from "@shared/model";
 import { useSite } from "@/lib/live";
 import { MEAL_PREP as MP } from "@/lib/content";
 import { longDate, nextDays } from "@/lib/requests";
-import { Page, Reveal } from "@/components/page";
+import { Page } from "@/components/page";
 import { Choice, ContactFields, DoneText, Field, Input, RequestForm, Section, TextArea, checkContact, useContact } from "@/components/form";
 
 type Meal = { protein: string; veggie: string; base: string; flavor: string; extra: boolean };
@@ -51,18 +51,6 @@ export default function MealPrepPage() {
         </>
       }
     >
-      <Reveal className="grid grid-cols-3 gap-3 md:gap-4 mb-14">
-        {MP.packs.map((p) => (
-          <div key={p.meals} className="bg-white rounded-lg border border-[#E8DCC8] p-4 md:p-6">
-            <p className="font-serif text-4xl md:text-5xl" style={{ fontWeight: 500 }}>
-              {p.meals}
-            </p>
-            <p className="font-sans text-sm text-[#8A7060]">meals</p>
-            <p className="font-sans font-semibold text-lg mt-3">{money(p.price)}</p>
-            <p className="font-sans text-xs text-[#8A7060]">{money(Math.round((p.price / p.meals) * 100) / 100)} each</p>
-          </div>
-        ))}
-      </Reveal>
 
       <RequestForm
         submit={`Place meal prep order, ${money(total)}`}
@@ -98,7 +86,43 @@ export default function MealPrepPage() {
         )}
       >
         <Section title="How many meals?">
-          <Choice options={MP.packs.map((p) => p.meals)} value={pack} onChange={resize} render={(n) => `${n} meals`} sub={(n) => money(MP.packs.find((p) => p.meals === n)!.price)} cols="grid grid-cols-3 gap-2" />
+          <div className="grid grid-cols-3 gap-2.5 md:gap-4" role="group" aria-label="Meal pack">
+            {MP.packs.map((p) => {
+              const on = p.meals === pack;
+              const tag = p.meals === 5 ? "Most popular" : p.meals === 10 ? "Best value" : "";
+              return (
+                <motion.button
+                  type="button"
+                  key={p.meals}
+                  aria-pressed={on}
+                  onClick={() => resize(p.meals)}
+                  whileTap={{ scale: 0.97 }}
+                  className={`relative isolate text-left rounded-[18px] p-4 md:p-6 border transition-[border-color,box-shadow,transform,color] duration-300 ${
+                    on ? "text-white border-transparent" : "bg-[#FFFDF8] border-[#180E06]/10 shadow-[0_1px_2px_rgba(24,14,6,0.05)] hover:-translate-y-0.5 hover:shadow-[0_18px_36px_-24px_rgba(24,14,6,0.55)]"
+                  }`}
+                >
+                  {on && (
+                    <motion.span
+                      layoutId="pack"
+                      className="absolute inset-0 -z-10 rounded-[18px] bg-gradient-to-b from-[#2A1B10] to-[#140B05] shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_24px_44px_-22px_rgba(24,14,6,0.85)]"
+                      transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                    />
+                  )}
+                  {tag && (
+                    <span className={`absolute -top-2.5 left-4 md:left-6 rounded-full px-2.5 py-1 text-[11px] font-bold font-sans ${on ? "bg-[#E8920E] text-[#180E06]" : "bg-[#180E06] text-white"}`}>
+                      {tag}
+                    </span>
+                  )}
+                  <span className="block font-serif text-4xl md:text-6xl leading-none mt-1" style={{ fontWeight: 500 }}>{p.meals}</span>
+                  <span className={`block font-sans text-sm mt-1 ${on ? "text-white/60" : "text-[#8A7060]"}`}>meals</span>
+                  <span className={`block mt-4 pt-3 border-t ${on ? "border-white/15" : "border-[#180E06]/10"}`}>
+                    <span className="block font-sans font-bold text-lg md:text-xl">{money(p.price)}</span>
+                    <span className={`block font-sans text-xs ${on ? "text-[#F2B75A]" : "text-[#8A7060]"}`}>{money(Math.round((p.price / p.meals) * 100) / 100)} a meal</span>
+                  </span>
+                </motion.button>
+              );
+            })}
+          </div>
         </Section>
 
         <Section title="Build each meal" sub="Set up one, then copy it to the rest if you like.">
@@ -106,9 +130,9 @@ export default function MealPrepPage() {
             {meals.map((m, i) => {
               const on = open === i;
               return (
-                <div key={i} className={`rounded-lg border transition-colors ${on ? "bg-white border-[#180E06]/25" : "bg-white/60 border-[#E8DCC8]"}`}>
+                <div key={i} className={`rounded-[18px] border transition-all duration-300 ${on ? "bg-[#FFFDF8] border-[#180E06]/15 shadow-[0_24px_48px_-30px_rgba(24,14,6,0.55)]" : "bg-[#FFFDF8]/70 border-[#180E06]/8 hover:border-[#180E06]/20"}`}>
                   <button type="button" onClick={() => setOpen(on ? -1 : i)} className="w-full flex items-center gap-4 px-5 py-4 text-left min-h-[64px]" aria-expanded={on}>
-                    <span className="w-9 h-9 rounded-full bg-[#180E06] text-white grid place-items-center font-sans text-sm font-semibold flex-shrink-0">{i + 1}</span>
+                    <span className={`w-9 h-9 rounded-full grid place-items-center font-sans text-sm font-semibold flex-shrink-0 transition-colors ${on ? "bg-[#C4281A] text-white" : "bg-[#180E06] text-white"}`}>{i + 1}</span>
                     <span className="flex-1 min-w-0">
                       <span className="block font-sans font-semibold">{m.protein} with {m.flavor.toLowerCase()}</span>
                       <span className="block font-sans text-sm text-[#8A7060] truncate">
@@ -177,7 +201,7 @@ export default function MealPrepPage() {
           </div>
         </Section>
 
-        <div className="mt-10 bg-white rounded-lg border border-[#E8DCC8] p-6">
+        <div className="mt-10 surface p-6 md:p-7">
           <Row l={`${pack} meal pack`} r={money(base)} />
           {extras > 0 && <Row l="Quinoa and extra protein" r={`+${money(extras)}`} />}
           <Row l={how === "Delivery" ? "Delivery" : "Pickup"} r={how === "Pickup" || free ? "Free" : "Confirmed by text"} />

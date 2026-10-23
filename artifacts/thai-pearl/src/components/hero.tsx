@@ -79,16 +79,16 @@ export function Hero() {
             />
             <button
               onClick={() => scrollTo("order")}
-              className="relative bg-[#C4281A] hover:bg-[#a42016] active:scale-95 text-white px-9 py-4 font-sans font-bold text-[11px] tracking-[0.25em] uppercase transition-colors duration-200 shadow-lg shadow-[#C4281A]/30"
+              className="btn btn-red"
             >
-              Order Now
+              Order now
             </button>
           </div>
           <Link
             href="/reserve"
-            className="border border-white/30 hover:border-[#E8920E]/70 text-white/70 hover:text-white px-9 py-4 font-sans text-[11px] tracking-[0.22em] uppercase transition-all duration-200"
+            className="btn btn-glass"
           >
-            Reserve
+            Book a table
           </Link>
         </motion.div>
 
@@ -118,7 +118,7 @@ export function Hero() {
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-white/30 hover:text-white/60 transition-colors"
         aria-label="Scroll down"
       >
-        <span className="font-sans text-[9px] tracking-[0.35em] uppercase">Scroll</span>
+        <span className="font-sans text-[13px] font-semibold">Scroll</span>
         <motion.div
           animate={{ y: [0, 5, 0] }}
           transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}

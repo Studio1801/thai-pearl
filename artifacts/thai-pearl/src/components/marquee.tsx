@@ -37,7 +37,7 @@ export function Marquee() {
                 ? "text-[#E8920E]/30 text-xs"
                 : item.thai
                 ? `font-serif text-base ${item.gold ? "text-[#E8920E]/70" : "text-white/30"}`
-                : `font-sans text-[10px] font-semibold tracking-[0.22em] uppercase ${
+                : `font-sans text-[13px] font-semibold ${
                     item.gold ? "text-[#E8920E]" : "text-white/40"
                   }`
             }

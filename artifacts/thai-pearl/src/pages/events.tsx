@@ -26,9 +26,9 @@ export default function EventsPage() {
         {specials.length ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
             {specials.map((s, i) => (
-              <Reveal key={s.id} delay={i * 0.06} className="lift bg-[#180E06] thai-pattern-dark grain overflow-hidden text-white rounded-lg p-7">
-                <p className="font-sans text-sm text-[#E8920E] font-semibold">{s.when}</p>
-                <p className="font-serif text-2xl md:text-3xl mt-2 leading-tight" style={{ fontWeight: 500 }}>{s.title}</p>
+              <Reveal key={s.id} delay={i * 0.06} className="lift relative bg-[#1C1007] bg-gradient-to-br from-[#2E1D11] via-[#1C1007] to-[#120A04] grain overflow-hidden text-white rounded-[22px] p-7 md:p-8 shadow-[0_30px_60px_-34px_rgba(24,14,6,0.9)] ring-1 ring-white/5">
+                <p className="inline-flex items-center gap-2 rounded-full bg-[#E8920E]/15 text-[#F2B75A] px-3 py-1 font-sans text-[13px] font-semibold"><span className="w-1.5 h-1.5 rounded-full bg-[#F2B75A]" />{s.when}</p>
+                <p className="font-serif text-2xl md:text-[2rem] mt-4 leading-tight" style={{ fontWeight: 500 }}>{s.title}</p>
                 <p className="font-sans text-white/65 leading-relaxed mt-3">{s.detail}</p>
               </Reveal>
             ))}
@@ -41,7 +41,7 @@ export default function EventsPage() {
       <section className="mt-16">
         <h2 className="font-serif text-3xl" style={{ fontWeight: 500 }}>Coming up</h2>
         {events.length ? (
-          <div className="mt-6 divide-y divide-[#E8DCC8] border-y border-[#E8DCC8]">
+          <div className="mt-6 surface px-6 md:px-8 divide-y divide-[#180E06]/8">
             {events.map((e, i) => {
               const d = new Date(`${e.date}T12:00:00Z`);
               return (
@@ -68,12 +68,12 @@ export default function EventsPage() {
         )}
       </section>
 
-      <Reveal className="mt-16 rounded-lg bg-[#C4281A] text-white p-8 md:p-10 flex flex-col md:flex-row md:items-center gap-6 justify-between">
+      <Reveal className="mt-16 rounded-[22px] bg-gradient-to-br from-[#D6371F] to-[#A81F14] text-white p-8 md:p-10 flex flex-col md:flex-row md:items-center gap-6 justify-between shadow-[0_30px_60px_-30px_rgba(196,40,26,0.8)] grain relative overflow-hidden">
         <div>
           <p className="font-serif text-3xl leading-tight" style={{ fontWeight: 500 }}>Planning a holiday party?</p>
           <p className="font-sans text-white/75 mt-2">We host office parties, birthdays and family dinners in the dining room.</p>
         </div>
-        <Link href="/parties" className="bg-white text-[#180E06] rounded-lg px-7 py-4 font-sans font-bold text-center hover:bg-[#FDF7EC] transition-colors">
+        <Link href="/parties" className="btn btn-line">
           Ask about a party
         </Link>
       </Reveal>

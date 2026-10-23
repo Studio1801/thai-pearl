@@ -16,7 +16,7 @@ export default function PressPage() {
         <p className="font-sans text-sm text-[#8A7060] mt-1.5">Five-star reviews on Google</p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
           {REVIEWS.map((r, i) => (
-            <Reveal key={r.name} delay={i * 0.06} className="lift bg-white rounded-lg border border-[#E8DCC8] p-7">
+            <Reveal key={r.name} delay={i * 0.06} className="lift surface p-7">
               <p className="text-[#E8920E] tracking-[0.2em] text-sm" aria-label="5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</p>
               <p className="font-serif text-2xl leading-snug mt-3" style={{ fontWeight: 500 }}>&ldquo;{r.quote}&rdquo;</p>
               <p className="font-sans text-sm mt-4">
@@ -33,7 +33,7 @@ export default function PressPage() {
 
       <section className="mt-16">
         <h2 className="font-serif text-3xl" style={{ fontWeight: 500 }}>In the press</h2>
-        <div className="mt-6 divide-y divide-[#E8DCC8] border-y border-[#E8DCC8]">
+        <div className="mt-6 surface px-6 md:px-8 divide-y divide-[#180E06]/8">
           {PRESS.map((p) => (
             <a key={p.url} href={p.url} target="_blank" rel="noopener noreferrer" className="group flex items-start justify-between gap-6 py-6">
               <div>

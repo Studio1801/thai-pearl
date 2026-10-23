@@ -40,7 +40,7 @@ export default function MenuPage() {
         <img src={menuBgImg} alt="Thai Pearl Menu" className="w-full h-full object-cover object-center" />
         <div className="absolute inset-0 bg-gradient-to-b from-[#180E06]/75 via-[#180E06]/50 to-[#FDF7EC]" />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 pt-16">
-          <p className="font-sans text-[#E8920E] text-[10px] tracking-[0.4em] uppercase font-semibold mb-1">Thai Pearl</p>
+          <p className="font-sans text-[#E8920E] text-[13px] font-semibold mb-1">Thai Pearl</p>
           <p className="font-serif text-[#E8920E]/50 text-base tracking-widest mb-4" style={{ fontWeight: 400 }}>ไทยเพิร์ล</p>
           <h1 className="font-serif text-white leading-none" style={{ fontSize: "clamp(3rem, 8vw, 7rem)", fontWeight: 500 }}>
             Our Menu
@@ -157,7 +157,7 @@ export default function MenuPage() {
         {/* Spice levels */}
         <div className="mt-4 mb-16 bg-[#180E06] thai-pattern-dark p-8 md:p-10">
           <div className="flex items-baseline gap-3 mb-5">
-            <p className="font-sans text-[#E8920E] text-[10px] tracking-[0.3em] uppercase font-semibold">Spice Levels</p>
+            <p className="font-sans text-[#E8920E] text-[13px] font-semibold">Spice Levels</p>
             <p className="font-serif text-[#E8920E]/40 text-sm" style={{ fontWeight: 400 }}>ระดับความเผ็ด</p>
           </div>
           <div className="flex flex-wrap gap-x-8 gap-y-3">
@@ -178,15 +178,15 @@ export default function MenuPage() {
             <a
               href="https://www.grubhub.com/search?locationQuery=747+Haywood+Rd+Asheville+NC&queryText=Thai+Pearl"
               target="_blank" rel="noopener noreferrer"
-              className="bg-[#C4281A] hover:bg-[#a42016] text-white px-10 py-4 font-sans font-bold text-[11px] tracking-[0.25em] uppercase transition-colors text-center"
+              className="btn btn-red"
             >
-              Order Delivery
+              Order delivery
             </a>
             <Link
               href="/reserve"
-              className="border border-[#180E06]/40 hover:border-[#180E06] text-[#180E06] px-10 py-4 font-sans text-[11px] tracking-[0.22em] uppercase transition-colors text-center"
+              className="btn btn-line"
             >
-              Reserve a Table
+              Book a table
             </Link>
           </div>
         </div>

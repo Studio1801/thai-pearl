@@ -25,7 +25,7 @@ export function Contact() {
         <div className="absolute inset-0 bg-gradient-to-r from-[#180E06]/60 via-transparent to-transparent" />
 
         <div className="absolute bottom-0 left-0 px-8 md:px-16 pb-10">
-          <p className="font-sans text-[#E8920E] text-[10px] tracking-[0.4em] uppercase font-semibold mb-4">
+          <p className="font-sans text-[#E8920E] text-[13px] font-semibold mb-4">
             Come find us
           </p>
           <h2
@@ -92,13 +92,13 @@ export function Contact() {
             <div className="flex flex-col sm:flex-row gap-3">
               <Link
                 href="/reserve"
-                className="bg-[#E8920E] hover:bg-[#c87a0c] text-white px-8 py-4 font-sans font-bold text-[11px] tracking-[0.25em] uppercase transition-colors text-center"
+                className="btn btn-gold"
               >
-                Reserve a Table
+                Book a table
               </Link>
               <Link
                 href="/catering"
-                className="border border-white/20 hover:border-[#E8920E]/50 text-white/50 hover:text-white px-8 py-4 font-sans text-[11px] tracking-[0.22em] uppercase transition-all text-center"
+                className="btn btn-glass"
               >
                 Catering
               </Link>
@@ -108,7 +108,7 @@ export function Contact() {
             <p className="mt-10 font-serif text-white/8 text-4xl tracking-widest select-none" style={{ fontWeight: 400 }}>
               ยินดีต้อนรับ
             </p>
-            <p className="font-sans text-white/18 text-[9px] tracking-[0.3em] uppercase mt-1">Welcome</p>
+            <p className="font-sans text-white/18 text-[13px] font-semibold mt-1">Welcome</p>
           </motion.div>
 
         </div>
