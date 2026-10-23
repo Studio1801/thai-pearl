@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 // GET /api/order?id=...  -> the guest's own order status (no phone number, first name only)
 
 import type { Order, PublicOrder } from "../shared/model";

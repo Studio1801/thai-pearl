@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 // Tiny JSON store. Vercel Blob in production (private store, conditional
 // writes so two orders landing at the same moment never overwrite each other).
 // Without a BLOB_READ_WRITE_TOKEN it falls back to local files for development.

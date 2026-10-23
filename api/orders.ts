@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 // POST  /api/orders  -> a guest places a pickup order from the website
 // GET   /api/orders  -> today's orders for the dashboard (needs the PIN)
 // PATCH /api/orders  -> dashboard moves an order along: cooking, ready, picked up

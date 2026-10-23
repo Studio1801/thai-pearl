@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import crypto from "node:crypto";
 import { SEED } from "../../shared/seed";
 import type { Settings } from "../../shared/model";

@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 // POST /api/login  -> checks the dashboard PIN (sent as the x-pin header)
 
 import { fail, isOwner, json } from "./_lib/http";

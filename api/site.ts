@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 // GET  /api/site  -> everything the public website shows (menu, hours, banner, ordering state)
 // PUT  /api/site  -> dashboard saves changes (needs the PIN)
 
