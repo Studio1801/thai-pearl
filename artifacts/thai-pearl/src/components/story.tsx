@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import basketsImg from "@assets/thai-pearl/interior-baskets.png";
+import basketsImg from "@assets/thai-pearl/food/table-spread.jpg";
 
 export function Story() {
   return (
@@ -16,7 +16,7 @@ export function Story() {
         >
           <img
             src={basketsImg}
-            alt="Thai Pearl dining room"
+            alt="Cashew stir fry, pad thai and a crispy taco on the table at Thai Pearl"
             className="w-full h-full object-cover"
           />
           <div className="absolute top-6 left-6 bg-[#C4281A] text-white font-sans font-bold text-[9px] tracking-[0.25em] uppercase px-3 py-2">
