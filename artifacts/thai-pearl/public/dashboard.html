@@ -197,6 +197,36 @@
   .fab span { font-size: 24px; font-weight: 400; line-height: 1; margin-top: -2px; }
   .fab:active { transform: scale(0.95); }
   .fab.off { transform: translateY(90px) scale(0.9); opacity: 0; pointer-events: none; }
+  .live { display: inline-flex; align-items: center; gap: 8px; padding: 5px 13px 5px 11px; border-radius: 20px; background: rgba(47, 107, 87, 0.1); color: var(--green); font-weight: 600; font-size: 14px; }
+  .live i { width: 7px; height: 7px; border-radius: 50%; background: var(--green); animation: beat 2s infinite; }
+  .cats { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; margin: 26px -20px 0; padding: 4px 20px 6px; }
+  .cats::-webkit-scrollbar { display: none; }
+  .cats button { flex-shrink: 0; padding: 9px 16px; border-radius: 20px; background: var(--wash); font-size: 14px; font-weight: 500; color: var(--ink-2); transition: background 0.3s, color 0.3s, transform 0.2s var(--ease); }
+  .cats button:active { transform: scale(0.95); }
+  .cats button[aria-pressed="true"] { background: var(--ink); color: #fff; }
+  .mh { display: flex; justify-content: space-between; align-items: baseline; margin: 38px 0 0; font-size: 20px; }
+  .mlist { padding: 2px 8px 2px 24px; }
+  .mrow { display: flex; align-items: center; gap: 12px; padding: 4px 0; transition: opacity 0.4s; }
+  .mrow + .mrow { border-top: 1px solid var(--line); }
+  .mrow.off .mn, .mrow.off .mp { opacity: 0.4; }
+  .mrow.off .mn b { text-decoration: line-through; }
+  .mmain { flex: 1; min-width: 0; display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 15px 0; text-align: left; border-radius: 10px; }
+  .mn { display: flex; flex-direction: column; min-width: 0; line-height: 1.35; }
+  .mn b { font-weight: 600; font-size: 16px; }
+  .mn small { color: var(--muted); font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .mp { font-size: 16px; flex-shrink: 0; }
+  .sw { position: relative; flex-shrink: 0; width: 46px; height: 28px; margin-right: 12px; border-radius: 14px; background: #D9D2C6; transition: background 0.35s var(--ease); }
+  .sw span { position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); transition: transform 0.45s var(--spring); }
+  .sw.on { background: var(--green); } .sw.on span { transform: translateX(18px); }
+  .mrow.open { display: block; padding: 18px 16px 18px 0; }
+  .mform { display: flex; flex-direction: column; gap: 10px; }
+  .mform input, .mform textarea { width: 100%; font: inherit; font-size: 16px; padding: 13px 14px; border: 0; border-radius: 12px; background: var(--wash); outline: none; transition: box-shadow 0.25s; }
+  .mform input:focus, .mform textarea:focus { box-shadow: 0 0 0 2px var(--ink); }
+  .mform textarea { resize: none; height: 72px; }
+  .mform .f { display: flex; gap: 10px; } .mform .f .lb { flex: 1; }
+  .lb { display: flex; flex-direction: column; gap: 5px; font-size: 13px; color: var(--muted); }
+  .mnew { margin-top: 20px; }
+  @media (max-width: 640px) { .tabs { gap: 14px; } .tab { font-size: 14px; } .tab .badge { margin-left: 5px; } .mlist { padding-left: 18px; } .cats { margin-inline: -18px; padding-inline: 18px; } }
   .scrim { position: fixed; inset: 0; z-index: 50; background: rgba(22, 20, 18, 0.32); backdrop-filter: blur(6px); display: flex; align-items: flex-end; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.4s var(--ease); }
   .scrim.on { opacity: 1; pointer-events: auto; }
   .sheet { width: min(560px, 100%); max-height: 92vh; overflow: auto; background: var(--card); border-radius: 28px 28px 0 0; padding: 26px 24px calc(24px + env(safe-area-inset-bottom, 0px)); transform: translateY(40px); transition: transform 0.6s var(--ease); }
@@ -324,6 +354,7 @@
       <button class="tab" role="tab" id="t-orders" data-act="tab" data-v="orders" aria-selected="true" aria-controls="view">Orders<span class="badge" id="b-orders" hidden></span></button>
       <button class="tab" role="tab" id="t-res" data-act="tab" data-v="res" aria-selected="false" aria-controls="view"><span class="lg">Reservations</span><span class="sm">Tables</span><span class="badge" id="b-res" hidden></span></button>
       <button class="tab" role="tab" id="t-ev" data-act="tab" data-v="ev" aria-selected="false" aria-controls="view">Events<span class="badge" id="b-ev" hidden></span></button>
+      <button class="tab" role="tab" id="t-menu" data-act="tab" data-v="menu" aria-selected="false" aria-controls="view">Menu</button>
       <button class="tab" role="tab" id="t-money" data-act="tab" data-v="money" aria-selected="false" aria-controls="view">Financial</button>
     </div>
   </div>
@@ -470,7 +501,7 @@
       if (k < 3 && list.length) { const f = list.find((x) => k > 0 || x.at > min) || list[list.length - 1]; f.status = "new"; }
       res.push(...list);
     }
-    return { day, paused: false, orders, res, ev: genEvents(day, rng(hash(day) + 90)) };
+    return { day, menu: JSON.parse(JSON.stringify(MENU)), paused: false, orders, res, ev: genEvents(day, rng(hash(day) + 90)) };
   }
   let S;
   const store = {
@@ -479,9 +510,10 @@
     wipe() { try { localStorage.removeItem(KEY); } catch (e) {} },
   };
   S = store.load() || seedToday();
+  if (!S.menu) S.menu = JSON.parse(JSON.stringify(MENU));
 
   /* ---------- state ---------- */
-  const V = { tab: "orders", day: now().day, rday: now().day, type: "all", range: "7", mode: "week", zoom: null, fresh: null, noteFor: null, flash: null, armed: null, doneOpen: false, open: new Set(), anim: true };
+  const V = { tab: "orders", day: now().day, rday: now().day, type: "all", range: "7", mode: "week", zoom: null, cat: "all", edit: null, fresh: null, noteFor: null, flash: null, armed: null, doneOpen: false, open: new Set(), anim: true };
   const sum = (list) => list.reduce((t, o) => t + o.total, 0);
   const weekDays = () => { const T = now().day; const mon = addDays(T, -((dow(T) + 6) % 7)); return [...Array(7)].map((_, k) => addDays(mon, k)); };
   const ordersOn = (d) => (d === now().day ? S.orders : HIST.filter((o) => o.day === d)).filter((o) => o.status !== "declined" && (V.type === "all" || o.type === V.type));
@@ -596,6 +628,25 @@
       }).join("")}</div>`;
   }
 
+  const cleanN = (n) => n.replace(/\s*\((V|V avail\.)\)/, "");
+  const priceOf = (i) => (i.sizes && i.sizes.length ? i.sizes[0].price : i.price);
+  function editForm(i, cid) {
+    const isNew = !i;
+    return `<form class="mform" data-id="${isNew ? "new" : i.id}" data-cat="${cid}">
+      <input name="name" value="${isNew ? "" : esc(i.name)}" placeholder="Dish name" autocomplete="off" required>
+      ${i && i.sizes && i.sizes.length ? `<div class="f">${i.sizes.map((z, k) => `<label class="lb">${esc(z.label)}<input name="sz${k}" value="${z.price}" inputmode="decimal"></label>`).join("")}</div>` : `<label class="lb">Price<input name="price" value="${isNew ? "" : i.price}" inputmode="decimal" placeholder="0.00" required></label>`}
+      <textarea name="desc" placeholder="Short description">${isNew ? "" : esc(i.desc || "")}</textarea>
+      <div class="c-act" style="margin-top:6px"><button class="btn big" type="submit">Save</button>${isNew ? "" : `<button class="link ${V.armed === i.id ? "armed" : ""}" type="button" data-act="mdel" data-id="${i.id}">${V.armed === i.id ? "Tap again" : "Remove"}</button>`}<button class="link" type="button" data-act="mcancel">Cancel</button></div></form>`;
+  }
+  function menuView() {
+    const cats = S.menu, sel = V.cat === "all" ? cats : cats.filter((c) => c.id === V.cat), n = cats.reduce((t, c) => t + c.items.length, 0), off = cats.reduce((t, c) => t + c.items.filter((i) => i.off).length, 0);
+    return `<h1 class="title">Menu</h1><p class="sub">Edit here and your website updates right away.</p>
+      <p class="chips"><span class="live"><i></i>Live on website</span><span>${n} dishes${off ? `, ${off} sold out` : ""}</span></p>
+      <div class="cats" role="group" aria-label="Category">${[["all", "All"], ...cats.map((c) => [c.id, c.name])].map(([id, l]) => `<button aria-pressed="${V.cat === id}" data-act="mcat" data-v="${id}">${esc(l)}</button>`).join("")}</div>
+      ${V.edit && V.edit.startsWith("new:") ? `<div class="card mnew">${editForm(null, V.edit.slice(4))}</div>` : ""}
+      ${sel.map((c) => `<h2 class="h3 mh">${esc(c.name)} <button class="link" data-act="madd" data-v="${c.id}">+ Add</button></h2><div class="list mlist">${c.items.map((i) => V.edit === i.id ? `<div class="mrow open">${editForm(i, c.id)}</div>` : `<div class="mrow ${i.off ? "off" : ""}"><button class="mmain" data-act="medit" data-id="${i.id}"><span class="mn"><b>${esc(cleanN(i.name))}</b>${i.desc ? `<small>${esc(i.desc)}</small>` : ""}</span><span class="mp num">${i.sizes && i.sizes.length ? "from " : ""}${money2(priceOf(i))}</span></button><button class="sw ${i.off ? "" : "on"}" role="switch" aria-checked="${!i.off}" aria-label="Available" data-act="mtoggle" data-id="${i.id}"><span></span></button></div>`).join("")}</div>`).join("")}`;
+  }
+  const findItem = (id) => { for (const c of S.menu) { const i = c.items.find((x) => x.id === id); if (i) return [c, i]; } return []; };
   let BUCKETS = [];
   const RNG = { 1: "today", 7: "this week", 30: "this month" };
   function moneyView() {
@@ -625,13 +676,13 @@
     setB($("#b-orders"), S.orders.filter((o) => o.status === "new").length);
     setB($("#b-res"), S.res.filter((x) => x.status === "new").length);
     setB($("#b-ev"), S.ev.filter((x) => x.status === "new").length);
-    $("#fab").classList.toggle("off", V.tab !== "orders");
+    $("#fab").classList.toggle("off", V.tab !== "orders" && V.tab !== "menu"); $("#fab").lastChild.textContent = V.tab === "menu" ? "Add dish" : "Add order";
     $("#online").setAttribute("aria-checked", String(!S.paused));
     $("#onlineText").innerHTML = S.paused ? "Online orders <b>paused</b>" : "Online orders <b>on</b>";
-    for (const v of ["orders", "res", "ev", "money"]) $("#t-" + v).setAttribute("aria-selected", String(V.tab === v));
+    for (const v of ["orders", "res", "ev", "menu", "money"]) $("#t-" + v).setAttribute("aria-selected", String(V.tab === v));
     const view = $("#view");
     view.setAttribute("aria-labelledby", "t-" + V.tab);
-    view.innerHTML = { orders: ordersView, res: resView, ev: evView, money: moneyView }[V.tab]();
+    view.innerHTML = { orders: ordersView, res: resView, ev: evView, menu: menuView, money: moneyView }[V.tab]();
     if (V.anim && !calm) { view.classList.remove("enter"); void view.offsetWidth; view.classList.add("enter"); } else view.classList.remove("enter");
     if (V.zoom) { const z = view.querySelector(`[data-zoom="${V.zoom}"]`); if (z) z.style.viewTransitionName = "dayzoom"; }
     V.anim = false; V.fresh = null; V.flash = null;
@@ -719,6 +770,12 @@
       if (V.tab === "orders" && V.mode === "week") { const tl = $("#view .day-tile.needs"); if (tl) return acts.zoom(tl); }
       const c = $("#view .card.needs"); if (c) c.scrollIntoView({ behavior: calm ? "auto" : "smooth", block: "center" });
     },
+    mcat(el) { V.cat = el.dataset.v; V.edit = null; commit(); },
+    medit(el) { V.edit = el.dataset.id; V.armed = null; commit(); },
+    madd(el) { V.edit = "new:" + el.dataset.v; commit(); setTimeout(() => { const i = $(".mform input"); if (i) i.focus(); window.scrollTo({ top: 0, behavior: "smooth" }); }, 80); },
+    mcancel() { V.edit = null; V.armed = null; commit(); },
+    mtoggle(el) { const [, i] = findItem(el.dataset.id); if (!i) return; i.off = !i.off; toast(i.off ? `${cleanN(i.name)} is sold out on your website` : `${cleanN(i.name)} is back on your website`); commit(); },
+    mdel(el) { const id = el.dataset.id; if (V.armed !== id) { V.armed = id; commit(); return; } const [c, i] = findItem(id); if (c) c.items.splice(c.items.indexOf(i), 1); V.edit = null; V.armed = null; toast("Removed from your website"); commit(); },
     oday(el) { V.day = el.dataset.d; V.armed = null; commit(); },
     rday(el) { V.rday = el.dataset.d; V.armed = null; commit(); },
     otype(el) { V.type = el.dataset.v; commit(); },
@@ -752,7 +809,7 @@
     },
     bar(el) { showBar(el); },
     note(el) { V.noteFor = el.dataset.id; commit(); setTimeout(() => { const i = $(".nform input"); if (i) i.focus(); }, 80); },
-    add() { openSheet(); },
+    add() { if (V.tab === "menu") { const c = V.cat === "all" ? S.menu[0].id : V.cat; return acts.madd({ dataset: { v: c } }); } openSheet(); },
     close() { closeSheet(); },
     step(el) { const id = el.dataset.id; M.q[id] = Math.max(0, (M.q[id] || 0) + +el.dataset.d); sheetItems(); },
     kind(el) { M.type = el.dataset.v; sheetHead(); },
@@ -760,9 +817,9 @@
     reset() { store.wipe(); S = seedToday(); Object.assign(V, { day: now().day, rday: now().day, type: "all", doneOpen: false, armed: null, anim: true }); toast("Demo reset"); commit(); },
   };
   /* ---------- manual order sheet ---------- */
-  const ITEMS = MENU.flatMap((c) => c.items.map((i) => ({ id: i.id, n: i.name.replace(/\s*\((V|V avail\.)\)/, ""), p: i.sizes && i.sizes.length ? i.sizes[0].price : i.price })));
+  const getItems = () => S.menu.flatMap((c) => c.items.filter((i) => !i.off).map((i) => ({ id: i.id, n: i.name.replace(/\s*\((V|V avail\.)\)/, ""), p: i.sizes && i.sizes.length ? i.sizes[0].price : i.price })));
   let M = null;
-  const mTotal = () => ITEMS.reduce((t, i) => t + (M.q[i.id] || 0) * i.p, 0);
+  const mTotal = () => getItems().reduce((t, i) => t + (M.q[i.id] || 0) * i.p, 0);
   function openSheet() { M = { type: "pickup", q: {}, search: "" }; $("#sheet").innerHTML = `<h2>New order</h2>
     <div class="f"><input id="mName" placeholder="Name" autocomplete="off"><input id="mPhone" placeholder="Phone" inputmode="tel" autocomplete="off"></div>
     <div class="f"><div class="seg" id="mKind" style="flex:1;display:flex"></div></div>
@@ -776,12 +833,12 @@
     $("#scrim").classList.add("on"); $("#scrim").setAttribute("aria-hidden", "false"); setTimeout(() => $("#mName").focus(), 300); }
   function sheetHead() { $("#mKind").innerHTML = [["pickup", "Pickup"], ["delivery", "Delivery"]].map(([v, l]) => `<button style="flex:1;border-radius:11px;${M.type === v ? "background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.12);font-weight:600" : ""}" data-act="kind" data-v="${v}">${l}</button>`).join(""); $("#mAddrRow").hidden = M.type !== "delivery"; }
   function sheetItems() {
-    $("#mMenu").innerHTML = ITEMS.filter((i) => !M.search || i.n.toLowerCase().includes(M.search) || M.q[i.id]).map((i) => `<div class="mi"><span>${esc(i.n)}<small>${money2(i.p)}</small></span><span class="step">${M.q[i.id] ? `<button data-act="step" data-id="${i.id}" data-d="-1" aria-label="Remove one">&minus;</button><b>${M.q[i.id]}</b>` : ""}<button data-act="step" data-id="${i.id}" data-d="1" aria-label="Add one">+</button></span></div>`).join("");
+    $("#mMenu").innerHTML = getItems().filter((i) => !M.search || i.n.toLowerCase().includes(M.search) || M.q[i.id]).map((i) => `<div class="mi"><span>${esc(i.n)}<small>${money2(i.p)}</small></span><span class="step">${M.q[i.id] ? `<button data-act="step" data-id="${i.id}" data-d="-1" aria-label="Remove one">&minus;</button><b>${M.q[i.id]}</b>` : ""}<button data-act="step" data-id="${i.id}" data-d="1" aria-label="Add one">+</button></span></div>`).join("");
     $("#mTot").textContent = money2(mTotal());
   }
   function closeSheet() { $("#scrim").classList.remove("on"); $("#scrim").setAttribute("aria-hidden", "true"); }
   function saveManual() {
-    const lines = ITEMS.filter((i) => M.q[i.id]).map((i) => ({ q: M.q[i.id], n: i.n, s: "", p: i.p }));
+    const lines = getItems().filter((i) => M.q[i.id]).map((i) => ({ q: M.q[i.id], n: i.n, s: "", p: i.p }));
     if (!lines.length) return toast("Pick at least one item");
     const { day, min } = now(), name = $("#mName").value.trim() || "Walk-in";
     const o = { id: "", num: S.orders.reduce((m, y) => Math.max(m, y.num), 0) + 1, day, at: min, status: "confirmed", due: min + (M.type === "delivery" ? 40 : 20), type: M.type, name, phone: $("#mPhone").value.trim() || "No phone", addr: M.type === "delivery" ? $("#mAddr").value.trim() : "", lines, total: total(lines), note: $("#mNote").value.trim() };
@@ -789,6 +846,15 @@
     V.flash = o.id; V.day = day; V.mode = "day"; V.tab = "orders"; V.type = "all"; closeSheet(); toast(`Added ${name}'s order`); commit();
   }
   document.addEventListener("submit", (e) => {
+    const m = e.target.closest(".mform");
+    if (m) {
+      e.preventDefault(); const f = m, num = (v) => Math.max(0, Math.round(parseFloat(String(v).replace(/[^0-9.]/g, "")) * 100) / 100 || 0);
+      let c, i;
+      if (f.dataset.id === "new") { c = S.menu.find((x) => x.id === f.dataset.cat); i = { id: "n" + Date.now(), name: "", price: 0, desc: "" }; c.items.unshift(i); } else [c, i] = findItem(f.dataset.id);
+      i.name = f.name.value.trim() || "Untitled"; i.desc = f.desc.value.trim();
+      if (i.sizes && i.sizes.length) i.sizes.forEach((z, k) => { z.price = num(f["sz" + k].value); }); else i.price = num(f.price.value);
+      V.edit = null; V.flash = null; toast(`${cleanN(i.name)} is live on your website`); commit(); return;
+    }
     const f = e.target.closest(".nform"); if (!f) return; e.preventDefault();
     const x = POOLS()[f.dataset.k].find((y) => y.id === f.dataset.id); if (x) x.note = f.n.value.trim(); V.noteFor = null; commit();
   });
@@ -820,7 +886,7 @@
   }, true);
   document.addEventListener("keydown", (e) => {
     if (!e.target.classList || !e.target.classList.contains("tab")) return;
-    if (e.key === "ArrowRight" || e.key === "ArrowLeft") { const o = ["orders", "res", "ev", "money"], i = o.indexOf(V.tab) + (e.key === "ArrowRight" ? 1 : 3), t = $("#t-" + o[i % 4]); t.click(); t.focus(); }
+    if (e.key === "ArrowRight" || e.key === "ArrowLeft") { const o = ["orders", "res", "ev", "menu", "money"], i = o.indexOf(V.tab) + (e.key === "ArrowRight" ? 1 : 4), t = $("#t-" + o[i % 5]); t.click(); t.focus(); }
   });
 
   render();
