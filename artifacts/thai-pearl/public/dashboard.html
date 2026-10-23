@@ -73,6 +73,10 @@
   @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2px); } }
   .alert:hover { transform: translateY(-2px) scale(1.01); box-shadow: inset 0 0 0 1px rgba(214, 170, 30, 0.7), 0 16px 38px rgba(224, 176, 29, 0.38); }
   .alert:active { transform: scale(0.98); }
+  .mini { position: relative; overflow: hidden; display: flex; align-items: center; gap: 12px; margin: 18px 0 0; padding: 9px 14px 9px 9px; border-radius: 16px; color: #4A3300; background: linear-gradient(135deg, #FFF3BF 0%, #FFE27A 100%); box-shadow: inset 0 0 0 1px rgba(214, 170, 30, 0.55), 0 8px 20px rgba(224, 176, 29, 0.25); }
+  .mini::after { content: ""; position: absolute; inset: 0; background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, 0.65) 50%, transparent 70%); transform: translateX(-120%); animation: sheen 4.5s 1s var(--ease) infinite; pointer-events: none; }
+  .mini .ct { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 11px; background: var(--ink); color: #FFE27A; font-size: 17px; font-weight: 700; animation: beat2 2.2s ease-in-out infinite; }
+  .mini .tx { display: flex; flex-direction: column; line-height: 1.2; } .mini .tx b { font-size: 15px; font-weight: 600; } .mini .tx small { font-size: 12px; opacity: 0.7; }
   .alert .ct { flex-shrink: 0; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 15px; background: var(--ink); color: #FFE27A; font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; animation: beat2 2.2s ease-in-out infinite; }
   @keyframes beat2 { 0%, 100% { box-shadow: 0 0 0 0 rgba(22, 20, 18, 0.35); } 50% { box-shadow: 0 0 0 8px rgba(22, 20, 18, 0); } }
   .alert .tx { flex: 1; display: flex; flex-direction: column; line-height: 1.25; }
@@ -571,7 +575,7 @@
     const ini = (n) => n.split(" ").map((w) => w[0]).join("").slice(0, 2);
     return `<button class="card day-tile ${np ? "needs" : ""} ${d === T ? "is-today" : ""}" data-act="zoom" data-d="${d}" data-zoom="${d}">
       <div class="c-top"><div><h3 class="c-name">${dayName}</h3><p class="c-kind">${noon(d).toLocaleDateString("en-US", { timeZone: "UTC", month: "long", day: "numeric" })}</p></div><div class="tt"><p class="c-total num">${l.length ? money(tot) : "$0"}</p><small>${l.length} ${l.length === 1 ? "order" : "orders"}${l.length ? ` &middot; ${money2(tot / l.length)} avg` : ""}</small></div></div>
-      ${np ? `<p class="need tl"><i></i>${np} waiting for you</p>` : ""}
+      ${np ? `<p class="mini"><span class="ct">${np}</span><span class="tx"><b>${np === 1 ? "order" : "orders"} to confirm</b><small>Tap to review</small></span></p>` : ""}
       ${l.length ? `<div class="spark" aria-hidden="true">${cnt.map((c, i) => `<span class="${hr[i] == peak ? "pk" : ""}"><i style="height:${Math.max(6, (c / mx) * 100)}%"></i></span>`).join("")}</div>
       <div class="axis"><span>12p</span><span>4p</span><span>8p</span></div>
       <div class="facts2"><span><i class="pickup"></i>${pk} pickup</span><span><i class="delivery"></i>${dl} delivery</span></div>
