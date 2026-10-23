@@ -1,0 +1,828 @@
+<title>Thai Pearl Kitchen</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap">
+<style>
+  /* One narrow column. Big type, hairlines, white cards, and yellow only when something needs the owner. */
+  :root {
+    --bg: #FAF8F4;
+    --card: #FFFFFF;
+    --ink: #161412;
+    --ink-2: #4B453E;
+    --muted: #8E877D;
+    --line: #EEE9E0;
+    --wash: #F1EDE5;
+    --yellow: #FFF4C9;
+    --yellow-line: #EBCB63;
+    --amber: #8A6100;
+    --green: #2F6B57;
+    --rust: #B24A2B;
+    --deliv: #C9A15A;
+    --font: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --ease: cubic-bezier(.22, 1, .36, 1);
+    --spring: cubic-bezier(.34, 1.56, .64, 1);
+    --shadow: 0 1px 2px rgba(22, 20, 18, 0.04), 0 14px 36px rgba(22, 20, 18, 0.05);
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  .link { white-space: nowrap; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 var(--font); letter-spacing: -0.005em; -webkit-font-smoothing: antialiased; }
+  button, input { font: inherit; color: inherit; }
+  button { cursor: pointer; border: 0; background: none; padding: 0; }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; border-radius: 8px; }
+  .gut { padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+  .wrap { max-width: 760px; margin: 0 auto; }
+  .num { font-weight: 500; font-variant-numeric: tabular-nums; letter-spacing: -0.03em; }
+
+  /* header */
+  .top { position: sticky; top: 0; z-index: 20; padding-top: env(safe-area-inset-top, 0px); background: rgba(250, 248, 244, 0.82); backdrop-filter: saturate(1.5) blur(18px); -webkit-backdrop-filter: saturate(1.5) blur(18px); border-bottom: 1px solid transparent; transition: box-shadow 0.4s var(--ease), border-color 0.4s; animation: hdr 0.8s var(--ease) both; }
+  .top.scrolled { border-color: var(--line); box-shadow: 0 12px 32px rgba(22, 20, 18, 0.05); }
+  @keyframes hdr { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: none; } }
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 16px 4px; }
+  .brand { display: flex; align-items: center; gap: 12px; font-weight: 600; font-size: 17px; letter-spacing: -0.02em; }
+  .brand img { height: 32px; width: auto; }
+  .online { display: flex; align-items: center; gap: 11px; min-height: 44px; font-size: 14px; color: var(--muted); }
+  .online b { font-weight: 600; color: var(--ink); }
+  .switch { position: relative; width: 44px; height: 26px; border-radius: 13px; background: #D9D2C6; flex-shrink: 0; transition: background 0.35s var(--ease); }
+  .switch span { position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); transition: transform 0.45s var(--spring); }
+  .online[aria-checked="true"] .switch { background: var(--green); }
+  .online[aria-checked="true"] .switch span { transform: translateX(18px); }
+  .tabs { position: relative; display: flex; gap: 26px; overflow-x: auto; scrollbar-width: none; }
+  .tab { padding: 14px 0 15px; min-height: 48px; font-size: 15px; color: var(--muted); white-space: nowrap; transition: color 0.3s, transform 0.2s var(--ease); }
+  .tab:hover { color: var(--ink); }
+  .tab:active { transform: scale(0.96); }
+  .tab[aria-selected="true"] { color: var(--ink); font-weight: 600; }
+  .tab .sm { display: none; }
+  .inkbar { position: absolute; left: 0; bottom: 0; height: 2px; width: 0; border-radius: 2px; background: var(--ink); }
+  .inkbar.ready { transition: transform 0.6s var(--ease), width 0.6s var(--ease); }
+  .badge { display: inline-grid; place-items: center; min-width: 20px; height: 20px; padding: 0 6px; margin-left: 7px; border-radius: 10px; background: #F0C93C; color: var(--ink); font-size: 12px; font-weight: 700; vertical-align: 1px; }
+  .badge.pop { animation: pop 0.6s var(--spring); }
+  @keyframes pop { from { transform: scale(0.3); } to { transform: none; } }
+
+  main { padding-block: 44px 64px; min-height: 72vh; }
+
+  /* title block */
+  .title { margin: 0; font-size: clamp(44px, 9vw, 64px); font-weight: 600; letter-spacing: -0.05em; line-height: 1; }
+  .sub { margin: 10px 0 0; color: var(--muted); font-size: 17px; }
+  .chips { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin: 16px 0 0; min-height: 32px; font-size: 15px; color: var(--ink-2); }
+  .alert { position: relative; overflow: hidden; display: flex; align-items: center; gap: 14px; width: min(100%, 400px); padding: 12px 16px 12px 12px; border-radius: 20px; text-align: left; color: #4A3300; background: linear-gradient(135deg, #FFF3BF 0%, #FFE27A 100%); box-shadow: inset 0 0 0 1px rgba(214, 170, 30, 0.55), 0 12px 30px rgba(224, 176, 29, 0.28); transition: transform 0.4s var(--spring), box-shadow 0.4s var(--ease); animation: float 3.6s ease-in-out infinite; }
+  .alert::after { content: ""; position: absolute; inset: 0; background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, 0.65) 50%, transparent 70%); transform: translateX(-120%); animation: sheen 4.5s 1s var(--ease) infinite; pointer-events: none; }
+  @keyframes sheen { 0% { transform: translateX(-120%); } 40%, 100% { transform: translateX(120%); } }
+  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2px); } }
+  .alert:hover { transform: translateY(-2px) scale(1.01); box-shadow: inset 0 0 0 1px rgba(214, 170, 30, 0.7), 0 16px 38px rgba(224, 176, 29, 0.38); }
+  .alert:active { transform: scale(0.98); }
+  .alert .ct { flex-shrink: 0; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 15px; background: var(--ink); color: #FFE27A; font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; animation: beat2 2.2s ease-in-out infinite; }
+  @keyframes beat2 { 0%, 100% { box-shadow: 0 0 0 0 rgba(22, 20, 18, 0.35); } 50% { box-shadow: 0 0 0 8px rgba(22, 20, 18, 0); } }
+  .alert .tx { flex: 1; display: flex; flex-direction: column; line-height: 1.25; }
+  .alert .tx b { font-size: 17px; font-weight: 600; letter-spacing: -0.02em; }
+  .alert .tx small { font-size: 13px; opacity: 0.7; }
+  .alert svg { flex-shrink: 0; opacity: 0.7; transition: transform 0.4s var(--ease); }
+  .alert:hover svg { transform: translateX(4px); }
+  .chips:has(.alert) { margin-top: 20px; }
+  .need { display: inline-flex; align-items: center; gap: 9px; padding: 5px 14px 5px 11px; border-radius: 20px; background: var(--yellow); box-shadow: inset 0 0 0 1px var(--yellow-line); color: #6E4C00; font-weight: 600; font-size: 14px; }
+  .need i { width: 8px; height: 8px; border-radius: 50%; background: #D7A91A; animation: beat 1.8s ease-in-out infinite; }
+  @keyframes beat { 0%, 100% { box-shadow: 0 0 0 0 rgba(215, 169, 26, 0.5); } 50% { box-shadow: 0 0 0 6px rgba(215, 169, 26, 0); } }
+
+  /* sliding controls */
+  .strip, .seg { position: relative; display: grid; gap: 2px; padding: 5px; border-radius: 18px; background: var(--wash); }
+  .strip { grid-template-columns: repeat(7, minmax(0, 1fr)); margin-top: 28px; }
+  .seg { display: inline-flex; border-radius: 14px; padding: 4px; }
+  .strip button, .seg button { position: relative; z-index: 1; border-radius: 13px; color: var(--ink-2); transition: color 0.3s, transform 0.2s var(--ease), opacity 0.3s; }
+  .strip button { padding: 10px 0 12px; text-align: center; line-height: 1.15; }
+  .strip small { display: block; font-size: 12px; color: var(--muted); }
+  .strip b { display: block; margin-top: 3px; font-size: 19px; font-weight: 600; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+  .strip .dot { position: absolute; left: 50%; bottom: 5px; width: 5px; height: 5px; margin-left: -2.5px; border-radius: 50%; background: #E0B01D; }
+  .strip .past { opacity: 0.6; }
+  .strip button[aria-pressed="true"] { opacity: 1; color: var(--ink); }
+  .strip button[aria-pressed="true"] small { color: var(--ink-2); }
+  .strip button.today small::after { content: " \00b7"; }
+  .seg button { padding: 8px 16px; min-height: 38px; font-size: 14px; font-weight: 500; }
+  .seg button[aria-pressed="true"] { color: var(--ink); font-weight: 600; }
+  .strip button:active, .seg button:active { transform: scale(0.95); }
+  .thumb { position: absolute; left: 0; top: 0; z-index: 0; border-radius: 13px; background: var(--card); box-shadow: 0 1px 2px rgba(22, 20, 18, 0.08), 0 4px 12px rgba(22, 20, 18, 0.06); pointer-events: none; }
+  .thumb.go { transition: transform 0.6s var(--ease), width 0.6s var(--ease), height 0.35s var(--ease); }
+  .tools { flex-wrap: wrap; display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 22px; }
+  .link { font-size: 14px; color: var(--muted); padding: 8px 4px; min-height: 36px; transition: color 0.2s; }
+  .link:hover { color: var(--ink); }
+  .link.armed { color: var(--rust); font-weight: 600; }
+
+  /* cards */
+  .hs { display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin: 18px -20px 0; padding: 6px 20px 30px; scroll-padding: 0 20px; overscroll-behavior-x: contain; align-items: flex-start; }
+  .hs::-webkit-scrollbar { display: none; }
+  .hs .day-tile { flex: 0 0 min(86%, 360px); scroll-snap-align: start; min-height: 240px; }
+  .tt { text-align: right; }
+  .tt small { color: var(--muted); font-size: 13px; }
+  .day-tile .c-total { font-size: 30px; }
+  .tl { margin: 14px 0 0; display: inline-flex; }
+  .split { display: flex; gap: 3px; height: 6px; margin-top: 20px; }
+  .split b, .split u { border-radius: 3px; background: var(--green); } .split u { background: var(--deliv); }
+  .facts2 { display: flex; gap: 14px; margin-top: 10px; font-size: 13px; color: var(--muted); }
+  .facts2 i { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 6px; vertical-align: 1px; }
+  .facts2 .pickup { background: var(--green); } .facts2 .delivery { background: var(--deliv); } .facts2 .r { margin-left: auto; color: var(--ink-2); }
+  .day-tile .c-lines { margin-top: 18px; padding-top: 6px; border-top: 1px solid var(--line); gap: 0; }
+  .day-tile .c-lines li { align-items: center; gap: 10px; padding: 9px 0; font-size: 15px; }
+  .day-tile .c-lines li + li { border-top: 1px solid var(--line); }
+  .day-tile .c-lines li em { font-style: normal; color: var(--muted); font-size: 13px; width: 62px; white-space: nowrap; flex-shrink: 0; font-variant-numeric: tabular-nums; }
+  .day-tile .c-lines li b { font-weight: 500; }
+  .day-tile .c-lines li.more { color: var(--muted); font-size: 13px; border: 0; padding-bottom: 0; }
+  .st { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; } .st.ok { background: #CFC8BB; } .st.new { background: #E0B01D; box-shadow: 0 0 0 3px rgba(224, 176, 29, 0.25); }
+  .tfoot { display: flex; justify-content: space-between; gap: 10px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); }
+  .tfoot b { color: var(--ink); font-weight: 600; }
+  .empty { margin: 36px 0 20px; color: var(--muted); font-size: 15px; }
+  .open { display: flex; align-items: center; gap: 5px; margin-top: 16px; font-size: 14px; font-weight: 600; color: var(--ink-2); transition: gap 0.4s var(--ease); }
+  .day-tile:hover .open { gap: 10px; }
+  .hs .day-tile { border-radius: 30px; padding: 28px 26px 22px; background: linear-gradient(180deg, #FFFFFF 0%, #FCFAF5 100%); box-shadow: inset 0 0 0 1px rgba(22, 20, 18, 0.05), 0 1px 2px rgba(22, 20, 18, 0.04), 0 24px 48px -12px rgba(22, 20, 18, 0.12); }
+  .hs .day-tile.needs { background: linear-gradient(180deg, #FFF8D6 0%, #FFF1B8 100%); box-shadow: inset 0 0 0 1.5px var(--yellow-line), 0 24px 48px -12px rgba(214, 170, 30, 0.35); }
+  .hs .day-tile:hover { transform: translateY(-5px); }
+  .hs .day-tile .c-name { font-size: 28px; letter-spacing: -0.045em; }
+  .hs .day-tile .c-kind { margin-top: 3px; color: var(--muted); font-weight: 400; }
+  .spark { display: flex; align-items: flex-end; gap: 5px; height: 54px; margin-top: 24px; }
+  .spark span { flex: 1; height: 100%; display: flex; align-items: flex-end; }
+  .spark i { display: block; width: 100%; border-radius: 5px 5px 3px 3px; background: rgba(22, 20, 18, 0.1); }
+  .spark .pk i { background: var(--ink); }
+  .axis { display: flex; justify-content: space-between; margin-top: 7px; font-size: 11px; color: var(--muted); }
+  .facts2 { margin-top: 14px !important; }
+  .av { flex-shrink: 0; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; font-size: 12px; font-weight: 600; background: rgba(47, 107, 87, 0.12); color: var(--green); }
+  .av.delivery { background: rgba(201, 161, 90, 0.2); color: #8A6420; }
+  .day-tile .c-lines li .nm { display: flex; flex-direction: column; line-height: 1.25; min-width: 0; }
+  .day-tile .c-lines li .nm b { font-size: 15px; }
+  .day-tile .c-lines li .nm em { font-size: 12px; color: var(--muted); width: auto; }
+  .day-tile .c-lines li .nm u { text-decoration: none; color: #9A6B00; font-weight: 600; }
+  .day-tile .c-lines li span { margin-left: 0; font-size: inherit; color: inherit; }
+  .day-tile .c-lines li > .nm { flex: 1; text-align: left; align-items: flex-start; }
+  .day-tile .c-lines li .am { margin-left: auto; font-size: 15px; font-weight: 500; font-variant-numeric: tabular-nums; }
+  .day-tile .c-lines li { gap: 12px; padding: 10px 0; }
+  .day-tile .tfoot { border: 0; padding-top: 4px; display: grid; grid-template-columns: 1fr auto; gap: 12px; }
+  .tfoot span { display: flex; flex-direction: column; gap: 2px; min-width: 0; } .tfoot .r { text-align: right; }
+  .tfoot small { font-size: 11px; color: var(--muted); } .tfoot b { font-size: 14px; }
+  .day-tile .open { padding: 12px 16px; margin: 18px -4px 0; border-radius: 14px; background: rgba(22, 20, 18, 0.05); justify-content: center; }
+  .day-tile:hover .open { background: var(--ink); color: #fff; gap: 10px; }
+  .day-tile { display: block; width: 100%; text-align: left; font: inherit; color: inherit; }
+  .day-tile .c-lines { margin-top: 14px; gap: 5px; }
+  .day-tile .c-lines li { font-size: 15px; display: flex; }
+  .day-tile .c-lines li span { margin-left: auto; }
+  .day-tile:active { transform: scale(0.985); }
+  .back { display: block; margin: -22px 0 14px; font-size: 15px; }
+  ::view-transition-group(dayzoom) { animation-duration: 0.75s; animation-timing-function: var(--ease); z-index: 5; }
+  ::view-transition-old(dayzoom), ::view-transition-new(dayzoom) { height: 100%; object-fit: none; object-position: left top; }
+  .stack { display: flex; flex-direction: column; gap: 14px; margin-top: 18px; }
+  .card { position: relative; background: var(--card); border-radius: 24px; padding: 26px 28px 24px; box-shadow: var(--shadow); transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease), background 0.5s; }
+  .card:hover { transform: translateY(-2px); box-shadow: 0 2px 4px rgba(22, 20, 18, 0.04), 0 22px 48px rgba(22, 20, 18, 0.08); }
+  .card.needs { background: var(--yellow); box-shadow: inset 0 0 0 1.5px var(--yellow-line), 0 14px 36px rgba(214, 170, 30, 0.14); }
+  .card.arrive { animation: arrive 0.9s var(--ease) both; }
+  @keyframes arrive { from { opacity: 0; transform: translateY(-26px) scale(0.97); } to { opacity: 1; transform: none; } }
+  .card.flash { animation: settle 1.3s var(--ease); }
+  @keyframes settle { 0% { box-shadow: var(--shadow), 0 0 0 0 rgba(47, 107, 87, 0.4); } 100% { box-shadow: var(--shadow), 0 0 0 20px rgba(47, 107, 87, 0); } }
+  .c-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+  .c-kind { margin: 0; display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--ink-2); font-weight: 500; }
+  .c-kind i { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .c-kind .pickup { background: var(--green); }
+  .c-kind .delivery { background: var(--deliv); }
+  .c-name { margin: 6px 0 0; font-size: 26px; font-weight: 600; letter-spacing: -0.04em; line-height: 1.15; }
+  .c-total { margin: 0; font-size: 26px; line-height: 1.15; }
+  .c-lines { list-style: none; margin: 18px 0 0; padding: 0; display: flex; flex-direction: column; gap: 7px; }
+  .c-lines li { font-size: 16px; }
+  .c-lines span { color: var(--muted); font-size: 14px; margin-left: 8px; }
+  .c-meta { margin: 14px 0 0; font-size: 14px; color: var(--ink-2); overflow-wrap: anywhere; }
+  .c-note { margin: 14px 0 0; font-size: 14px; color: var(--amber); font-weight: 500; }
+  .c-foot { margin: 20px 0 0; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .nlink { padding: 4px 0; min-height: 30px; margin-top: 8px; display: block; font-size: 13px; }
+  .nform { display: flex; gap: 10px; margin-top: 14px; }
+  .nform input, .sheet input, .sheet textarea { flex: 1; min-width: 0; font-size: 16px; padding: 13px 14px; border: 0; border-radius: 12px; background: var(--wash); outline: none; transition: box-shadow 0.25s; }
+  .nform input:focus, .sheet input:focus, .sheet textarea:focus { box-shadow: 0 0 0 2px var(--ink); }
+  .needs .nform input { background: rgba(255, 255, 255, 0.7); }
+  .fab { position: fixed; right: max(18px, env(safe-area-inset-right, 0px)); bottom: max(20px, env(safe-area-inset-bottom, 0px)); z-index: 30; display: flex; align-items: center; gap: 9px; padding: 0 22px 0 16px; height: 54px; border-radius: 27px; background: var(--ink); color: #fff; font-weight: 600; font-size: 16px; box-shadow: 0 14px 34px rgba(22, 20, 18, 0.3); transition: transform 0.5s var(--spring), opacity 0.3s; }
+  .fab span { font-size: 24px; font-weight: 400; line-height: 1; margin-top: -2px; }
+  .fab:active { transform: scale(0.95); }
+  .fab.off { transform: translateY(90px) scale(0.9); opacity: 0; pointer-events: none; }
+  .scrim { position: fixed; inset: 0; z-index: 50; background: rgba(22, 20, 18, 0.32); backdrop-filter: blur(6px); display: flex; align-items: flex-end; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.4s var(--ease); }
+  .scrim.on { opacity: 1; pointer-events: auto; }
+  .sheet { width: min(560px, 100%); max-height: 92vh; overflow: auto; background: var(--card); border-radius: 28px 28px 0 0; padding: 26px 24px calc(24px + env(safe-area-inset-bottom, 0px)); transform: translateY(40px); transition: transform 0.6s var(--ease); }
+  .scrim.on .sheet { transform: none; }
+  @media (min-width: 700px) { .scrim { align-items: center; } .sheet { border-radius: 28px; } }
+  .sheet h2 { margin: 0 0 18px; font-size: 28px; letter-spacing: -0.04em; }
+  .sheet .f { display: flex; gap: 10px; margin-bottom: 10px; }
+  .sheet textarea { resize: none; height: 60px; width: 100%; font: inherit; }
+  .menu { max-height: 220px; overflow: auto; margin: 12px 0; border-top: 1px solid var(--line); }
+  .mi { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
+  .mi span:first-child { flex: 1; min-width: 0; }
+  .mi small { color: var(--muted); margin-left: 8px; }
+  .step { display: inline-flex; align-items: center; gap: 4px; }
+  .step button { width: 34px; height: 34px; border-radius: 50%; background: var(--wash); font-size: 18px; transition: transform 0.2s var(--spring); }
+  .step button:active { transform: scale(0.88); }
+  .step b { min-width: 22px; text-align: center; font-variant-numeric: tabular-nums; }
+  .sheet .tot { display: flex; justify-content: space-between; font-weight: 600; font-size: 18px; margin: 6px 0 16px; }
+  .c-act { display: flex; align-items: center; gap: 14px; margin-top: 24px; }
+  .btn { border-radius: 14px; padding: 14px 20px; min-height: 52px; font-weight: 600; font-size: 16px; background: var(--ink); color: #fff; transition: background 0.25s, transform 0.2s var(--ease); display: inline-flex; align-items: center; justify-content: center; text-decoration: none; }
+  .btn:hover { background: #34302B; }
+  .btn:active { transform: scale(0.97); }
+  .btn.big { flex: 1; }
+  .btn.quiet { background: rgba(22, 20, 18, 0.07); color: var(--ink); }
+  .btn.quiet:hover { background: rgba(22, 20, 18, 0.12); }
+  .needs .btn.quiet { background: rgba(22, 20, 18, 0.08); }
+  .ok { display: inline-flex; align-items: center; gap: 9px; font-weight: 600; font-size: 15px; color: var(--green); }
+  .ok svg path { stroke-dasharray: 22; stroke-dashoffset: 0; }
+  .flash .ok svg path, .arrive .ok svg path { animation: draw 0.7s 0.2s var(--ease) both; }
+  @keyframes draw { from { stroke-dashoffset: 22; } }
+  .c-act .sp { flex: 1; }
+  .when { margin: 0; font-size: 44px; font-weight: 600; letter-spacing: -0.05em; line-height: 1; font-variant-numeric: tabular-nums; }
+  .when small { font-size: 16px; font-weight: 500; letter-spacing: -0.01em; color: var(--muted); margin-left: 6px; }
+
+  /* lists in one card */
+  .list { margin-top: 14px; background: var(--card); border-radius: 24px; box-shadow: var(--shadow); padding: 4px 28px; }
+  .row { display: grid; grid-template-columns: 84px minmax(0, 1fr) auto; gap: 2px 16px; align-items: baseline; padding: 17px 0; }
+  .row + .row { border-top: 1px solid var(--line); }
+  .row .t { color: var(--muted); font-size: 15px; font-variant-numeric: tabular-nums; }
+  .row b { font-weight: 600; }
+  .row .k { margin-left: 10px; font-size: 13px; color: var(--muted); font-weight: 400; }
+  .row .it { grid-column: 2; margin: 0; font-size: 14px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .row .a { grid-row: 1; grid-column: 3; font-size: 17px; }
+  .done { margin-top: 30px; }
+  .done > summary { display: flex; align-items: center; gap: 10px; cursor: pointer; list-style: none; font-weight: 600; min-height: 44px; }
+  .done > summary::-webkit-details-marker { display: none; }
+  .done > summary::before, .day > summary::before { content: ""; width: 7px; height: 7px; border-right: 1.8px solid var(--muted); border-bottom: 1.8px solid var(--muted); transform: rotate(-45deg); transition: transform 0.35s var(--ease); margin-right: 2px; }
+  .done[open] > summary::before, .day[open] > summary::before { transform: rotate(45deg); }
+  .done > summary span { font-weight: 400; color: var(--muted); }
+  .none { margin: 64px 0 24px; text-align: center; font-size: 20px; color: var(--muted); letter-spacing: -0.02em; }
+  .done, .day { interpolate-size: allow-keywords; }
+  .done::details-content, .day::details-content { block-size: 0; overflow: clip; transition: block-size 0.5s var(--ease), content-visibility 0.5s allow-discrete; }
+  .done[open]::details-content, .day[open]::details-content { block-size: auto; }
+
+  /* financial */
+  .hero { margin: 30px 0 0; font-size: clamp(64px, 17vw, 112px); font-weight: 600; letter-spacing: -0.06em; line-height: 0.95; font-variant-numeric: tabular-nums; }
+  .facts { margin: 14px 0 0; color: var(--muted); font-size: 16px; }
+  .facts b { color: var(--ink); font-weight: 600; }
+  .bks { display: flex; align-items: flex-end; gap: 6px; height: 170px; margin-top: 34px; }
+  .bks.many { gap: 3px; }
+  .bk { flex: 1; min-width: 0; height: 100%; display: flex; align-items: flex-end; }
+  .bk i { display: block; width: 100%; min-height: 3px; border-radius: 6px; background: #DDD6C9; transition: background 0.3s, transform 0.3s var(--ease); transform-origin: bottom; }
+  .bk:hover i, .bk.sel i { background: var(--ink); }
+  .ticks { display: flex; gap: 6px; margin-top: 10px; }
+  .ticks.many { gap: 3px; }
+  .ticks div { flex: 1; min-width: 0; position: relative; height: 16px; }
+  .ticks span { position: absolute; left: 50%; transform: translateX(-50%); white-space: nowrap; font-size: 12px; color: var(--muted); }
+  .cap { margin: 0 0 6px; min-height: 24px; font-size: 15px; color: var(--muted); }
+  .cap b { color: var(--ink); font-weight: 600; }
+  .h3 { margin: 52px 0 8px; font-size: 22px; font-weight: 600; letter-spacing: -0.03em; }
+  .day { border-bottom: 1px solid var(--line); }
+  .day > summary { display: grid; grid-template-columns: auto 1fr auto; gap: 4px 14px; align-items: baseline; cursor: pointer; list-style: none; padding: 18px 0; }
+  .day > summary::-webkit-details-marker { display: none; }
+  .day > summary b { font-weight: 600; }
+  .day > summary .m { color: var(--muted); font-size: 14px; text-align: right; }
+  .day .rows { padding-bottom: 10px; }
+  .day .row { padding: 12px 0 12px 22px; }
+  .day .row + .row { border-top: 0; }
+
+  footer { padding-block: 0 44px; font-size: 14px; color: var(--muted); }
+  footer .link { text-decoration: underline; text-underline-offset: 3px; font-size: 14px; }
+  #toast { position: fixed; left: 50%; bottom: max(26px, env(safe-area-inset-bottom, 0px)); transform: translate(-50%, 24px) scale(0.96); z-index: 40; max-width: calc(100vw - 40px); padding: 14px 22px; border-radius: 16px; background: var(--ink); color: #fff; font-size: 15px; font-weight: 500; box-shadow: 0 16px 40px rgba(22, 20, 18, 0.28); opacity: 0; pointer-events: none; transition: opacity 0.3s, transform 0.55s var(--spring); }
+  #toast.on { opacity: 1; transform: translate(-50%, 0); }
+
+  /* motion */
+  #view.enter > * { animation: up 0.8s var(--ease) both; animation-delay: calc(var(--j, 0) * 60ms); }
+  #view.enter .card, #view.enter .row, #view.enter .day { animation: up 0.8s var(--ease) both; animation-delay: calc(240ms + var(--j, 0) * 55ms); }
+  #view.enter .bk i { animation: grow 1s var(--ease) both; animation-delay: calc(240ms + var(--j, 0) * 24ms); }
+  @keyframes up { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+  @keyframes grow { from { transform: scaleY(0); } to { transform: none; } }
+  .pre { opacity: 0; transform: translateY(28px); animation: none !important; }
+  .rvl { transition: opacity 0.9s var(--ease), transform 0.9s var(--ease) !important; }
+  ::view-transition-group(*) { animation-duration: 0.6s; animation-timing-function: var(--ease); }
+  ::view-transition-old(root) { animation: fade-out 0.35s var(--ease) both; }
+  ::view-transition-new(root) { animation: fade-in 0.45s var(--ease) both; }
+  ::view-transition-old(.tk):only-child { animation: vt-out 0.45s var(--ease) both; }
+  ::view-transition-new(.tk):only-child { animation: vt-in 0.65s var(--ease) both; }
+  @keyframes fade-out { to { opacity: 0; } }
+  @keyframes fade-in { from { opacity: 0; } }
+  @keyframes vt-out { to { opacity: 0; transform: scale(0.95) translateY(10px); } }
+  @keyframes vt-in { from { opacity: 0; transform: translateY(20px) scale(0.98); } }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; } .pre { opacity: 1; transform: none; } }
+
+  @media (max-width: 640px) {
+    main { padding-block: 32px 48px; }
+    .gut { padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); }
+    .tabs { gap: 0; justify-content: space-between; }
+    .tab .lg { display: none; } .tab .sm { display: inline; }
+    .card { padding: 22px 22px 20px; border-radius: 22px; }
+    .list { padding: 2px 20px; }
+    .row { grid-template-columns: 70px minmax(0, 1fr) auto; gap: 2px 12px; }
+    .c-name, .c-total { font-size: 23px; }
+    .when { font-size: 38px; }
+    .strip { margin-inline: -4px; }
+    .hs { margin-inline: -18px; padding-inline: 18px; scroll-padding: 0 18px; }
+  }
+</style>
+
+<header class="top gut">
+  <div class="wrap">
+    <div class="bar">
+      <div class="brand"><img src="data:image/png;base64,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" alt="Thai Pearl">Thai Pearl</div>
+      <button class="online" id="online" role="switch" aria-checked="true" data-act="online"><span id="onlineText">Online orders <b>on</b></span><span class="switch"><span></span></span></button>
+    </div>
+    <div class="tabs" role="tablist" aria-label="Sections"><span class="inkbar" id="ink" aria-hidden="true"></span>
+      <button class="tab" role="tab" id="t-orders" data-act="tab" data-v="orders" aria-selected="true" aria-controls="view">Orders<span class="badge" id="b-orders" hidden></span></button>
+      <button class="tab" role="tab" id="t-res" data-act="tab" data-v="res" aria-selected="false" aria-controls="view"><span class="lg">Reservations</span><span class="sm">Tables</span><span class="badge" id="b-res" hidden></span></button>
+      <button class="tab" role="tab" id="t-ev" data-act="tab" data-v="ev" aria-selected="false" aria-controls="view">Events<span class="badge" id="b-ev" hidden></span></button>
+      <button class="tab" role="tab" id="t-money" data-act="tab" data-v="money" aria-selected="false" aria-controls="view">Financial</button>
+    </div>
+  </div>
+</header>
+
+<main class="gut"><div class="wrap" id="view" role="tabpanel"></div></main>
+<footer class="gut"><div class="wrap">Sample data for the demo. <button class="link" data-act="reset">Reset</button></div></footer>
+<button class="fab" id="fab" data-act="add" aria-label="Add an order"><span>+</span>Add order</button>
+<div class="scrim" id="scrim" aria-hidden="true"><div class="sheet" role="dialog" aria-label="New order" id="sheet"></div></div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(() => {
+  const MENU = [{"id":"appetizers","name":"Appetizers","items":[{"id":"edamame-v","name":"Edamame (V)","price":8,"desc":"Steamed whole soybeans with sea salt and garlic"},{"id":"fresh-rolls-2","name":"Fresh Rolls (2)","price":9,"desc":"Shrimp, cilantro, red onion, mint, romaine, cabbage, carrot, Thai basil in rice paper with hoisin and peanuts"},{"id":"thai-pearl-spring-rolls-3","name":"Thai Pearl Spring Rolls (3)","price":9,"desc":"Fried spring rolls with Thai-seasoned minced chicken, mozzarella cheese, and sweet chili sauce"},{"id":"thai-fried-shrimp","name":"Thai Fried Shrimp","price":14,"desc":"Butter-fried jumbo shrimp marinated in Thai Pearl house sauce"},{"id":"thai-onion-rings-v-avail","name":"Thai Onion Rings (V avail.)","price":13,"desc":"Battered fried yellow onions seasoned with Thai larb seasoning, served with Sriracha mayo"},{"id":"thai-fries","name":"Thai Fries","price":9,"desc":"Hand-cut fries tossed in chili lime seasoning with homemade spicy mayo"},{"id":"crispy-tofu-with-sweet-chili-v","name":"Crispy Tofu with Sweet Chili (V)","price":9,"desc":"Lightly breaded organic non-GMO tofu, fried and topped with sweet chili sauce, Thai basil, and crushed peanuts"},{"id":"grilled-chicken-satay-3","name":"Grilled Chicken Satay (3)","price":14,"desc":"Chicken marinated in turmeric brown sauce, served with peanut sauce and cucumber salad"},{"id":"shrimp-rangoon-4","name":"Shrimp Rangoon (4)","price":9,"desc":"Shrimp mixed with cream cheese, wrapped in wonton skin, with sweet chili sauce"}]},{"id":"salads","name":"Thai Salads","items":[{"id":"thai-pearl-house-salad-v-avail","name":"Thai Pearl House Salad (V avail.)","price":9,"desc":"Romaine, cabbage, carrot, tomato, red onion, bean sprout, peanut, Thai basil, scallion, cilantro, mint, chili-lime dressing"},{"id":"green-papaya-salad-v-avail","name":"Green Papaya Salad (V avail.)","price":14,"sizes":[{"label":"Classic","price":14},{"label":"E-San style","price":15}],"desc":"Shredded unripe papaya, carrot, fresh garlic, tomato, crushed peanuts with Thai chili-lime-fish sauce dressing"},{"id":"larb-salad","name":"Larb Salad","price":15,"desc":"Minced chicken with Thai seasoning, roasted rice, red onion, Thai basil, mint, scallion, cilantro with lime and fish sauce dressing"},{"id":"clear-noodle-salad","name":"Clear Noodle Salad","price":16,"desc":"Minced chicken with clear mung bean noodles, red onion, tomato, carrot, cilantro, peanuts with sweet chili and lime dressing"},{"id":"grilled-beef-salad","name":"Grilled Beef Salad","price":17,"desc":"Grilled marinated beef strips with lettuce, cabbage, carrot, tomato, red onion, bean sprout, Thai basil, mint, chili-lime dressing"}]},{"id":"soups","name":"Soups and Noodle Soups","items":[{"id":"tom-yum","name":"Tom Yum","price":8,"sizes":[{"label":"Cup","price":8},{"label":"Bowl","price":15}],"desc":"Tomato, galangal, lemongrass, kaffir lime leaf, mushroom, carrot, snap pea, onion, cilantro, scallion"},{"id":"tom-kha","name":"Tom Kha","price":9,"sizes":[{"label":"Cup","price":9},{"label":"Bowl","price":16}],"desc":"Coconut milk, galangal, kaffir lime leaf, lemongrass, onion, mushroom, carrot, snap pea, cilantro, scallion"},{"id":"ginger-rice-soup-v-avail","name":"Ginger Rice Soup (V avail.)","price":7,"sizes":[{"label":"Cup","price":7},{"label":"Bowl","price":13}],"desc":"Jasmine rice, fresh ginger, scallion, cilantro, crispy garlic oil"},{"id":"chicken-noodle-soup","name":"Chicken Noodle Soup","price":18,"desc":"Rice noodles, carrot, scallion, bean sprouts, Asian greens, cabbage, crispy garlic, crushed peanuts, cilantro"},{"id":"clear-soup","name":"Clear Soup","price":8,"sizes":[{"label":"Cup","price":8},{"label":"Bowl","price":15}],"desc":"Choice of meat, broccoli, carrot, mushrooms and Asian greens, topped with cilantro, scallions, and garlic oil","protein":true},{"id":"thai-street-noodle-soup","name":"Thai Street Noodle Soup","price":18,"desc":"Clear noodles, sprouts, Asian greens, cabbage, carrot, basil, scallion, cilantro, peanuts, crispy garlic oil with lime"},{"id":"ba-mee-noodles-gf-avail","name":"Ba Mee Noodles (GF avail.)","price":18,"desc":"Egg noodles with Asian greens, cabbage, sprouts, carrot, crushed peanuts, scallion, cilantro, brown sauce, garlic oil"},{"id":"yen-ta-fo-pink-noodle-soup","name":"Yen Ta Fo Pink Noodle Soup","price":18,"desc":"Wide rice noodles in red tofu and bean paste broth with sprouts, Asian greens, cabbage, carrot, scallion, cilantro, crushed peanuts, crispy garlic oil, and lime"}]},{"id":"noodles","name":"Noodle Dishes","items":[{"id":"thai-pearl-pad-thai","name":"Thai Pearl Pad Thai","price":17,"desc":"Stir-fried rice noodles in our old-school Pad Thai sauce with egg, onion, scallion, cabbage, bean sprouts, crushed peanuts","protein":true},{"id":"drunken-noodles-issan","name":"Drunken Noodles Issan","price":20,"desc":"Stir-fried egg noodles (or GF rice noodles) in Thai basil sauce with onion, bell pepper, garlic, carrot, peppercorn, snap pea, mushroom, broccoli, and Thai basil","protein":true},{"id":"pad-see-ew","name":"Pad See-Ew","price":18,"desc":"Wide rice noodles stir-fried in sweet black soy sauce with egg, onion, carrot, cabbage, broccoli, and Asian greens","protein":true},{"id":"pad-woon-sen-noodles","name":"Pad Woon-Sen Noodles","price":19,"desc":"Clear bean thread noodles stir-fried in brown sauce with egg, onion, garlic, tomato, snap pea, bell pepper, carrot, mushroom, broccoli, cabbage, scallion","protein":true}]},{"id":"stir-fry","name":"Stir Frys with Jasmine Rice","items":[{"id":"eggplant-basil","name":"Eggplant Basil","price":21,"desc":"Japanese eggplant, carrot, mushroom, onion, garlic, snap pea, bell pepper, Thai basil in basil sauce","protein":true},{"id":"thai-style-fresh-basil","name":"Thai Style Fresh Basil","price":20,"desc":"Onion, garlic, snap pea, carrot, sweet bell pepper, and Thai basil in basil sauce","protein":true},{"id":"pad-khing-fresh-ginger","name":"Pad Khing 'Fresh Ginger'","price":19,"desc":"Fresh ginger root with onion, bell pepper, snap pea, carrot, mushroom, scallion, broccoli, and cabbage","protein":true},{"id":"pineapple-fried-rice","name":"Pineapple Fried Rice","price":19,"desc":"Stir-fried Jasmine rice with pineapple, egg, onion, carrot, tomato, and scallion","protein":true},{"id":"mixed-vegetable","name":"Mixed Vegetable","price":19,"desc":"Broccoli, carrot, mushroom, snap pea, bean sprout, cabbage, and Asian greens in brown sauce","protein":true},{"id":"thai-fried-rice","name":"Thai Fried Rice","price":18,"desc":"Stir-fried Jasmine rice with egg, garlic, onion, tomato, carrot, Asian green, scallion","protein":true},{"id":"broccoli-and-meat","name":"Broccoli and Meat","price":18,"desc":"Your choice of protein stir-fried with sweet onion and broccoli in brown sauce, topped with garlic","protein":true}]},{"id":"chef-specials","name":"Chef Specials","items":[{"id":"pad-ped-spicy-stir-fry","name":"Pad Ped 'Spicy Stir Fry'","price":28,"desc":"Shrimp and Pork with Japanese eggplant, carrot, mushroom, snap pea, bell pepper, bamboo, and peppercorn in red curry paste sauce with Jasmine rice"},{"id":"secret-wife-stir-fry","name":"Secret Wife Stir Fry","price":26,"desc":"Your choice of protein with lemongrass, kaffir lime leaf, Thai basil, carrot, mushroom, onion, bell pepper, snap pea, and yellow curry powder in brown sauce with Jasmine rice","protein":true},{"id":"seafood-basil-fried-rice","name":"Seafood Basil Fried Rice","price":28,"desc":"Stir-fried Jasmine rice with shrimp, mussels, calamari, Thai basil, egg, broccoli, carrot, mushroom, and onion in basil sauce"},{"id":"wild-ginger-curry-noodles","name":"Wild Ginger Curry Noodles","price":28,"desc":"Your choice of protein stir-fried with aromatics, broccoli, Asian greens, bell peppers, and green beans with wide noodles, finished with green curry and topped with bean sprouts and basil","protein":true},{"id":"thai-pearl-cashew-nut-stir-fry","name":"Thai Pearl Cashew Nut Stir Fry","price":27,"desc":"Your choice of protein stir-fried with garlic, onions, pineapple, carrots, mushrooms, bell peppers, broccoli, and cashew nuts","protein":true}]},{"id":"curries","name":"Curries","items":[{"id":"red-curry","name":"Red Curry","price":23,"desc":"Coconut milk with dry chili paste, peppercorn, mushroom, bell pepper, bamboo shoots, carrot, onion, broccoli, snap pea, and Thai basil","protein":true},{"id":"green-curry","name":"Green Curry","price":22,"desc":"Our famous curry with chili paste, coconut milk, onion, Japanese eggplant, carrot, broccoli, bell pepper, mushroom, snap pea, and Thai basil","protein":true},{"id":"pineapple-curry","name":"Pineapple Curry","price":23,"desc":"Sweet red curry with coconut milk, pineapple, mushroom, snap pea, tomato, carrot, bell pepper, onion, broccoli, and Thai basil","protein":true},{"id":"vegan-curry","name":"Vegan Curry","price":20,"desc":"Curry of the day with onion, Thai herbs, chili paste, bell pepper, kaffir lime leaf, carrot, broccoli, Thai basil, mushroom, snap peas, and Asian greens"},{"id":"paneang-curry","name":"Paneang Curry","price":21,"desc":"A sweeter curry made with coconut milk, Thai herbs, chili paste, onion, bell pepper, kaffir lime leaf, carrot, broccoli, Thai basil, mushroom, snap pea, topped with crushed peanuts","protein":true},{"id":"massaman-curry","name":"Massaman Curry","price":20,"desc":"Curry of tamarind, cumin, turmeric, and coconut milk with carrots, onion, and potato, topped with crushed peanuts and crispy onion","protein":true}]},{"id":"kids","name":"Kids Menu","items":[{"id":"kids-noodles","name":"Kids Noodles","price":10,"desc":"Chicken, onion, egg, broccoli, and carrot"},{"id":"kids-fried-rice","name":"Kids Fried Rice","price":10,"desc":"Chicken, onion, egg, broccoli, and carrot"}]},{"id":"sides","name":"Sides","items":[{"id":"white-rice","name":"White Rice","price":3},{"id":"fried-rice","name":"Fried Rice","price":6},{"id":"noodles","name":"Noodles","price":3,"desc":"Rice, wide rice, egg, or clear noodles"},{"id":"soup-broth","name":"Soup Broth","price":4,"desc":"Chicken or Vegetable"},{"id":"thai-fried-egg","name":"Thai Fried Egg","price":3},{"id":"extra-curry-sauce","name":"Extra Curry Sauce","price":7,"desc":"Green, Red, Paneang, Massaman, or Vegan"},{"id":"sauces","name":"Sauces","price":1.5,"desc":"Sweet Chili, Hoisin, Sriracha mayo, or Peanut Satay"}]}];
+  const TZ = "America/New_York";
+  const KEY = "tp-kitchen-v4";
+  const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const $ = (s, r = document) => r.querySelector(s);
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+  /* ---------- clock: New York time, and a dinner rush if you open it at 11 PM ---------- */
+  const nyParts = (ms) => {
+    const o = {};
+    new Intl.DateTimeFormat("en-US", { timeZone: TZ, hour12: false, year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" })
+      .formatToParts(new Date(ms)).forEach((p) => (o[p.type] = p.value));
+    return { day: `${o.year}-${o.month}-${o.day}`, min: (+o.hour % 24) * 60 + +o.minute };
+  };
+  let OFFSET = 0;
+  { const n = nyParts(Date.now()); if (n.min < 750 || n.min > 1200) OFFSET = (1095 - n.min) * 60000; }
+  const now = () => nyParts(Date.now() + OFFSET);
+  const noon = (day) => new Date(day + "T12:00:00Z");
+  const addDays = (day, n) => { const d = noon(day); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); };
+  const dow = (day) => noon(day).getUTCDay();
+  const dayLabel = (day) => noon(day).toLocaleDateString("en-US", { timeZone: "UTC", weekday: "short", month: "short", day: "numeric" });
+  const shortDay = (day) => noon(day).toLocaleDateString("en-US", { timeZone: "UTC", month: "short", day: "numeric" });
+  const clockStr = (m) => `${Math.floor(m / 60) % 12 || 12}:${String(m % 60).padStart(2, "0")} ${m < 720 ? "AM" : "PM"}`;
+  const dur = (m) => (m < 60 ? `${m} min` : `${Math.floor(m / 60)}h${m % 60 ? ` ${m % 60}m` : ""}`);
+  const money = (v) => "$" + Math.round(v).toLocaleString("en-US");
+  const money2 = (v) => "$" + v.toFixed(2);
+
+  /* ---------- sample data, built from their real menu ---------- */
+  const rng = (seed) => () => { seed |= 0; seed = (seed + 0x6D2B79F5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+  const hash = (s) => parseInt(String(s).replace(/\D/g, ""), 10) || 1;
+  const pick = (r, a) => a[Math.floor(r() * a.length)];
+  const WEIGHT = { noodles: 3, "stir-fry": 3, curries: 3, "chef-specials": 1.5, appetizers: 1.5, soups: 0.7, salads: 0.5, kids: 0.2, sides: 0.8 };
+  const POOL = MENU.flatMap((c) => c.items.map((i) => ({ i, c: c.id, w: WEIGHT[c.id] ?? 1 })));
+  const POOL_W = POOL.reduce((t, p) => t + p.w, 0);
+  const wpick = (r, only) => {
+    const list = only ? POOL.filter((p) => only.includes(p.c)) : POOL;
+    let x = r() * list.reduce((t, p) => t + p.w, 0);
+    for (const p of list) { x -= p.w; if (x <= 0) return p; }
+    return list[0];
+  };
+  const FIRST = ["Maya", "Jordan", "Chris", "Dana", "Luis", "Priya", "Tom", "Hannah", "Marcus", "Ellie", "Sam", "Nora", "Owen", "Grace", "Devon", "Rosa", "Eli", "Tess", "Andre", "Kim", "Wes", "Lena", "Ben", "Ivy", "Carlos", "Jill", "Noah", "Aria", "Pete", "Mina"];
+  const STREETS = ["Haywood Rd", "Patton Ave", "Brevard Rd", "Emma Rd", "Amboy Rd", "Louisiana Ave", "Burton St", "Craven St", "Sulphur Springs Rd", "Willow Rd"];
+  const PROTEIN = ["Chicken", "Chicken", "Tofu", "Shrimp", "Shrimp", "Beef"];
+  const SPICE = ["Mild", "Medium", "Medium", "Hot", "Thai hot"];
+
+  function makeLines(r) {
+    const lines = [];
+    const add = (p) => {
+      const it = p.i;
+      let price = it.price, size = "";
+      if (it.sizes && it.sizes.length) { const z = pick(r, it.sizes); size = z.label; price = z.price; }
+      const sub = [size, it.protein ? pick(r, PROTEIN) : "", it.protein || p.c === "curries" || p.c === "stir-fry" ? pick(r, SPICE) : ""].filter(Boolean).join(", ");
+      lines.push({ q: r() < 0.12 ? 2 : 1, n: it.name.replace(/\s*\((V|V avail\.)\)/, ""), s: sub, p: price });
+    };
+    const mains = 1 + (r() < 0.55) + (r() < 0.25) + (r() < 0.08);
+    for (let i = 0; i < mains; i++) add(wpick(r, ["noodles", "stir-fry", "curries", "chef-specials", "soups"]));
+    if (r() < 0.45) add(wpick(r, ["appetizers"]));
+    if (r() < 0.3) add(wpick(r, ["sides"]));
+    return lines;
+  }
+  const total = (lines) => Math.round(lines.reduce((t, l) => t + l.p * l.q, 0) * 100) / 100;
+  function makeOrder(r, day, at, status, type) {
+    const lines = makeLines(r);
+    const delivery = (type ?? (r() < 0.36 ? "delivery" : "pickup")) === "delivery";
+    return {
+      id: "", num: 0, day, at, status,
+      due: at + (delivery ? 38 : 20) + Math.floor(r() * 10),
+      type: delivery ? "delivery" : "pickup",
+      name: pick(r, FIRST) + " " + String.fromCharCode(65 + Math.floor(r() * 26)) + ".",
+      phone: `(828) 555-${String(100 + Math.floor(r() * 899)).padStart(4, "0")}`,
+      addr: delivery ? `${100 + Math.floor(r() * 880)} ${pick(r, STREETS)}` : "",
+      lines, total: total(lines), note: "",
+    };
+  }
+  function genDay(day, r, maxMin, scale, age) {
+    const base = [7, 5, 6, 7, 8, 12, 13][dow(day)];
+    const n = Math.max(0, Math.round(base * (1 - age * 0.0016) * (0.78 + r() * 0.44) * scale));
+    const out = [];
+    for (let i = 0; i < n; i++) {
+      const b = (r() + r() + r()) / 3;
+      let at = Math.round(r() < 0.36 ? 750 + (b - 0.5) * 150 : 1095 + (b - 0.5) * 220);
+      if (at > maxMin) at = Math.floor(720 + r() * Math.max(10, maxMin - 720));
+      out.push(makeOrder(r, day, at, "done"));
+    }
+    out.sort((a, b) => a.at - b.at);
+    out.forEach((o, k) => { o.num = k + 1; o.id = `${day}-${o.num}`; });
+    return out;
+  }
+
+
+
+  /* ---------- reservations and events samples ---------- */
+  const LAST = ["Simone", "Parker", "Nguyen", "Brooks", "Ramos", "Hale", "Ward", "Chen", "Foster", "Lane"];
+  const RNOTES = ["Birthday dinner", "High chair please", "Booth if possible", "One guest is gluten free", "Anniversary", ""];
+  function genRes(day, r, k) {
+    const n = Math.round([3, 2, 3, 3, 4, 6, 7][dow(day)] * (0.8 + r() * 0.5));
+    const out = [];
+    for (let i = 0; i < n; i++) {
+      const first = pick(r, FIRST), last = pick(r, LAST);
+      out.push({ id: `r${day}-${i}`, day, at: 720 + 15 * Math.floor(r() < 0.3 ? r() * 8 : 20 + r() * 14), party: pick(r, [2, 2, 2, 3, 4, 4, 5, 6]), name: `${first} ${last}`, phone: `(828) 555-${String(1000 + Math.floor(r() * 8999))}`, note: r() < 0.4 ? pick(r, RNOTES) : "", status: "confirmed" });
+    }
+    out.sort((a, b) => a.at - b.at);
+    return out;
+  }
+  const ENOTES = { catering: ["Office lunch, a few vegetarians", "Rehearsal dinner, needs delivery", "Graduation party, mostly pad thai", "Team offsite, needs it by 11:30"], party: ["50th birthday, back section if possible", "Book club, just a long table", "Retirement party, may bring a cake", "Baby shower brunch"] };
+  function genEvents(day, r) {
+    return [["catering", "new", 9], ["party", "new", 16], ["catering", "confirmed", 5], ["party", "confirmed", 12], ["catering", "confirmed", 20]].map(([type, status, ahead], i) => ({
+      id: `e${day}-${i}`, type, status, name: `${pick(r, FIRST)} ${pick(r, LAST)}`, phone: `(828) 555-${String(1000 + Math.floor(r() * 8999))}`,
+      date: addDays(day, ahead), at: 660 + 30 * Math.floor(r() * 16), guests: type === "catering" ? pick(r, [20, 30, 40, 60]) : pick(r, [12, 16, 20, 25]), how: type === "catering" ? (r() < 0.5 ? "Delivery" : "Pickup") : "", note: pick(r, ENOTES[type]),
+    }));
+  }
+
+  const T0 = now().day;
+  const HIST = [];
+  for (let age = 100; age >= 1; age--) { const d = addDays(T0, -age); HIST.push(...genDay(d, rng(hash(d) + 7), 1245, 1, age)); }
+
+  function seedToday() {
+    const { day, min } = now();
+    const r = rng(hash(day) + 3);
+    const scale = Math.min(1, Math.max(0.05, (min - 45 - 720) / 525));
+    const orders = genDay(day, r, min - 45, scale, 0);
+    [["confirmed", "pickup", min - 20, 8], ["new", "pickup", min - 1, 24], ["new", "delivery", min - 3, 38]].forEach(([status, type, at, rel], k) => {
+      const o = makeOrder(r, day, at, status, type);
+      o.due = min + rel; o.num = orders.length + 1; o.id = `${day}-${o.num}`;
+      if (k === 1) o.note = "Please no peanuts";
+      orders.push(o);
+    });
+    const res = [];
+    for (let k = 0; k < 7; k++) {
+      const d = addDays(day, k), list = genRes(d, rng(hash(day) + 50 + k), k);
+      if (k < 3 && list.length) { const f = list.find((x) => k > 0 || x.at > min) || list[list.length - 1]; f.status = "new"; }
+      res.push(...list);
+    }
+    return { day, paused: false, orders, res, ev: genEvents(day, rng(hash(day) + 90)) };
+  }
+  let S;
+  const store = {
+    load() { try { const x = JSON.parse(localStorage.getItem(KEY)); if (x && x.day === now().day && x.res && x.ev) return x; } catch (e) {} return null; },
+    save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} },
+    wipe() { try { localStorage.removeItem(KEY); } catch (e) {} },
+  };
+  S = store.load() || seedToday();
+
+  /* ---------- state ---------- */
+  const V = { tab: "orders", day: now().day, rday: now().day, type: "all", range: "7", mode: "week", zoom: null, fresh: null, noteFor: null, flash: null, armed: null, doneOpen: false, open: new Set(), anim: true };
+  const sum = (list) => list.reduce((t, o) => t + o.total, 0);
+  const weekDays = () => { const T = now().day; const mon = addDays(T, -((dow(T) + 6) % 7)); return [...Array(7)].map((_, k) => addDays(mon, k)); };
+  const ordersOn = (d) => (d === now().day ? S.orders : HIST.filter((o) => o.day === d)).filter((o) => o.status !== "declined" && (V.type === "all" || o.type === V.type));
+  const typeLabel = (o) => (o.type === "delivery" ? "Delivery" : "Pickup");
+  const CHECK = '<svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M3.5 9.5l3.7 3.5L14.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  const attr = (k, id) => `data-k="${k}" data-id="${id}"`;
+  const vt = (id) => `style="view-transition-name:t-${id};view-transition-class:tk"`;
+
+  /* one card pattern for orders, reservations and events */
+  function confirmRow(k, x, label) {
+    return x.status === "new"
+      ? `<div class="c-act"><button class="btn big" data-act="confirm" ${attr(k, x.id)}>${label || "Confirm"}</button><button class="link ${V.armed === x.id ? "armed" : ""}" data-act="decline" ${attr(k, x.id)}>${V.armed === x.id ? "Tap again" : "Decline"}</button></div>`
+      : "";
+  }
+  const noteBox = (k, x) => V.noteFor === x.id
+    ? `<form class="nform" data-k="${k}" data-id="${x.id}"><input name="n" value="${esc(x.note || "")}" placeholder="Add a note" autocomplete="off"><button class="btn quiet" type="submit">Save</button></form>`
+    : `${x.note ? `<p class="c-note">${esc(x.note)}</p>` : ""}<button class="link nlink" data-act="note" ${attr(k, x.id)}>${x.note ? "Edit note" : "Add note"}</button>`;
+  const foot = (k, x) => `<p class="c-foot">${esc(x.phone)}${x.num ? ` &middot; #${x.num}` : ""}</p>`;
+  function orderCard(o) {
+    const needs = o.status === "new";
+    const act = needs ? confirmRow("o", o, "Confirm order")
+      : `<div class="c-act"><span class="ok">${CHECK}Confirmed</span><span class="sp"></span><button class="btn quiet" data-act="done" ${attr("o", o.id)}>${o.type === "delivery" ? "Delivered" : "Picked up"}</button></div>`;
+    return `<article class="card ${needs ? "needs" : ""} ${V.fresh === o.id ? "arrive" : ""} ${V.flash === o.id ? "flash" : ""}" ${vt(o.id)}>
+      <div class="c-top"><div><h3 class="c-name">${esc(o.name)}</h3><p class="c-kind"><i class="${o.type}"></i>${typeLabel(o)} at ${clockStr(o.due)}</p></div><p class="c-total num">${money2(o.total)}</p></div>
+      <ul class="c-lines">${o.lines.map((l) => `<li>${l.q}&times; ${esc(l.n)}${l.s ? `<span>${esc(l.s)}</span>` : ""}</li>`).join("")}</ul>
+      ${o.addr ? `<p class="c-meta">Deliver to ${esc(o.addr)}</p>` : ""}${noteBox("o", o)}${act}${foot("o", o)}</article>`;
+  }
+  const rowsOf = (list) => list.map((o) => `<div class="row"><span class="t">${clockStr(o.due)}</span><span><b>${esc(o.name)}</b><span class="k">${typeLabel(o)}</span></span><span class="a num">${money2(o.total)}</span><p class="it">${esc(o.lines.map((l) => (l.q > 1 ? l.q + "x " : "") + l.n).join(", "))}</p></div>`).join("");
+
+  /* shared day strip */
+  function strip(days, sel, act, flagged, T) {
+    return `<div class="strip" role="group" aria-label="Day">${days.map((d) => `<button class="${d < T ? "past" : ""} ${d === T ? "today" : ""}" aria-pressed="${d === sel}" data-act="${act}" data-d="${d}"><small>${noon(d).toLocaleDateString("en-US", { timeZone: "UTC", weekday: "short" })}</small><b>${noon(d).getUTCDate()}</b>${flagged(d) ? '<i class="dot"></i>' : ""}</button>`).join("")}</div>`;
+  }
+  const head = (d, T, title) => `<h1 class="title">${d === T ? (title || "Today") : noon(d).toLocaleDateString("en-US", { timeZone: "UTC", weekday: "long" })}</h1><p class="sub">${noon(d).toLocaleDateString("en-US", { timeZone: "UTC", weekday: "long", month: "long", day: "numeric" })}</p>`;
+  const needChip = (n, w = "order") => (n ? `<button class="alert" data-act="review"><span class="ct">${n}</span><span class="tx"><b>${w}${n === 1 ? "" : "s"} to confirm</b><small>Tap to review</small></span><svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M6.5 3.5L12 9l-5.5 5.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>` : "");
+
+  /* ---------- views ---------- */
+  function weekView() {
+    const T = now().day, days = weekDays(), all = days.flatMap((d) => ordersOn(d)), nNew = S.orders.filter((o) => o.status === "new").length;
+    return `<h1 class="title">This week</h1><p class="sub">${all.length} orders, ${money(sum(all))}</p>
+      ${strip(days, V.wk || T, "wkpick", (x) => x === T && nNew > 0, T)}
+      <div class="tools"><div class="seg" role="group" aria-label="Type">${[["all", "All"], ["pickup", "Pickup"], ["delivery", "Delivery"]].map(([id, l]) => `<button aria-pressed="${V.type === id}" data-act="otype" data-v="${id}">${l}</button>`).join("")}</div><span><button class="link" data-act="add">+ Add order</button></span></div>
+      <div class="hs" id="hs">${days.map((d) => tile(d, T)).join("")}</div>`;
+  }
+  function tile(d, T) {
+    const l = ordersOn(d).sort((a, b) => a.due - b.due), np = d === T ? S.orders.filter((o) => o.status === "new").length : 0;
+    const tot = sum(l), pk = l.filter((o) => o.type === "pickup").length, dl = l.length - pk;
+    const hrs = {}; l.forEach((o) => { const h = Math.floor(o.due / 60); hrs[h] = (hrs[h] || 0) + 1; });
+    const peak = Object.keys(hrs).sort((a, b) => hrs[b] - hrs[a])[0];
+    const items = {}; l.forEach((o) => o.lines.forEach((x) => { items[x.n] = (items[x.n] || 0) + x.q; }));
+    const top = Object.keys(items).sort((a, b) => items[b] - items[a])[0];
+    const mark = (o) => (o.status === "new" ? '<i class="st new"></i>' : '<i class="st ok"></i>');
+    const dayName = d === T ? "Today" : noon(d).toLocaleDateString("en-US", { timeZone: "UTC", weekday: "long" });
+    const hr = [12, 13, 14, 15, 16, 17, 18, 19, 20], cnt = hr.map((h) => (hrs[h] || 0)), mx = Math.max(1, ...cnt);
+    const ini = (n) => n.split(" ").map((w) => w[0]).join("").slice(0, 2);
+    return `<button class="card day-tile ${np ? "needs" : ""} ${d === T ? "is-today" : ""}" data-act="zoom" data-d="${d}" data-zoom="${d}">
+      <div class="c-top"><div><h3 class="c-name">${dayName}</h3><p class="c-kind">${noon(d).toLocaleDateString("en-US", { timeZone: "UTC", month: "long", day: "numeric" })}</p></div><div class="tt"><p class="c-total num">${l.length ? money(tot) : "$0"}</p><small>${l.length} ${l.length === 1 ? "order" : "orders"}${l.length ? ` &middot; ${money2(tot / l.length)} avg` : ""}</small></div></div>
+      ${np ? `<p class="need tl"><i></i>${np} waiting for you</p>` : ""}
+      ${l.length ? `<div class="spark" aria-hidden="true">${cnt.map((c, i) => `<span class="${hr[i] == peak ? "pk" : ""}"><i style="height:${Math.max(6, (c / mx) * 100)}%"></i></span>`).join("")}</div>
+      <div class="axis"><span>12p</span><span>4p</span><span>8p</span></div>
+      <div class="facts2"><span><i class="pickup"></i>${pk} pickup</span><span><i class="delivery"></i>${dl} delivery</span></div>
+      <ul class="c-lines">${l.slice(0, 4).map((o) => `<li><span class="av ${o.type}">${esc(ini(o.name))}</span><span class="nm"><b>${esc(o.name)}</b><em>${clockStr(o.due)}${o.status === "new" ? " &middot; <u>Needs confirm</u>" : ""}</em></span><span class="am">${money2(o.total)}</span></li>`).join("")}${l.length > 4 ? `<li class="more">+ ${l.length - 4} more</li>` : ""}</ul>
+      <div class="tfoot"><span><small>Top item</small><b>${top ? esc(top) : ""}</b></span><span class="r"><small>Busiest</small><b>${peak ? clockStr(peak * 60).replace(":00 ", " ") : ""}</b></span></div>`
+      : `<p class="empty">${d > T ? "No orders yet. They appear here on the day." : "No orders this day."}</p>`}
+      <span class="open">Open day <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 2.5L9.5 7 5 11.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>`;
+  }
+  function ordersView() {
+    if (V.mode === "week") return weekView();
+    const { day: T } = now(), d = V.day;
+    const list = ordersOn(d), act = list.filter((o) => o.status === "new" || o.status === "confirmed").sort((a, b) => (a.status === "new" ? 0 : 1) - (b.status === "new" ? 0 : 1) || a.due - b.due);
+    const fin = list.filter((o) => o.status === "done").sort((a, b) => b.due - a.due);
+    const nNew = list.filter((o) => o.status === "new").length;
+    const past = d !== T, all = past ? list.slice().sort((a, b) => a.due - b.due) : [];
+    return `<button class="link back" data-act="week">&lsaquo; Week</button><div data-zoom="${d}">${head(d, T)}</div>
+      <p class="chips">${needChip(nNew)}<span>${list.length ? `${list.length} orders, ${money(sum(list))}` : past || d > T ? "" : "No orders yet"}</span></p>
+      ${strip(weekDays(), d, "oday", (x) => x === T && S.orders.some((o) => o.status === "new"), T)}
+      <div class="tools"><div class="seg" role="group" aria-label="Type">${[["all", "All"], ["pickup", "Pickup"], ["delivery", "Delivery"]].map(([id, l]) => `<button aria-pressed="${V.type === id}" data-act="otype" data-v="${id}">${l}</button>`).join("")}</div>
+        ${d === T ? '<span><button class="link" data-act="add">+ Add order</button> <button class="link" data-act="test" data-k="o">Test order</button></span>' : ""}</div>
+      ${past ? (all.length ? `<div class="list">${rowsOf(all)}</div>` : `<p class="none">${d > T ? "Orders show up here on the day." : "No orders this day."}</p>`)
+        : `${act.length ? `<div class="stack">${act.map(orderCard).join("")}</div>` : `<p class="none">${S.paused ? "Online orders are paused." : "All caught up. New orders appear here."}</p>`}
+           ${fin.length ? `<details class="done" id="doneList" ${V.doneOpen ? "open" : ""}><summary>Done <span>${fin.length}</span></summary><div class="list">${rowsOf(fin)}</div></details>` : ""}`}`;
+  }
+
+  function resView() {
+    const { day: T } = now(), d = V.rday, days = [...Array(7)].map((_, k) => addDays(T, k));
+    const list = S.res.filter((x) => x.day === d && x.status !== "declined").sort((a, b) => (a.status === "new" ? 0 : 1) - (b.status === "new" ? 0 : 1) || a.at - b.at);
+    const nNew = list.filter((x) => x.status === "new").length;
+    const guests = list.filter((x) => x.status === "confirmed").reduce((t, x) => t + x.party, 0);
+    return `${head(d, T, "Today")}
+      <p class="chips">${needChip(nNew, "booking")}<span>${list.filter((x) => x.status === "confirmed").length} tables, ${guests} guests</span></p>
+      ${strip(days, d, "rday", (x) => S.res.some((r) => r.day === x && r.status === "new"), T)}
+      <div class="tools"><span></span><button class="link" data-act="test" data-k="r">Send a test booking</button></div>
+      ${list.length ? `<div class="stack">${list.map((x) => `<article class="card ${x.status === "new" ? "needs" : ""} ${V.fresh === x.id ? "arrive" : ""} ${V.flash === x.id ? "flash" : ""}" ${vt(x.id)}>
+        <div class="c-top"><div><h3 class="c-name">${esc(x.name)}</h3><p class="when" style="margin-top:10px">${clockStr(x.at).replace(" ", "<small>")}</small></p></div><p class="c-total num">${x.party}<small style="font-size:15px;color:var(--muted);font-weight:400;letter-spacing:0"> guests</small></p></div>
+        ${noteBox("r", x)}
+        ${x.status === "new" ? confirmRow("r", x, "Confirm table") : `<div class="c-act"><span class="ok">${CHECK}Confirmed</span></div>`}<p class="c-foot">${esc(x.phone)}</p></article>`).join("")}</div>`
+        : `<p class="none">No reservations for this day.</p>`}`;
+  }
+
+  function evView() {
+    const T = now().day, list = S.ev.filter((x) => x.status !== "declined").sort((a, b) => (a.status === "new" ? 0 : 1) - (b.status === "new" ? 0 : 1) || a.date.localeCompare(b.date));
+    const nNew = list.filter((x) => x.status === "new").length;
+    return `<h1 class="title">Catering &amp; parties</h1><p class="sub">Call them back, then confirm.</p>
+      <p class="chips">${needChip(nNew, "inquiry").replace("inquirys", "inquiries")}<span>${list.filter((x) => x.status === "confirmed").length} booked</span></p>
+      <div class="tools"><span></span><button class="link" data-act="test" data-k="e">Send a test inquiry</button></div>
+      <div class="stack">${list.map((x) => {
+        const days = Math.round((noon(x.date) - noon(T)) / 864e5);
+        return `<article class="card ${x.status === "new" ? "needs" : ""} ${V.fresh === x.id ? "arrive" : ""} ${V.flash === x.id ? "flash" : ""}" ${vt(x.id)}>
+          <div class="c-top"><div><p class="c-kind">${x.type === "catering" ? "Catering" : "Private party"} &middot; ${x.guests} guests${x.how ? " &middot; " + x.how : ""}</p><h3 class="c-name">${esc(x.name)}</h3></div><p class="c-total num">${shortDay(x.date)}</p></div>
+          <p class="c-meta">${clockStr(x.at)}, ${days <= 1 ? (days === 0 ? "today" : "tomorrow") : `in ${days} days`} &middot; ${esc(x.phone)}</p><p class="c-note" style="color:var(--ink-2)">${esc(x.note)}</p>
+          ${x.status === "new" ? `<div class="c-act"><a class="btn quiet" href="tel:${x.phone.replace(/\D/g, "")}">Call</a><button class="btn big" data-act="confirm" ${attr("e", x.id)}>Confirm</button><button class="link ${V.armed === x.id ? "armed" : ""}" data-act="decline" ${attr("e", x.id)}>${V.armed === x.id ? "Tap again" : "Decline"}</button></div>` : `<div class="c-act"><span class="ok">${CHECK}Confirmed</span></div>`}</article>`;
+      }).join("")}</div>`;
+  }
+
+  let BUCKETS = [];
+  const RNG = { 1: "today", 7: "this week", 30: "this month" };
+  function moneyView() {
+    const N = +V.range, T = now().day;
+    const all = HIST.concat(S.orders.filter((o) => o.status !== "declined")).filter((o) => o.day >= addDays(T, -(N - 1)) && o.day <= T);
+    const tot = sum(all), n = all.length, pk = sum(all.filter((o) => o.type === "pickup")), dl = tot - pk;
+    const by = new Map(); all.forEach((o) => by.set(o.day, (by.get(o.day) || { v: 0, n: 0 }, by.get(o.day) || (by.set(o.day, { v: 0, n: 0 }), by.get(o.day)))));
+    all.forEach((o) => { const b = by.get(o.day); b.v += o.total; b.n++; });
+    BUCKETS = N === 1 ? [] : [...Array(N)].map((_, k) => { const d = addDays(T, -(N - 1 - k)), b = by.get(d) || { v: 0, n: 0 }; return { name: dayLabel(d), label: N === 7 ? noon(d).toLocaleDateString("en-US", { timeZone: "UTC", weekday: "short" }) : shortDay(d), ...b }; });
+    const max = Math.max(1, ...BUCKETS.map((b) => b.v)), many = BUCKETS.length > 10, step = many ? 5 : 1;
+    const days = [...by.keys()].sort().reverse();
+    return `<h1 class="title">Financial</h1>
+      <div class="tools" style="margin-top:24px"><div class="seg" role="group" aria-label="Range">${[["1", "Today"], ["7", "This week"], ["30", "This month"]].map(([id, l]) => `<button aria-pressed="${V.range === id}" data-act="range" data-v="${id}">${l}</button>`).join("")}</div></div>
+      <p class="hero" data-cu="${tot}" data-f="money">${money(tot)}</p>
+      <p class="facts"><b data-cu="${n}" data-f="int">${n}</b> orders &middot; <b>${n ? money2(tot / n) : "$0.00"}</b> average &middot; Pickup <b>${money(pk)}</b> &middot; Delivery <b>${money(dl)}</b></p>
+      ${N === 1 ? "" : `<div class="bks ${many ? "many" : ""}" role="group" aria-label="Sales by day">${BUCKETS.map((b, i) => `<button class="bk ${i === BUCKETS.length - 1 ? "sel" : ""}" style="--j:${i}" data-act="bar" data-i="${i}" aria-label="${esc(b.name)}: ${money(b.v)}"><i style="height:${(b.v / max) * 100}%"></i></button>`).join("")}</div>
+        <div class="ticks ${many ? "many" : ""}">${BUCKETS.map((b, i) => `<div>${(BUCKETS.length - 1 - i) % step === 0 ? `<span>${esc(b.label)}</span>` : ""}</div>`).join("")}</div>
+        <p class="cap" id="cap" style="margin-top:16px">${capText(BUCKETS.length - 1)}</p>`}
+      <h2 class="h3">Past orders</h2>
+      ${days.length ? days.map((d, idx) => { const rows = all.filter((o) => o.day === d).sort((a, b) => b.due - a.due); return `<details class="day" data-day="${d}" ${V.open.has(d) || (idx === 0 && !V.open.size) ? "open" : ""}><summary><b>${d === T ? "Today" : dayLabel(d)}</b><span></span><span class="m">${rows.length} orders &nbsp; <span class="num" style="color:var(--ink);font-size:17px">${money(sum(rows))}</span></span></summary><div class="rows">${rowsOf(rows)}</div></details>`; }).join("") : `<p class="none">No orders yet.</p>`}`;
+  }
+  const capText = (i) => (BUCKETS[i] ? `<b>${esc(BUCKETS[i].name)}</b>, ${money(BUCKETS[i].v)} from ${BUCKETS[i].n} orders` : "");
+
+  /* ---------- render ---------- */
+  function render() {
+    const setB = (el, n) => { const was = el.textContent; el.hidden = !n; el.textContent = n; if (n && was !== String(n) && !calm) { el.classList.remove("pop"); void el.offsetWidth; el.classList.add("pop"); } };
+    setB($("#b-orders"), S.orders.filter((o) => o.status === "new").length);
+    setB($("#b-res"), S.res.filter((x) => x.status === "new").length);
+    setB($("#b-ev"), S.ev.filter((x) => x.status === "new").length);
+    $("#fab").classList.toggle("off", V.tab !== "orders");
+    $("#online").setAttribute("aria-checked", String(!S.paused));
+    $("#onlineText").innerHTML = S.paused ? "Online orders <b>paused</b>" : "Online orders <b>on</b>";
+    for (const v of ["orders", "res", "ev", "money"]) $("#t-" + v).setAttribute("aria-selected", String(V.tab === v));
+    const view = $("#view");
+    view.setAttribute("aria-labelledby", "t-" + V.tab);
+    view.innerHTML = { orders: ordersView, res: resView, ev: evView, money: moneyView }[V.tab]();
+    if (V.anim && !calm) { view.classList.remove("enter"); void view.offsetWidth; view.classList.add("enter"); } else view.classList.remove("enter");
+    if (V.zoom) { const z = view.querySelector(`[data-zoom="${V.zoom}"]`); if (z) z.style.viewTransitionName = "dayzoom"; }
+    V.anim = false; V.fresh = null; V.flash = null;
+    stagger(view); sliders(); if (V.tab === "orders" && V.mode === "week") { const hs = $("#hs"), i = weekDays().indexOf(V.wk || now().day); if (hs && i > 0) hs.scrollLeft = hs.children[i].offsetLeft - hs.firstElementChild.offsetLeft; } counters(view); reveal(view);
+  }
+
+  /* ---------- motion helpers ---------- */
+  const THUMB = {};
+  const place = (th, p) => { th.style.transform = `translate(${p.x}px, ${p.y}px)`; th.style.width = p.w + "px"; th.style.height = p.h + "px"; };
+  const rectOf = (el) => ({ x: el.offsetLeft, y: el.offsetTop, w: el.offsetWidth, h: el.offsetHeight });
+  function sliders() {
+    document.querySelectorAll("#view .seg, #view .strip").forEach((box, i) => {
+      const on = box.querySelector('[aria-pressed="true"]'); if (!on) return;
+      const key = V.tab + i, th = document.createElement("span"); th.className = "thumb"; box.prepend(th);
+      const next = rectOf(on), prev = THUMB[key];
+      place(th, prev && !calm ? prev : next);
+      if (prev && !calm) { void th.offsetWidth; th.classList.add("go"); place(th, next); }
+      THUMB[key] = next;
+    });
+    ink();
+  }
+  function fit() {
+    document.querySelectorAll("#view .seg, #view .strip").forEach((box, i) => { const th = box.querySelector(".thumb"), on = box.querySelector('[aria-pressed="true"]'); if (th && on) { th.classList.remove("go"); place(th, rectOf(on)); THUMB[V.tab + i] = rectOf(on); } });
+    ink();
+  }
+  let inkReady = false;
+  function ink() {
+    const bar = $("#ink"), sel = $('.tab[aria-selected="true"]'); if (!bar || !sel) return;
+    bar.style.width = sel.offsetWidth + "px"; bar.style.transform = `translateX(${sel.offsetLeft}px)`;
+    if (!inkReady) requestAnimationFrame(() => { bar.classList.add("ready"); inkReady = true; });
+  }
+  function stagger(root) {
+    const seen = new Map();
+    root.querySelectorAll(":scope > *, .card, .row, .day").forEach((el) => { const n = seen.get(el.parentElement) || 0; seen.set(el.parentElement, n + 1); el.style.setProperty("--j", Math.min(n, 10)); });
+  }
+  function counters(root) {
+    if (calm) return;
+    const F = { money, int: (v) => String(Math.round(v)) };
+    root.querySelectorAll("[data-cu]").forEach((el) => {
+      const end = +el.dataset.cu, f = F[el.dataset.f] || F.int, t0 = performance.now() + 160;
+      const step = (ts) => { const p = Math.max(0, Math.min(1, (ts - t0) / 1100)); el.textContent = f(end * (1 - Math.pow(1 - p, 4))); if (p < 1) requestAnimationFrame(step); };
+      el.textContent = f(0); requestAnimationFrame(step);
+    });
+  }
+  const io = !calm && "IntersectionObserver" in window ? new IntersectionObserver((es) => es.forEach((e) => {
+    if (!e.isIntersecting) return;
+    const el = e.target; io.unobserve(el); el.classList.remove("pre"); setTimeout(() => el.classList.remove("rvl"), 1000);
+  }), { rootMargin: "0px 0px -8% 0px" }) : null;
+  function reveal(root) {
+    if (!io) return;
+    root.querySelectorAll(".card, .list, .day, .done, .bks").forEach((el) => { if (el.getBoundingClientRect().top > innerHeight * 0.92) { el.classList.add("pre", "rvl"); io.observe(el); } });
+  }
+  const smooth = (fn) => (document.startViewTransition && !calm ? document.startViewTransition(fn) : fn());
+  const commit = () => { store.save(); smooth(render); };
+  addEventListener("scroll", () => $(".top").classList.toggle("scrolled", scrollY > 4), { passive: true });
+  addEventListener("resize", fit);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+
+  /* ---------- actions ---------- */
+  let toastT;
+  const toast = (m) => { const t = $("#toast"); t.textContent = m; t.classList.add("on"); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove("on"), 2800); };
+  let AC;
+  function chime() {
+    try {
+      AC = AC || new (window.AudioContext || window.webkitAudioContext)();
+      const t = AC.currentTime;
+      [[660, 0], [880, 0.16], [1175, 0.32]].forEach(([f, d]) => {
+        const o = AC.createOscillator(), g = AC.createGain(); o.type = "sine"; o.frequency.value = f;
+        g.gain.setValueAtTime(0, t + d); g.gain.linearRampToValueAtTime(0.14, t + d + 0.02); g.gain.exponentialRampToValueAtTime(0.001, t + d + 0.6);
+        o.connect(g).connect(AC.destination); o.start(t + d); o.stop(t + d + 0.65);
+      });
+    } catch (e) {}
+  }
+  const POOLS = () => ({ o: S.orders, r: S.res, e: S.ev });
+  const find = (el) => POOLS()[el.dataset.k].find((x) => x.id === el.dataset.id);
+  const first = (x) => x.name.split(" ")[0];
+  const WORD = { o: "order", r: "table", e: "booking" };
+
+  const acts = {
+    tab(el) { V.tab = el.dataset.v; V.armed = null; V.anim = true; commit(); window.scrollTo({ top: 0 }); },
+    zoom(el) { document.querySelectorAll("[data-zoom]").forEach((n) => (n.style.viewTransitionName = "")); el.style.viewTransitionName = "dayzoom"; V.zoom = el.dataset.d; V.day = el.dataset.d; V.mode = "day"; V.anim = false; store.save(); const x = smooth(render); if (x && x.finished) x.finished.finally(() => { V.zoom = null; document.querySelectorAll("[data-zoom]").forEach((n) => (n.style.viewTransitionName = "")); }); else V.zoom = null; window.scrollTo({ top: 0 }); },
+    week(el) { const z = $("#view [data-zoom]"); if (z) z.style.viewTransitionName = "dayzoom"; V.zoom = V.day; V.mode = "week"; const x = smooth(render); if (x && x.finished) x.finished.finally(() => { V.zoom = null; document.querySelectorAll("[data-zoom]").forEach((n) => (n.style.viewTransitionName = "")); }); else V.zoom = null; },
+    wkpick(el) { const i = weekDays().indexOf(el.dataset.d), hs = $("#hs"); V.wk = el.dataset.d; if (hs) hs.scrollTo({ left: hs.children[i].offsetLeft - hs.firstElementChild.offsetLeft, behavior: calm ? "auto" : "smooth" }); mark(i); },
+    review() {
+      if (V.tab === "orders" && V.mode === "week") { const tl = $("#view .day-tile.needs"); if (tl) return acts.zoom(tl); }
+      const c = $("#view .card.needs"); if (c) c.scrollIntoView({ behavior: calm ? "auto" : "smooth", block: "center" });
+    },
+    oday(el) { V.day = el.dataset.d; V.armed = null; commit(); },
+    rday(el) { V.rday = el.dataset.d; V.armed = null; commit(); },
+    otype(el) { V.type = el.dataset.v; commit(); },
+    range(el) { V.range = el.dataset.v; V.open = new Set(); V.anim = true; commit(); },
+    confirm(el) {
+      const x = find(el); if (!x) return;
+      x.status = "confirmed"; V.flash = x.id;
+      toast(`Confirmed. ${first(x)} gets a text.`); commit();
+    },
+    done(el) { const x = find(el); if (x) { x.status = "done"; toast(`${first(x)}'s order is ${x.type === "delivery" ? "delivered" : "picked up"}`); commit(); } },
+    decline(el) {
+      const id = el.dataset.id;
+      if (V.armed !== id) { V.armed = id; commit(); setTimeout(() => { if (V.armed === id) { V.armed = null; commit(); } }, 4000); return; }
+      const x = find(el); if (x) x.status = "declined"; V.armed = null; toast(`${first(x)} is let know`); commit();
+    },
+    online() { S.paused = !S.paused; toast(S.paused ? "Online orders paused" : "Online orders are back on"); commit(); },
+    test(el) {
+      const k = el.dataset.k, { day, min } = now(), r = rng(Date.now() & 0xffffff);
+      if (k === "o") {
+        if (S.paused) return toast("Online orders are paused. Turn them on first.");
+        const o = makeOrder(r, day, min, "new"); o.due = min + (o.type === "delivery" ? 40 : 22);
+        o.num = S.orders.reduce((m, y) => Math.max(m, y.num), 0) + 1; o.id = `${day}-${o.num}`; S.orders.push(o);
+        V.fresh = o.id; V.day = day; V.mode = "day"; V.type = "all"; V.tab = "orders"; toast(`New order from ${o.name}`);
+      } else if (k === "r") {
+        const d = addDays(day, Math.floor(r() * 3)), x = genRes(d, r, 0)[0]; if (!x) return;
+        x.id = "r" + Date.now(); x.status = "new"; S.res.push(x); V.fresh = x.id; V.rday = d; V.tab = "res"; toast(`New booking from ${x.name}`);
+      } else {
+        const x = genEvents(day, r)[Math.floor(r() * 2)]; x.id = "e" + Date.now(); x.status = "new"; S.ev.push(x); V.fresh = x.id; V.tab = "ev"; toast(`New ${x.type === "catering" ? "catering" : "party"} inquiry from ${x.name}`);
+      }
+      chime(); commit();
+    },
+    bar(el) { showBar(el); },
+    note(el) { V.noteFor = el.dataset.id; commit(); setTimeout(() => { const i = $(".nform input"); if (i) i.focus(); }, 80); },
+    add() { openSheet(); },
+    close() { closeSheet(); },
+    step(el) { const id = el.dataset.id; M.q[id] = Math.max(0, (M.q[id] || 0) + +el.dataset.d); sheetItems(); },
+    kind(el) { M.type = el.dataset.v; sheetHead(); },
+    save() { saveManual(); },
+    reset() { store.wipe(); S = seedToday(); Object.assign(V, { day: now().day, rday: now().day, type: "all", doneOpen: false, armed: null, anim: true }); toast("Demo reset"); commit(); },
+  };
+  /* ---------- manual order sheet ---------- */
+  const ITEMS = MENU.flatMap((c) => c.items.map((i) => ({ id: i.id, n: i.name.replace(/\s*\((V|V avail\.)\)/, ""), p: i.sizes && i.sizes.length ? i.sizes[0].price : i.price })));
+  let M = null;
+  const mTotal = () => ITEMS.reduce((t, i) => t + (M.q[i.id] || 0) * i.p, 0);
+  function openSheet() { M = { type: "pickup", q: {}, search: "" }; $("#sheet").innerHTML = `<h2>New order</h2>
+    <div class="f"><input id="mName" placeholder="Name" autocomplete="off"><input id="mPhone" placeholder="Phone" inputmode="tel" autocomplete="off"></div>
+    <div class="f"><div class="seg" id="mKind" style="flex:1;display:flex"></div></div>
+    <div class="f" id="mAddrRow" hidden><input id="mAddr" placeholder="Delivery address" autocomplete="off"></div>
+    <input id="mSearch" placeholder="Search the menu" autocomplete="off" style="width:100%">
+    <div class="menu" id="mMenu"></div>
+    <textarea id="mNote" placeholder="Add a note"></textarea>
+    <div class="tot"><span>Total</span><span class="num" id="mTot">$0.00</span></div>
+    <div class="c-act" style="margin-top:0"><button class="btn big" data-act="save">Add order</button><button class="link" data-act="close">Cancel</button></div>`;
+    sheetHead(); sheetItems(); $("#mSearch").oninput = (e) => { M.search = e.target.value.toLowerCase(); sheetItems(); };
+    $("#scrim").classList.add("on"); $("#scrim").setAttribute("aria-hidden", "false"); setTimeout(() => $("#mName").focus(), 300); }
+  function sheetHead() { $("#mKind").innerHTML = [["pickup", "Pickup"], ["delivery", "Delivery"]].map(([v, l]) => `<button style="flex:1;border-radius:11px;${M.type === v ? "background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.12);font-weight:600" : ""}" data-act="kind" data-v="${v}">${l}</button>`).join(""); $("#mAddrRow").hidden = M.type !== "delivery"; }
+  function sheetItems() {
+    $("#mMenu").innerHTML = ITEMS.filter((i) => !M.search || i.n.toLowerCase().includes(M.search) || M.q[i.id]).map((i) => `<div class="mi"><span>${esc(i.n)}<small>${money2(i.p)}</small></span><span class="step">${M.q[i.id] ? `<button data-act="step" data-id="${i.id}" data-d="-1" aria-label="Remove one">&minus;</button><b>${M.q[i.id]}</b>` : ""}<button data-act="step" data-id="${i.id}" data-d="1" aria-label="Add one">+</button></span></div>`).join("");
+    $("#mTot").textContent = money2(mTotal());
+  }
+  function closeSheet() { $("#scrim").classList.remove("on"); $("#scrim").setAttribute("aria-hidden", "true"); }
+  function saveManual() {
+    const lines = ITEMS.filter((i) => M.q[i.id]).map((i) => ({ q: M.q[i.id], n: i.n, s: "", p: i.p }));
+    if (!lines.length) return toast("Pick at least one item");
+    const { day, min } = now(), name = $("#mName").value.trim() || "Walk-in";
+    const o = { id: "", num: S.orders.reduce((m, y) => Math.max(m, y.num), 0) + 1, day, at: min, status: "confirmed", due: min + (M.type === "delivery" ? 40 : 20), type: M.type, name, phone: $("#mPhone").value.trim() || "No phone", addr: M.type === "delivery" ? $("#mAddr").value.trim() : "", lines, total: total(lines), note: $("#mNote").value.trim() };
+    o.id = `${day}-${o.num}`; S.orders.push(o);
+    V.flash = o.id; V.day = day; V.mode = "day"; V.tab = "orders"; V.type = "all"; closeSheet(); toast(`Added ${name}'s order`); commit();
+  }
+  document.addEventListener("submit", (e) => {
+    const f = e.target.closest(".nform"); if (!f) return; e.preventDefault();
+    const x = POOLS()[f.dataset.k].find((y) => y.id === f.dataset.id); if (x) x.note = f.n.value.trim(); V.noteFor = null; commit();
+  });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeSheet(); });
+  $("#scrim").addEventListener("click", (e) => { if (e.target.id === "scrim") closeSheet(); });
+  function showBar(el) {
+    const cap = $("#cap"); if (!cap) return;
+    cap.innerHTML = capText(+el.dataset.i);
+    document.querySelectorAll(".bk.sel").forEach((b) => b.classList.remove("sel")); el.classList.add("sel");
+  }
+  let wkT = 0;
+  function mark(i) {
+    const st = $("#view .strip"); if (!st) return; const b = st.querySelectorAll("button"); if (b[i].getAttribute("aria-pressed") === "true") return;
+    b.forEach((x, k) => x.setAttribute("aria-pressed", String(k === i))); V.wk = weekDays()[i];
+    const th = st.querySelector(".thumb"); if (th) { th.classList.add("go"); place(th, rectOf(b[i])); THUMB[V.tab + "0"] = rectOf(b[i]); }
+  }
+  document.addEventListener("scroll", (e) => {
+    const hs = e.target; if (!hs || hs.id !== "hs") return;
+    const a = hs.firstElementChild.offsetLeft, i = Math.min(6, Math.max(0, Math.round((hs.scrollLeft) / (hs.children[1].offsetLeft - a))));
+    mark(i);
+  }, true);
+  document.addEventListener("click", (e) => { const el = e.target.closest("[data-act]"); if (el && acts[el.dataset.act]) acts[el.dataset.act](el); });
+  document.addEventListener("mouseover", (e) => { const el = e.target.closest(".bk"); if (el) showBar(el); });
+  document.addEventListener("focusin", (e) => { const el = e.target.closest(".bk"); if (el) showBar(el); });
+  document.addEventListener("toggle", (e) => {
+    const d = e.target;
+    if (d.id === "doneList") V.doneOpen = d.open;
+    else if (d.classList && d.classList.contains("day")) { d.open ? V.open.add(d.dataset.day) : V.open.delete(d.dataset.day); if (!V.open.size) V.open.add("none"); }
+  }, true);
+  document.addEventListener("keydown", (e) => {
+    if (!e.target.classList || !e.target.classList.contains("tab")) return;
+    if (e.key === "ArrowRight" || e.key === "ArrowLeft") { const o = ["orders", "res", "ev", "money"], i = o.indexOf(V.tab) + (e.key === "ArrowRight" ? 1 : 3), t = $("#t-" + o[i % 4]); t.click(); t.focus(); }
+  });
+
+  render();
+})();
+</script>
