@@ -245,17 +245,20 @@
   .calnav button:hover { background: var(--card); } .calnav button:active { transform: scale(0.92); }
   .calnav .td { font-size: 14px; font-weight: 600; padding: 0 14px; }
   .cal { margin-top: 18px; background: var(--card); border-radius: 28px; padding: 14px 12px 12px; box-shadow: var(--shadow); }
-  .dows { display: grid; grid-template-columns: repeat(7, 1fr); padding: 6px 0 10px; text-align: center; font-size: 12px; color: var(--muted); }
-  .days7 { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+  .dows { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); padding: 6px 0 10px; text-align: center; font-size: 12px; color: var(--muted); }
+  .days7 { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
+  .days7.l { animation: slideL 0.6s var(--ease) both; } .days7.r { animation: slideR 0.6s var(--ease) both; }
+  @keyframes slideL { from { opacity: 0; transform: translateX(-28px); } } @keyframes slideR { from { opacity: 0; transform: translateX(28px); } }
   .cell { position: relative; aspect-ratio: 1 / 1.05; border-radius: 16px; display: flex; flex-direction: column; align-items: center; padding-top: 9px; font-size: 16px; color: var(--ink); transition: background 0.3s, color 0.3s, transform 0.35s var(--spring); }
   .cell.void { pointer-events: none; }
+  .cell.tdy:not(.sel) { background: rgba(22, 20, 18, 0.04); }
   .cell b { font-weight: 500; font-variant-numeric: tabular-nums; width: 30px; height: 30px; display: grid; place-items: center; border-radius: 50%; }
   .cell:hover { background: var(--wash); } .cell:active { transform: scale(0.93); }
   .cell.tdy b { box-shadow: inset 0 0 0 1.5px var(--ink); }
-  .cell.sel { background: var(--ink); color: #fff; } .cell.sel b { box-shadow: none; } .cell.sel:hover { background: var(--ink); }
+  .cell.sel { background: var(--ink); color: #fff; box-shadow: 0 10px 24px rgba(22, 20, 18, 0.25); transform: translateY(-1px); } .cell.sel b { box-shadow: none; } .cell.sel:hover { background: var(--ink); }
   .pip { position: absolute; bottom: 8px; width: 6px; height: 6px; border-radius: 50%; background: var(--green); } .pip.nw { background: #E0B01D; box-shadow: 0 0 0 3px rgba(224, 176, 29, 0.3); }
   .evs { display: none; }
-  @media (min-width: 700px) { .cell { aspect-ratio: auto; height: 96px; align-items: stretch; padding: 8px 8px 0; } .cell b { align-self: flex-start; } .pip { display: none; } .evs { display: flex; flex-direction: column; gap: 3px; margin-top: 6px; } .evs em { font-style: normal; display: block; padding: 3px 7px; border-radius: 7px; font-size: 11px; font-weight: 600; text-align: left; background: rgba(47, 107, 87, 0.14); color: var(--green); } .evs em.party { background: rgba(201, 161, 90, 0.22); color: #8A6420; } .evs em.nw { background: #FFE27A; color: #4A3300; } .cell.sel .evs em { background: rgba(255, 255, 255, 0.16); color: #fff; } .evs u { text-decoration: none; } }
+  @media (min-width: 700px) { .cell { aspect-ratio: auto; height: 104px; align-items: stretch; padding: 8px 8px 0; } .cell b { align-self: flex-start; } .pip { display: none; } .evs { display: flex; flex-direction: column; gap: 3px; margin-top: 6px; } .evs em { font-style: normal; display: flex; flex-direction: column; padding: 4px 8px; border-radius: 8px; font-size: 12px; font-weight: 600; text-align: left; line-height: 1.2; overflow: hidden; background: rgba(47, 107, 87, 0.14); color: var(--green); } .evs em.party { background: rgba(201, 161, 90, 0.22); color: #8A6420; } .evs em.nw { background: #FFE27A; color: #4A3300; } .cell.sel .evs em { background: rgba(255, 255, 255, 0.16); color: #fff; } .evs u { text-decoration: none; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .evs s { text-decoration: none; font-size: 10px; font-weight: 500; opacity: 0.7; } .cell.sel .evs em.nw { background: #FFE27A; color: #4A3300; } }
   .cell.pst { color: #B5AEA3; } .cell.pst .pip, .cell.pst .evs { opacity: 0.45; } .cell.pst.sel { color: #fff; }
   .legend { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 16px; font-size: 13px; color: var(--muted); }
   .legend i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 7px; } .legend .g { background: var(--green); } .legend .o { background: var(--deliv); } .legend .y { background: #E0B01D; } .legend .r { margin-left: auto; color: var(--ink-2); }
@@ -576,7 +579,7 @@
   if (!S.menu) S.menu = JSON.parse(JSON.stringify(MENU));
 
   /* ---------- state ---------- */
-  const V = { tab: "orders", day: now().day, rday: now().day, type: "all", range: "7", mode: "week", zoom: null, evMonth: null, evDay: null, cat: "all", q: "", photoFor: null, edit: null, fresh: null, noteFor: null, flash: null, armed: null, doneOpen: false, open: new Set(), anim: true };
+  const V = { tab: "orders", day: now().day, rday: now().day, type: "all", range: "7", mode: "week", zoom: null, dir: 0, evMonth: null, evDay: null, cat: "all", q: "", photoFor: null, edit: null, fresh: null, noteFor: null, flash: null, armed: null, doneOpen: false, open: new Set(), anim: true };
   const sum = (list) => list.reduce((t, o) => t + o.total, 0);
   const weekDays = () => { const T = now().day; const mon = addDays(T, -((dow(T) + 6) % 7)); return [...Array(7)].map((_, k) => addDays(mon, k)); };
   const ordersOn = (d) => (d === now().day ? S.orders : HIST.filter((o) => o.day === d)).filter((o) => o.status !== "declined" && (V.type === "all" || o.type === V.type));
@@ -698,8 +701,8 @@
       <div class="chips">${needChip(pend.length, "inquiry").replace("inquirys", "inquiries")}</div>
       <div class="calhead"><h2>${MONTHS[Mo - 1]} <span>${Y}</span></h2><div class="calnav"><button data-act="evgo" data-v="${prev}" aria-label="Previous month">&lsaquo;</button><button class="td" data-act="evgo" data-v="${T.slice(0, 7)}" data-d="${T}">Today</button><button data-act="evgo" data-v="${next}" aria-label="Next month">&rsaquo;</button></div></div>
       <div class="cal" role="grid"><div class="dows">${["S", "M", "T", "W", "T", "F", "S"].map((d) => `<span>${d}</span>`).join("")}</div>
-        <div class="days7">${cells.map((d, k) => { if (!d) return `<span class="cell void"></span>`; const ev = live.filter((x) => x.date === d), hasNew = ev.some((x) => x.status === "new");
-          return `<button class="cell ${d < T ? "pst" : ""} ${d === T ? "tdy" : ""} ${d === V.evDay ? "sel" : ""} ${ev.length ? "has" : ""}" data-act="evday" data-d="${d}" style="--j:${k}" aria-label="${d}${ev.length ? ", " + ev.length + " events" : ""}"><b>${+d.slice(8)}</b>${ev.length ? `<span class="evs">${ev.slice(0, 2).map((x) => `<em class="${x.status === "new" ? "nw" : x.type}"><u>${x.type === "catering" ? "Catering" : "Party"}</u></em>`).join("")}</span><i class="pip ${hasNew ? "nw" : ""}"></i>` : ""}</button>`; }).join("")}</div></div>
+        <div class="days7 ${V.dir > 0 ? "r" : V.dir < 0 ? "l" : ""}">${cells.map((d, k) => { if (!d) return `<span class="cell void"></span>`; const ev = live.filter((x) => x.date === d), hasNew = ev.some((x) => x.status === "new");
+          return `<button class="cell ${d < T ? "pst" : ""} ${d === T ? "tdy" : ""} ${d === V.evDay ? "sel" : ""} ${ev.length ? "has" : ""}" data-act="evday" data-d="${d}" style="--j:${k}" aria-label="${d}${ev.length ? ", " + ev.length + " events" : ""}"><b>${+d.slice(8)}</b>${ev.length ? `<span class="evs">${ev.slice(0, 2).map((x) => `<em class="${x.status === "new" ? "nw" : x.type}"><u>${esc(x.name.split(" ")[0])}</u><s>${x.type === "catering" ? "Catering" : "Party"}</s></em>`).join("")}</span><i class="pip ${hasNew ? "nw" : ""}"></i>` : ""}</button>`; }).join("")}</div></div>
       <div class="legend"><span><i class="g"></i>Catering</span><span><i class="o"></i>Party</span><span><i class="y"></i>Needs reply</span><span class="r">${booked} booked</span></div>
       <h2 class="h3 dayh">${noon(V.evDay).toLocaleDateString("en-US", { timeZone: "UTC", weekday: "long", month: "long", day: "numeric" })}</h2>
       ${sel.length ? `<div class="stack" style="margin-top:12px">${sel.map((x) => evCard(x, T)).join("")}</div>` : `<p class="none" style="margin:36px 0 12px">Nothing booked. Free day.</p>`}
@@ -777,7 +780,7 @@
     view.innerHTML = { orders: ordersView, res: resView, ev: evView, menu: menuView, money: moneyView }[V.tab]();
     if (V.anim && !calm) { view.classList.remove("enter"); void view.offsetWidth; view.classList.add("enter"); } else view.classList.remove("enter");
     if (V.zoom) { const z = view.querySelector(`[data-zoom="${V.zoom}"]`); if (z) z.style.viewTransitionName = "dayzoom"; }
-    V.anim = false; V.fresh = null; V.flash = null;
+    V.anim = false; V.dir = 0; V.fresh = null; V.flash = null;
     stagger(view); sliders(); if (V.tab === "orders" && V.mode === "week") { const hs = $("#hs"), i = weekDays().indexOf(V.wk || now().day); if (hs && i > 0) hs.scrollLeft = hs.children[i].offsetLeft - hs.firstElementChild.offsetLeft; } counters(view); reveal(view);
   }
 
@@ -870,7 +873,7 @@
     mcancel() { V.edit = null; V.armed = null; commit(); },
     mtoggle(el) { const [, i] = findItem(el.dataset.id); if (!i) return; i.off = !i.off; toast(i.off ? `${cleanN(i.name)} is sold out on your website` : `${cleanN(i.name)} is back on your website`); V.anim = false; commit(); },
     mdel(el) { const id = el.dataset.id; if (V.armed !== id) { V.armed = id; commit(); return; } const [c, i] = findItem(id); if (c) c.items.splice(c.items.indexOf(i), 1); V.edit = null; V.armed = null; toast("Removed from your website"); commit(); },
-    evgo(el) { V.evMonth = el.dataset.v; if (el.dataset.d) V.evDay = el.dataset.d; V.anim = true; commit(); },
+    evgo(el) { V.dir = el.dataset.v > V.evMonth ? 1 : el.dataset.v < V.evMonth ? -1 : 0; V.evMonth = el.dataset.v; if (el.dataset.d) V.evDay = el.dataset.d; V.anim = true; commit(); },
     evday(el) { V.evDay = el.dataset.d; V.armed = null; commit(); },
     oday(el) { V.day = el.dataset.d; V.armed = null; commit(); },
     rday(el) { V.rday = el.dataset.d; V.armed = null; commit(); },
@@ -978,6 +981,16 @@
     const f = fileIn.files[0]; if (!f || !V.photoFor) return; const id = V.photoFor, img = new Image(), url = URL.createObjectURL(f);
     img.onload = () => { const s = 520 / Math.max(img.width, img.height, 520), c = document.createElement("canvas"); c.width = Math.round(img.width * s); c.height = Math.round(img.height * s); c.getContext("2d").drawImage(img, 0, 0, c.width, c.height); const [, i] = findItem(id); if (i) { i.img = c.toDataURL("image/jpeg", 0.78); toast("Photo is live on your website"); commit(); } URL.revokeObjectURL(url); fileIn.value = ""; };
     img.src = url;
+  });
+  let sx = null;
+  document.addEventListener("touchstart", (e) => { sx = e.target.closest(".cal") ? e.touches[0].clientX : null; }, { passive: true });
+  document.addEventListener("touchend", (e) => {
+    if (sx === null || V.tab !== "ev") return; const dx = e.changedTouches[0].clientX - sx; sx = null; if (Math.abs(dx) < 55) return;
+    const b = document.querySelectorAll(".calnav button"); (dx < 0 ? b[2] : b[0]).click();
+  }, { passive: true });
+  document.addEventListener("keydown", (e) => {
+    if (V.tab !== "ev" || (e.key !== "ArrowLeft" && e.key !== "ArrowRight") || (e.target.classList && e.target.classList.contains("tab"))) return;
+    const b = document.querySelectorAll(".calnav button"); (e.key === "ArrowRight" ? b[2] : b[0]).click();
   });
   document.addEventListener("click", (e) => { const el = e.target.closest("[data-act]"); if (el && acts[el.dataset.act]) acts[el.dataset.act](el); });
   document.addEventListener("mouseover", (e) => { const el = e.target.closest(".bk"); if (el) showBar(el); });
