@@ -1,3 +1,9 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FAF8F4">
+<meta name="apple-mobile-web-app-capable" content="yes">
 <title>Thai Pearl Kitchen</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap">
@@ -310,7 +316,7 @@
   .rtags { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 0; } .rtags span { font-size: 12px; color: var(--ink-2); padding: 3px 10px; border-radius: 10px; background: rgba(22, 20, 18, 0.05); }
   .rcard .c-act { margin-top: 18px; } .rcard .c-foot { margin-top: 14px; }
   @media (max-width: 640px) { .rcard { flex-direction: column; gap: 12px; padding: 20px; } .rtime { flex-direction: row; align-items: baseline; gap: 6px; width: auto; } .rtime b { font-size: 30px; } .rsum { padding: 22px; } }
-  .sheet select { flex: 1; min-width: 0; font: inherit; font-size: 16px; padding: 13px 14px; border: 0; border-radius: 12px; background: var(--wash); outline: none; }
+  .sheet select { -webkit-appearance: none; appearance: none; background-image: linear-gradient(45deg, transparent 50%, #8E877D 50%), linear-gradient(135deg, #8E877D 50%, transparent 50%); background-position: calc(100% - 20px) 55%, calc(100% - 15px) 55%; background-size: 5px 5px; background-repeat: no-repeat; flex: 1; min-width: 0; font: inherit; font-size: 16px; padding: 13px 14px; border: 0; border-radius: 12px; background: var(--wash); outline: none; }
   .legend { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 16px; font-size: 13px; color: var(--muted); }
   .legend i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 7px; } .legend .g { background: var(--green); } .legend .o { background: var(--deliv); } .legend .y { background: #E0B01D; } .legend .r { margin-left: auto; color: var(--ink-2); }
   .dayh { margin: 34px 0 0; font-size: 24px; letter-spacing: -0.04em; }
@@ -458,6 +464,38 @@
     .when { font-size: 38px; }
     .strip { margin-inline: -4px; }
     .hs { margin-inline: -18px; padding-inline: 18px; scroll-padding: 0 18px; }
+  }
+  /* phone polish */
+  html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+  button, a, summary, .tab, .seg button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+  .sheet { max-height: 92vh; max-height: 92dvh; overscroll-behavior: contain; }
+  .day > summary { grid-template-columns: auto 1fr auto; }
+  .mtoggle { position: relative; } .mtoggle::after { content: ""; position: absolute; inset: -10px -6px; }
+  @media (max-width: 640px) {
+    main { padding-bottom: 110px; }
+    .link { min-height: 44px; padding: 10px 8px; display: inline-flex; align-items: center; }
+    .tab { min-height: 48px; }
+    .mcat { min-height: 44px; }
+    .seg button { min-height: 44px; }
+    .rtopline .btn { width: 100%; justify-content: center; order: 3; }
+    .rtopline { align-items: flex-start; }
+    .day > summary { padding: 16px 0; gap: 4px 10px; }
+    .day .row { padding: 12px 0 12px 0; grid-template-columns: 64px minmax(0, 1fr) auto; }
+    .row .c-name, .row b { font-size: 16px; }
+    .row .t { font-size: 13px; white-space: nowrap; }
+    .row .a { font-size: 16px; }
+    .row .k { margin-left: 6px; font-size: 12px; }
+    .c-top .c-total { white-space: nowrap; }
+    .fab { font-size: 0; width: 58px; height: 58px; padding: 0; justify-content: center; gap: 0; }
+    .fab span { font-size: 30px; margin-top: -1px; }
+    .hero { font-size: 64px; }
+    .facts { font-size: 15px; }
+  }
+  @media (max-width: 370px) {
+    .gut { padding-left: 14px !important; padding-right: 14px !important; }
+    .tab { font-size: 13px; } .tab .badge { margin-left: 3px; min-width: 18px; height: 18px; font-size: 11px; }
+    .title { font-size: 48px; } .c-name, .c-total { font-size: 20px; } .when { font-size: 32px; }
+    .rfacts b { font-size: 17px; } .rfacts div + div { padding-left: 12px; }
   }
 </style>
 
@@ -841,7 +879,7 @@
         <div class="ticks ${many ? "many" : ""}">${BUCKETS.map((b, i) => `<div>${(BUCKETS.length - 1 - i) % step === 0 ? `<span>${esc(b.label)}</span>` : ""}</div>`).join("")}</div>
         <p class="cap" id="cap" style="margin-top:16px">${capText(BUCKETS.length - 1)}</p>`}
       <h2 class="h3">Past orders</h2>
-      ${days.length ? days.map((d, idx) => { const rows = all.filter((o) => o.day === d).sort((a, b) => b.due - a.due); return `<details class="day" data-day="${d}" ${V.open.has(d) || (idx === 0 && !V.open.size) ? "open" : ""}><summary><b>${d === T ? "Today" : dayLabel(d)}</b><span></span><span class="m">${rows.length} orders &nbsp; <span class="num" style="color:var(--ink);font-size:17px">${money(sum(rows))}</span></span></summary><div class="rows">${rowsOf(rows)}</div></details>`; }).join("") : `<p class="none">No orders yet.</p>`}`;
+      ${days.length ? days.map((d, idx) => { const rows = all.filter((o) => o.day === d).sort((a, b) => b.due - a.due); return `<details class="day" data-day="${d}" ${V.open.has(d) || (idx === 0 && !V.open.size) ? "open" : ""}><summary><b>${d === T ? "Today" : dayLabel(d)}</b><span class="m">${rows.length} orders &nbsp; <span class="num" style="color:var(--ink);font-size:17px">${money(sum(rows))}</span></span></summary><div class="rows">${rowsOf(rows)}</div></details>`; }).join("") : `<p class="none">No orders yet.</p>`}`;
   }
   const capText = (i) => (BUCKETS[i] ? `<b>${esc(BUCKETS[i].name)}</b>, ${money(BUCKETS[i].v)} from ${BUCKETS[i].n} orders` : "");
 
