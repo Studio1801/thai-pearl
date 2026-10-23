@@ -52,10 +52,12 @@ export function Navbar() {
           <img src={logo} alt="Thai Pearl" className="h-11 w-auto object-contain" />
         </Link>
 
-        <div className="hidden md:flex items-center gap-9">
+        <div className="hidden lg:flex items-center gap-7">
           {[
-            { label: "Story", action: () => scrollTo("story") },
             { label: "Menu", action: () => {}, href: "/menu" },
+            { label: "Meal prep", action: () => {}, href: "/meal-prep" },
+            { label: "Events", action: () => {}, href: "/events" },
+            { label: "Catering", action: () => {}, href: "/catering" },
             { label: "Visit", action: () => scrollTo("contact") },
           ].map((item) =>
             item.href ? (
@@ -78,15 +80,13 @@ export function Navbar() {
           )}
         </div>
 
-        <div className="hidden md:flex items-center gap-4">
-          <a
-            href="https://thaipearlasheville.com/reservations"
-            target="_blank"
-            rel="noopener noreferrer"
+        <div className="hidden lg:flex items-center gap-4">
+          <Link
+            href="/reserve"
             className="font-sans text-[10px] font-semibold tracking-[0.28em] uppercase text-white/45 hover:text-white/80 transition-colors duration-200"
           >
             Reserve
-          </a>
+          </Link>
           <button
             onClick={() => scrollTo("order")}
             className="bg-[#C4281A] hover:bg-[#a42016] text-white px-6 py-2.5 font-sans text-[10px] font-bold tracking-[0.28em] uppercase transition-colors duration-200"
@@ -95,7 +95,7 @@ export function Navbar() {
           </button>
         </div>
 
-        <button className="md:hidden p-2 text-white" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+        <button className="lg:hidden p-2.5 -mr-2.5 text-white" aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"} aria-expanded={isMobileMenuOpen} onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
           {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
@@ -104,39 +104,48 @@ export function Navbar() {
         <motion.div
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
-          className="md:hidden bg-[#100907] border-t border-white/8"
+          className="lg:hidden bg-[#100907] border-t border-white/8"
         >
-          <div className="flex flex-col px-8 py-6 gap-5">
-            {["Story", "Visit"].map((label) => (
-              <button
-                key={label}
-                onClick={() => { setIsMobileMenuOpen(false); scrollTo(label.toLowerCase()); }}
-                className="text-left font-sans text-sm font-semibold tracking-[0.22em] uppercase text-white/55 hover:text-[#E8920E] transition-colors"
+          <div className="flex flex-col px-6 py-4 max-h-[calc(100dvh-80px)] overflow-y-auto">
+            {[
+              ["Menu", "/menu"],
+              ["Meal prep", "/meal-prep"],
+              ["Events and specials", "/events"],
+              ["Catering", "/catering"],
+              ["Private parties", "/parties"],
+              ["Press and reviews", "/press"],
+              ["Jobs", "/jobs"],
+            ].map(([label, href]) => (
+              <Link
+                key={href}
+                href={href}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`font-serif text-2xl py-3 border-b border-white/8 transition-colors ${location === href ? "text-[#E8920E]" : "text-white/85 hover:text-[#E8920E]"}`}
+                style={{ fontWeight: 500 }}
               >
                 {label}
-              </button>
+              </Link>
             ))}
-            <Link
-              href="/menu"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="text-left font-sans text-sm font-semibold tracking-[0.22em] uppercase text-white/55 hover:text-[#E8920E] transition-colors"
+            <button
+              onClick={() => scrollTo("contact")}
+              className="text-left font-serif text-2xl py-3 text-white/85 hover:text-[#E8920E] transition-colors"
+              style={{ fontWeight: 500 }}
             >
-              Menu
-            </Link>
-            <div className="pt-4 border-t border-white/8 flex flex-col gap-3">
-              <a
-                href="https://thaipearlasheville.com/reservations"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-center font-sans text-sm font-semibold tracking-widest uppercase text-white/40 py-3 border border-white/12"
+              Hours and directions
+            </button>
+            <div className="pt-5 pb-3 grid grid-cols-2 gap-3">
+              <Link
+                href="/reserve"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="text-center font-sans text-base font-semibold text-white py-4 rounded-lg bg-white/10"
               >
-                Reserve
-              </a>
+                Book a table
+              </Link>
               <button
                 onClick={() => { setIsMobileMenuOpen(false); scrollTo("order"); }}
-                className="bg-[#C4281A] text-white text-center py-4 font-sans text-sm font-bold tracking-[0.22em] uppercase"
+                className="bg-[#C4281A] text-white text-center py-4 rounded-lg font-sans text-base font-bold"
               >
-                Order Now
+                Order pickup
               </button>
             </div>
           </div>

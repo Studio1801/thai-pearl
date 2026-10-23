@@ -1,3 +1,4 @@
+import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import catImg from "@assets/thai-pearl/interior-cat.png";
@@ -83,14 +84,12 @@ export function Hero() {
               Order Now
             </button>
           </div>
-          <a
-            href="https://thaipearlasheville.com/reservations"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            href="/reserve"
             className="border border-white/30 hover:border-[#E8920E]/70 text-white/70 hover:text-white px-9 py-4 font-sans text-[11px] tracking-[0.22em] uppercase transition-all duration-200"
           >
             Reserve
-          </a>
+          </Link>
         </motion.div>
 
         <motion.p

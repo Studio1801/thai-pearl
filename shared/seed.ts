@@ -169,6 +169,19 @@ export const SEED: Settings = {
     { label: "Shrimp", price: 6 },
   ],
   menu,
+  // From the food menu on thaipearlasheville.com
+  specials: [
+    {
+      id: "weekday-lunch",
+      title: "Weekday lunch special",
+      detail: "$13.99 with chicken, veggies, pork or tofu. Beef, shrimp, calamari or mussels for a little extra.",
+      when: "Monday to Friday, lunch",
+    },
+  ],
+  // From the events calendar on thaipearlasheville.com
+  events: [
+    { id: "nye-2026", date: "2026-12-31", title: "New Year's Eve", time: "11 AM to 9 PM", detail: "Ring in the new year with us. Walk in or book a table ahead." },
+  ],
 };
 
 // Item ids must be unique for the dashboard and cart to work.

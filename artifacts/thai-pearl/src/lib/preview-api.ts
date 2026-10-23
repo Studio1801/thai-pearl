@@ -2,7 +2,8 @@
 // and dashboard can be demoed without a server. State lives in localStorage,
 // so a website tab and a dashboard tab (or two iframes) stay in sync.
 
-import type { Order, OrderLine, OrderStatus, PublicOrder, Settings } from "@shared/model";
+import type { GuestRequest, Order, OrderLine, OrderStatus, PublicOrder, RequestStatus, Settings } from "@shared/model";
+import { cleanRequest } from "@shared/requests";
 import {
   clock,
   findItem,
@@ -128,6 +129,27 @@ async function handle(path: string, url: URL, init: RequestInit = {}): Promise<R
     orders.push(order);
     save(ordersKey(day), orders);
     return json({ id: order.id, number: order.number }, 201);
+  }
+
+  if (path === "requests") {
+    const KEY = "tp-demo-requests";
+    const list = load<GuestRequest[]>(KEY, () => []);
+    if (method === "GET") return owner(init) ? json({ requests: list }) : fail("Wrong PIN", 401);
+    if (method === "PATCH") {
+      if (!owner(init)) return fail("Wrong PIN", 401);
+      const { id, status } = body() as { id: string; status: RequestStatus };
+      const r = list.find((x) => x.id === id);
+      if (!r) return fail("Not found", 404);
+      r.status = status;
+      save(KEY, list);
+      return json(r);
+    }
+    const clean = cleanRequest(body());
+    if (typeof clean === "string") return fail(clean);
+    const item: GuestRequest = { ...clean, id: Math.random().toString(36).slice(2, 14), createdAt: clock().toISOString(), status: "new" };
+    list.unshift(item);
+    save(KEY, list.slice(0, 600));
+    return json({ id: item.id }, 201);
   }
 
   if (path === "order") {

@@ -5,6 +5,7 @@ import { Story } from "@/components/story";
 import { OrderNow } from "@/components/order-now";
 import { MenuHighlights } from "@/components/menu-highlights";
 import { Contact } from "@/components/contact";
+import { More } from "@/components/more";
 import { Footer } from "@/components/footer";
 import { StickyOrderBar } from "@/components/sticky-order-bar";
 
@@ -18,6 +19,7 @@ export default function Home() {
         <Story />
         <OrderNow />
         <MenuHighlights />
+        <More />
         <Contact />
       </main>
       <Footer />

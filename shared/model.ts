@@ -51,6 +51,45 @@ export type Settings = {
   hours: DayHours[];
   proteins: Size[];
   menu: Category[];
+  /** Happy hour, lunch deals and the like. Edited in the dashboard. */
+  specials?: Special[];
+  /** Public events shown on the Events page (New Year's Eve, live music...). */
+  events?: SiteEvent[];
+};
+
+export type Special = { id: string; title: string; detail: string; when: string };
+export type SiteEvent = { id: string; date: string; title: string; time: string; detail: string };
+
+/* ---------- requests from the website (everything that isn't a pickup order) ---------- */
+
+export type RequestKind = "reservation" | "mealprep" | "catering" | "party" | "job" | "newsletter";
+export type RequestStatus = "new" | "confirmed" | "declined" | "done";
+
+export type GuestRequest = {
+  id: string;
+  kind: RequestKind;
+  createdAt: string;
+  status: RequestStatus;
+  name: string;
+  phone: string;
+  email: string;
+  /** The date it's for (reservation, event, meal prep delivery), YYYY-MM-DD */
+  date?: string;
+  time?: string;
+  guests?: number;
+  note?: string;
+  /** Kind-specific answers, already turned into readable lines */
+  details: { label: string; value: string }[];
+  total?: number;
+};
+
+export const REQUEST_LABEL: Record<RequestKind, string> = {
+  reservation: "Table",
+  mealprep: "Meal prep",
+  catering: "Catering",
+  party: "Private party",
+  job: "Job application",
+  newsletter: "Newsletter",
 };
 
 export type OrderStatus = "new" | "cooking" | "ready" | "done" | "cancelled";

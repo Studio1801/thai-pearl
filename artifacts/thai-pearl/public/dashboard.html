@@ -317,6 +317,26 @@
   .rcard .c-act { margin-top: 18px; } .rcard .c-foot { margin-top: 14px; }
   @media (max-width: 640px) { .rcard { flex-direction: column; gap: 12px; padding: 20px; } .rtime { flex-direction: row; align-items: baseline; gap: 6px; width: auto; } .rtime b { font-size: 30px; } .rsum { padding: 22px; } }
   .sheet select { -webkit-appearance: none; appearance: none; background-image: linear-gradient(45deg, transparent 50%, #8E877D 50%), linear-gradient(135deg, #8E877D 50%, transparent 50%); background-position: calc(100% - 20px) 55%, calc(100% - 15px) 55%; background-size: 5px 5px; background-repeat: no-repeat; flex: 1; min-width: 0; font: inherit; font-size: 16px; padding: 13px 14px; border: 0; border-radius: 12px; background: var(--wash); outline: none; }
+  .wstats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 24px; background: var(--card); border-radius: 28px; box-shadow: var(--shadow); padding: 24px 0; }
+  .wstats div { padding: 0 26px; min-width: 0; } .wstats div + div { border-left: 1px solid var(--line); }
+  .wstats small { color: var(--muted); font-size: 14px; display: block; } .wstats b { display: block; font-size: 38px; font-weight: 600; letter-spacing: -0.04em; margin-top: 6px; line-height: 1.05; } .wstats em { font-style: normal; color: var(--muted); font-size: 14px; }
+  .csub { display: block; font-size: 13px; font-weight: 400; color: var(--muted); letter-spacing: 0; text-align: right; }
+  .subs { list-style: none; margin: 0; padding: 0; } .subs li { display: flex; justify-content: space-between; gap: 12px; padding: 12px 0; font-size: 15px; } .subs li + li { border-top: 1px solid var(--line); } .subs span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .subs small { color: var(--muted); flex-shrink: 0; }
+  .wform .wtog { display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: 16px; font-weight: 500; margin-bottom: 14px; }
+  .wban { margin: 14px 0 0; background: #E8920E; color: #180E06; font-weight: 600; text-align: center; padding: 10px 14px; border-radius: 12px; font-size: 14px; }
+  .wlist { padding-top: 6px; padding-bottom: 6px; }
+  .wrow { display: flex; align-items: flex-start; gap: 16px; padding: 16px 0; } .wrow + .wrow { border-top: 1px solid var(--line); }
+  .wrow > div { flex: 1; min-width: 0; } .wrow b { display: block; font-size: 17px; font-weight: 600; letter-spacing: -0.02em; } .wrow small { display: block; color: var(--muted); font-size: 14px; margin-top: 2px; } .wrow p { margin: 6px 0 0; color: var(--ink-2); font-size: 15px; line-height: 1.45; }
+  .wdate { flex-shrink: 0; width: 52px; text-align: center; background: var(--wash); border-radius: 14px; padding: 6px 0; } .wdate small { margin: 0; font-size: 12px; } .wdate b { font-size: 22px; }
+  .live { width: 9px; height: 9px; border-radius: 50%; background: var(--green); margin-top: 7px; flex-shrink: 0; box-shadow: 0 0 0 4px rgba(47, 107, 87, 0.12); }
+  .wempty { color: var(--muted); margin: 10px 0; }
+  .wadd { display: grid; grid-template-columns: 1.1fr 1fr 1.4fr auto; gap: 10px; margin-top: 10px; padding-top: 18px; border-top: 1px solid var(--line); }
+  .wadd input { min-width: 0; font: inherit; font-size: 16px; padding: 12px 14px; border: 0; border-radius: 12px; background: var(--wash); outline: none; }
+  .wadd input:focus { box-shadow: 0 0 0 2px var(--ink); }
+  @media (max-width: 640px) {
+    .wstats { grid-template-columns: 1fr 1fr; padding: 20px 0; row-gap: 18px; } .wstats div { padding: 0 18px; } .wstats div:nth-child(3) { grid-column: 1 / -1; border-left: 0; border-top: 1px solid var(--line); padding-top: 16px; } .wstats b { font-size: 30px; }
+    .wadd { grid-template-columns: 1fr; } .wadd .btn { width: 100%; }
+  }
   .legend { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 16px; font-size: 13px; color: var(--muted); }
   .legend i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 7px; } .legend .g { background: var(--green); } .legend .o { background: var(--deliv); } .legend .y { background: #E0B01D; } .legend .r { margin-left: auto; color: var(--ink-2); }
   .dayh { margin: 34px 0 0; font-size: 24px; letter-spacing: -0.04em; }
@@ -491,6 +511,7 @@
     .hero { font-size: 64px; }
     .facts { font-size: 15px; }
   }
+  @media (max-width: 400px) { .tabs { overflow-x: auto; scrollbar-width: none; justify-content: flex-start; gap: 18px; margin-inline: -18px; padding-inline: 18px; } .tabs::-webkit-scrollbar { display: none; } }
   @media (max-width: 370px) {
     .gut { padding-left: 14px !important; padding-right: 14px !important; }
     .tab { font-size: 13px; } .tab .badge { margin-left: 3px; min-width: 18px; height: 18px; font-size: 11px; }
@@ -510,7 +531,8 @@
       <button class="tab" role="tab" id="t-res" data-act="tab" data-v="res" aria-selected="false" aria-controls="view"><span class="lg">Reservations</span><span class="sm">Tables</span><span class="badge" id="b-res" hidden></span></button>
       <button class="tab" role="tab" id="t-ev" data-act="tab" data-v="ev" aria-selected="false" aria-controls="view">Events<span class="badge" id="b-ev" hidden></span></button>
       <button class="tab" role="tab" id="t-menu" data-act="tab" data-v="menu" aria-selected="false" aria-controls="view">Menu</button>
-      <button class="tab" role="tab" id="t-money" data-act="tab" data-v="money" aria-selected="false" aria-controls="view">Financial</button>
+      <button class="tab" role="tab" id="t-web" data-act="tab" data-v="web" aria-selected="false" aria-controls="view"><span class="lg">Website</span><span class="sm">Site</span><span class="badge" id="b-web" hidden></span></button>
+      <button class="tab" role="tab" id="t-money" data-act="tab" data-v="money" aria-selected="false" aria-controls="view"><span class="lg">Financial</span><span class="sm">Sales</span></button>
     </div>
   </div>
 </header>
@@ -659,6 +681,35 @@
     }
     return { day, menu: JSON.parse(JSON.stringify(MENU)), paused: false, orders, res, ev: genEvents(day, rng(hash(day) + 90)) };
   }
+  /* website requests that aren't orders or tables */
+  const MP_P = ["Chicken", "Beef", "Shrimp", "Tofu"], MP_V = ["broccoli", "green beans", "mixed veggies"], MP_B = ["jasmine rice", "brown rice", "cauliflower rice", "quinoa"], MP_F = ["Thai basil", "garlic pepper", "chili lime", "light teriyaki"];
+  const MP_PACK = { 3: 39, 5: 59, 10: 110 };
+  const nextDow = (day, set) => { for (let k = 1; k < 9; k++) { const d = addDays(day, k); if (set.includes(dow(d))) return d; } return addDays(day, 1); };
+  function genMP(day, r, status) {
+    const n = pick(r, [3, 5, 5, 10]), groups = [];
+    let left = n;
+    while (left > 0) { const q = Math.min(left, 1 + Math.floor(r() * left)); groups.push({ q, p: pick(r, MP_P), v: pick(r, MP_V), b: pick(r, MP_B), f: pick(r, MP_F) }); left -= q; }
+    const extra = groups.reduce((t, g) => t + (g.b === "quinoa" ? 2 * g.q : 0), 0), del = r() < 0.65;
+    return { id: "m" + Math.floor(r() * 1e9), status, name: `${pick(r, FIRST)} ${pick(r, LAST)}`, phone: `(828) 555-${String(1000 + Math.floor(r() * 8999))}`,
+      date: nextDow(addDays(day, Math.floor(r() * 4)), [0, 1, 3]), meals: n, groups, total: MP_PACK[n] + extra, how: del ? "Delivery" : "Pickup",
+      addr: del ? `${10 + Math.floor(r() * 400)} ${pick(r, ["Haywood Rd", "State St", "Brevard Rd", "Merrimon Ave", "Patton Ave"])}` : "", note: r() < 0.3 ? pick(r, ["No peanuts please", "Gate code 4471", "Leave at the door"]) : "" };
+  }
+  const ROLES = ["Server", "Host", "Line cook", "Prep cook", "Dishwasher", "Delivery driver"];
+  function genJob(day, r, status) {
+    const roles = [pick(r, ROLES)]; if (r() < 0.4) roles.push(pick(r, ROLES.filter((x) => x !== roles[0])));
+    return { id: "j" + Math.floor(r() * 1e9), status, name: `${pick(r, FIRST)} ${pick(r, LAST)}`, phone: `(828) 555-${String(1000 + Math.floor(r() * 8999))}`, roles, hours: r() < 0.6 ? "Part time" : "Full time",
+      when: pick(r, ["Weekends, dinner", "Weekdays, lunch", "Any time", "Evenings after 4"]), exp: pick(r, ["Two years serving at a brewery on Lexington", "Line cook at a sushi place, can start Monday", "First restaurant job, fast learner", "Host at a hotel restaurant downtown"]), at: addDays(day, -Math.floor(r() * 6)) };
+  }
+  function webSeed(day) {
+    const r = rng(hash(day) + 333);
+    const mp = [genMP(day, r, "new"), genMP(day, r, "new"), genMP(day, r, "confirmed"), genMP(day, r, "confirmed"), genMP(day, r, "confirmed")];
+    const jobs = [genJob(day, r, "new"), genJob(day, r, "confirmed"), genJob(day, r, "confirmed")];
+    const subs = [...Array(6)].map(() => `${pick(r, FIRST).toLowerCase()}.${pick(r, LAST).toLowerCase()}@${pick(r, ["gmail.com", "yahoo.com", "icloud.com", "outlook.com"])}`);
+    return { mp, jobs, subs, subCount: 146, banner: { on: false, text: "" },
+      specials: [{ id: "s1", title: "Weekday lunch special", when: "Monday to Friday, lunch", detail: "$13.99 with chicken, veggies, pork or tofu. Beef, shrimp, calamari or mussels for a little extra." }],
+      wev: [{ id: "w1", date: day.slice(0, 4) + "-12-31", title: "New Year's Eve", time: "11 AM to 9 PM" }] };
+  }
+
   let S;
   const store = {
     load() { try { const x = JSON.parse(localStorage.getItem(KEY)); if (x && x.day === now().day && x.res && x.ev) return x; } catch (e) {} return null; },
@@ -667,6 +718,7 @@
   };
   S = store.load() || seedToday();
   if (!S.menu) S.menu = JSON.parse(JSON.stringify(MENU));
+  if (!S.mp) Object.assign(S, webSeed(S.day));
 
   /* ---------- state ---------- */
   const V = { tab: "orders", day: now().day, rday: now().day, type: "all", range: "7", mode: "week", zoom: null, dir: 0, evMonth: null, evDay: null, cat: "all", q: "", photoFor: null, edit: null, fresh: null, noteFor: null, flash: null, armed: null, doneOpen: false, open: new Set(), anim: true };
@@ -862,6 +914,62 @@
   const findItem = (id) => { for (const c of S.menu) { const i = c.items.find((x) => x.id === id); if (i) return [c, i]; } return []; };
   let BUCKETS = [];
   const RNG = { 1: "today", 7: "this week", 30: "this month" };
+  /* ---------- website: meal prep, jobs, newsletter, and what the site shows ---------- */
+  const PAGES = [["Menu", "Live from the Menu tab"], ["Online ordering", "Pickup orders land in Orders"], ["Reservations", "Bookings land in Tables"], ["Catering and private parties", "Inquiries land in Events"], ["Meal prep", "Orders land here"], ["Events and specials", "Edit below"], ["Jobs", "Applications land here"], ["Press and reviews", "Google reviews and articles"]];
+  const dshort = (d) => noon(d).toLocaleDateString("en-US", { timeZone: "UTC", weekday: "short", month: "short", day: "numeric" });
+  function mpCard(x) {
+    return `<article class="card ${x.status === "new" ? "needs" : ""} ${V.fresh === x.id ? "arrive" : ""} ${V.flash === x.id ? "flash" : ""}" ${vt(x.id)}>
+      <div class="c-top"><div><h3 class="c-name">${esc(x.name)}</h3><p class="c-kind"><i class="${x.how === "Delivery" ? "delivery" : "pickup"}"></i>${x.how} ${dshort(x.date)}</p></div><p class="c-total num">${money(x.total)}<small class="csub">${x.meals} meals</small></p></div>
+      <ul class="c-lines">${x.groups.map((g) => `<li>${g.q}&times; ${g.p}<span>${g.v}, ${g.b}, ${g.f}</span></li>`).join("")}</ul>
+      ${x.addr ? `<p class="c-meta">Deliver to ${esc(x.addr)}</p>` : ""}${noteBox("m", x)}
+      ${x.status === "new" ? confirmRow("m", x, "Confirm order") : `<div class="c-act"><span class="ok">${CHECK}Confirmed</span></div>`}
+      <p class="c-foot">${esc(x.phone)}</p></article>`;
+  }
+  function jobCard(x) {
+    const tel = x.phone.replace(/\D/g, "");
+    return `<article class="card ${x.status === "new" ? "needs" : ""} ${V.fresh === x.id ? "arrive" : ""}" ${vt(x.id)}>
+      <div class="c-top"><div><h3 class="c-name">${esc(x.name)}</h3><p class="c-kind">${x.roles.join(" or ")}</p></div><p class="c-total" style="font-size:15px;font-weight:500;color:var(--muted)">${x.hours}</p></div>
+      <p class="c-note" style="color:var(--ink-2)">${esc(x.exp)}</p><p class="c-meta">Available ${esc(x.when.toLowerCase())}</p>
+      ${x.status === "new" ? `<div class="c-act"><a class="btn big" href="tel:${tel}" data-act="jcall" data-id="${x.id}">Call ${first(x)}</a><a class="btn quiet" href="sms:${tel}">Text</a><button class="link ${V.armed === x.id ? "armed" : ""}" data-act="decline" ${attr("j", x.id)}>${V.armed === x.id ? "Tap again" : "Pass"}</button></div>`
+        : `<div class="c-act"><span class="ok">${CHECK}Contacted</span><span class="sp"></span><a class="link" href="tel:${tel}">Call</a></div>`}
+      <p class="c-foot">${esc(x.phone)}</p></article>`;
+  }
+  function webView() {
+    const T = now().day, sec = V.wsec || "in";
+    const mp = S.mp.filter((x) => x.status !== "declined").sort((a, b) => (a.status === "new" ? 0 : 1) - (b.status === "new" ? 0 : 1) || a.date.localeCompare(b.date));
+    const jobs = S.jobs.filter((x) => x.status !== "declined").sort((a, b) => (a.status === "new" ? 0 : 1) - (b.status === "new" ? 0 : 1));
+    const nNew = S.mp.filter((x) => x.status === "new").length + S.jobs.filter((x) => x.status === "new").length;
+    const mpMeals = mp.reduce((t, x) => t + x.meals, 0), mpTot = mp.reduce((t, x) => t + x.total, 0);
+    const seg = `<div class="tools" style="margin-top:24px"><div class="seg" role="group" aria-label="Section">${[["in", "Inbox"], ["show", "On your website"]].map(([v, l]) => `<button aria-pressed="${sec === v}" data-act="wsec" data-v="${v}">${l}</button>`).join("")}</div></div>`;
+    const head = `<h1 class="title">Website</h1><p class="sub">${sec === "in" ? "Meal prep, job applications and newsletter sign-ups from your website." : "What guests see. Changes go live as soon as you save."}</p>${sec === "in" ? `<p class="chips">${needChip(nNew, "request")}</p>` : ""}${seg}`;
+    if (sec === "in") return `${head}
+      <div class="wstats">
+        <div><small>Meal prep this week</small><b class="num"><span data-cu="${mpTot}" data-f="money">${money(mpTot)}</span></b><em>${mpMeals} meals, ${mp.length} orders</em></div>
+        <div><small>Job applications</small><b class="num">${jobs.length}</b><em>${S.jobs.filter((x) => x.status === "new").length} waiting on you</em></div>
+        <div><small>Newsletter</small><b class="num"><span data-cu="${S.subCount}" data-f="int">${S.subCount}</span></b><em>people on the list</em></div>
+      </div>
+      <div class="rsec"><h2 class="h3">Meal prep <span>${mpMeals} meals to cook</span></h2><div class="stack">${mp.map(mpCard).join("") || `<p class="none">No meal prep orders yet.</p>`}</div></div>
+      <div class="rsec"><h2 class="h3">Job applications <span>${jobs.length}</span></h2><div class="stack">${jobs.map(jobCard).join("") || `<p class="none">No applications yet.</p>`}</div></div>
+      <div class="rsec"><h2 class="h3">Newsletter <span>${S.subCount} subscribers</span></h2>
+        <div class="card"><ul class="subs">${S.subs.slice(0, 5).map((e, i) => `<li><span>${esc(e)}</span><small>${i === 0 ? "Today" : i + 1 + " days ago"}</small></li>`).join("")}</ul>
+        <div class="c-act"><button class="btn quiet" data-act="csv">Download all ${S.subCount} emails</button></div></div></div>
+      <div class="tools"><span></span><span><button class="link" data-act="test" data-k="m">Send a test meal prep order</button> <button class="link" data-act="test" data-k="j">Send a test application</button></span></div>`;
+    const evs = S.wev.filter((e) => e.date >= T).sort((a, b) => a.date.localeCompare(b.date));
+    return `${head}
+      <div class="rsec"><h2 class="h3">Announcement <span>A strip across the top of every page</span></h2>
+        <div class="card wform"><div class="wtog"><span>Show it on the website</span><button class="sw ${S.banner.on ? "on" : ""}" role="switch" aria-checked="${S.banner.on}" data-act="wban" aria-label="Show announcement"><span></span></button></div>
+        <form class="nform" data-wf="banner"><input name="t" value="${esc(S.banner.text)}" placeholder="Closing at 7 tonight for a private party" maxlength="160" autocomplete="off"><button class="btn quiet" type="submit">Save</button></form>
+        ${S.banner.on && S.banner.text ? `<p class="wban">${esc(S.banner.text)}</p>` : ""}</div></div>
+      <div class="rsec"><h2 class="h3">Specials <span>Lunch deals, happy hour, dish of the week</span></h2>
+        <div class="card wlist">${S.specials.map((s) => `<div class="wrow"><div><b>${esc(s.title)}</b><small>${esc(s.when)}</small><p>${esc(s.detail)}</p></div><button class="link ${V.armed === s.id ? "armed" : ""}" data-act="wdel" data-k="specials" data-id="${s.id}">${V.armed === s.id ? "Tap again" : "Remove"}</button></div>`).join("") || `<p class="wempty">No specials showing.</p>`}
+        <form class="wadd" data-wf="special"><input name="a" placeholder="Name, like Happy hour" maxlength="80" autocomplete="off"><input name="b" placeholder="When, like Weekdays 3 to 5 PM" maxlength="80" autocomplete="off"><input name="c" placeholder="Details" maxlength="300" autocomplete="off"><button class="btn" type="submit">Add special</button></form></div></div>
+      <div class="rsec"><h2 class="h3">Events <span>Past dates drop off by themselves</span></h2>
+        <div class="card wlist">${evs.map((e) => `<div class="wrow"><span class="wdate"><small>${noon(e.date).toLocaleDateString("en-US", { timeZone: "UTC", month: "short" })}</small><b class="num">${+e.date.slice(8)}</b></span><div><b>${esc(e.title)}</b><small>${esc(e.time)}</small></div><button class="link ${V.armed === e.id ? "armed" : ""}" data-act="wdel" data-k="wev" data-id="${e.id}">${V.armed === e.id ? "Tap again" : "Remove"}</button></div>`).join("") || `<p class="wempty">Nothing on the calendar.</p>`}
+        <form class="wadd" data-wf="event"><input name="a" placeholder="Event name" maxlength="80" autocomplete="off"><input name="b" type="date" min="${T}" aria-label="Date"><input name="c" placeholder="Time, like 6 to 9 PM" maxlength="40" autocomplete="off"><button class="btn" type="submit">Add event</button></form></div></div>
+      <div class="rsec"><h2 class="h3">Pages on your website <span>${PAGES.length} live</span></h2>
+        <div class="card wlist">${PAGES.map(([p, h]) => `<div class="wrow"><span class="live"></span><div><b>${p}</b><small>${h}</small></div></div>`).join("")}</div></div>`;
+  }
+
   function moneyView() {
     const N = +V.range, T = now().day;
     const all = HIST.concat(S.orders.filter((o) => o.status !== "declined")).filter((o) => o.day >= addDays(T, -(N - 1)) && o.day <= T);
@@ -889,13 +997,15 @@
     setB($("#b-orders"), S.orders.filter((o) => o.status === "new").length);
     setB($("#b-res"), S.res.filter((x) => x.status === "new").length);
     setB($("#b-ev"), S.ev.filter((x) => x.status === "new").length);
+    setB($("#b-web"), S.mp.filter((x) => x.status === "new").length + S.jobs.filter((x) => x.status === "new").length);
     $("#fab").classList.toggle("off", V.tab !== "orders"); $("#fab").lastChild.textContent = V.tab === "menu" ? "Add dish" : "Add order";
     $("#online").setAttribute("aria-checked", String(!S.paused));
     $("#onlineText").innerHTML = S.paused ? "Online orders <b>paused</b>" : "Online orders <b>on</b>";
-    for (const v of ["orders", "res", "ev", "menu", "money"]) $("#t-" + v).setAttribute("aria-selected", String(V.tab === v));
+    for (const v of ["orders", "res", "ev", "menu", "web", "money"]) $("#t-" + v).setAttribute("aria-selected", String(V.tab === v));
+    { const at = $("#t-" + V.tab), tb = at.parentElement; if (tb.scrollWidth > tb.clientWidth) { const l = at.offsetLeft - 18, r = at.offsetLeft + at.offsetWidth - tb.clientWidth + 18; if (tb.scrollLeft > l) tb.scrollLeft = l; else if (tb.scrollLeft < r) tb.scrollLeft = r; } }
     const view = $("#view");
     view.setAttribute("aria-labelledby", "t-" + V.tab);
-    view.innerHTML = { orders: ordersView, res: resView, ev: evView, menu: menuView, money: moneyView }[V.tab]();
+    view.innerHTML = { orders: ordersView, res: resView, ev: evView, menu: menuView, web: webView, money: moneyView }[V.tab]();
     if (V.anim && !calm) { view.classList.remove("enter"); void view.offsetWidth; view.classList.add("enter"); } else view.classList.remove("enter");
     if (V.zoom) { const z = view.querySelector(`[data-zoom="${V.zoom}"]`); if (z) z.style.viewTransitionName = "dayzoom"; }
     V.anim = false; V.dir = 0; V.fresh = null; V.flash = null;
@@ -969,7 +1079,7 @@
       });
     } catch (e) {}
   }
-  const POOLS = () => ({ o: S.orders, r: S.res, e: S.ev });
+  const POOLS = () => ({ o: S.orders, r: S.res, e: S.ev, m: S.mp, j: S.jobs });
   const find = (el) => POOLS()[el.dataset.k].find((x) => x.id === el.dataset.id);
   const first = (x) => x.name.split(" ")[0];
   const WORD = { o: "order", r: "table", e: "booking" };
@@ -990,6 +1100,14 @@
     rsave() {
       const { day } = now(), d = V.rday, x = { id: "r" + Date.now(), day: d, at: +$("#rTime").value, party: M.party, name: $("#rName").value.trim() || "Walk-in", phone: $("#rPhone").value.trim() || "No phone", note: $("#mNote").value.trim(), status: "confirmed", table: "Table " + (1 + Math.floor(Math.random() * 8)), src: "Added by you" };
       S.res.push(x); V.flash = x.id; closeSheet(); toast(`Booked ${x.name} for ${clockStr(x.at)}`); commit();
+    },
+    wsec(el) { V.wsec = el.dataset.v; V.armed = null; V.anim = true; commit(); },
+    wban() { S.banner.on = !S.banner.on; toast(S.banner.on ? (S.banner.text ? "Announcement is live on your website" : "Write the announcement, then save") : "Announcement is off"); V.anim = false; commit(); },
+    wdel(el) { const id = el.dataset.id, k = el.dataset.k; if (V.armed !== id) { V.armed = id; commit(); return; } S[k] = S[k].filter((x) => x.id !== id); V.armed = null; toast("Removed from your website"); commit(); },
+    jcall(el) { const x = S.jobs.find((y) => y.id === el.dataset.id); if (x) { x.status = "confirmed"; setTimeout(commit, 300); } },
+    csv() {
+      const rows = ["email", ...S.subs, ...[...Array(Math.max(0, S.subCount - S.subs.length))].map((_, i) => `guest${i + 1}@example.com`)];
+      const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([rows.join("\n")], { type: "text/csv" })); a.download = "thai-pearl-newsletter.csv"; a.click(); toast(`Downloaded ${S.subCount} emails`);
     },
     mcat(el) { V.cat = el.dataset.v; V.edit = null; commit(); },
     medit(el) { V.edit = el.dataset.id; V.armed = null; commit(); },
@@ -1022,6 +1140,10 @@
         const o = makeOrder(r, day, min, "new"); o.due = min + (o.type === "delivery" ? 40 : 22);
         o.num = S.orders.reduce((m, y) => Math.max(m, y.num), 0) + 1; o.id = `${day}-${o.num}`; S.orders.push(o);
         V.fresh = o.id; V.day = day; V.mode = "day"; V.type = "all"; V.tab = "orders"; toast(`New order from ${o.name}`);
+      } else if (k === "m") {
+        const x = genMP(day, r, "new"); S.mp.unshift(x); V.fresh = x.id; V.tab = "web"; V.wsec = "in"; toast(`New meal prep order from ${x.name}`);
+      } else if (k === "j") {
+        const x = genJob(day, r, "new"); S.jobs.unshift(x); V.fresh = x.id; V.tab = "web"; V.wsec = "in"; toast(`New application from ${x.name}`);
       } else if (k === "r") {
         const d = addDays(day, Math.floor(r() * 3)), x = genRes(d, r, 0)[0]; if (!x) return;
         x.id = "r" + Date.now(); x.status = "new"; S.res.push(x); V.fresh = x.id; V.rday = d; V.tab = "res"; toast(`New booking from ${x.name}`);
@@ -1037,7 +1159,7 @@
     step(el) { const id = el.dataset.id; M.q[id] = Math.max(0, (M.q[id] || 0) + +el.dataset.d); sheetItems(); },
     kind(el) { M.type = el.dataset.v; sheetHead(); },
     save() { saveManual(); },
-    reset() { store.wipe(); S = seedToday(); Object.assign(V, { day: now().day, rday: now().day, type: "all", doneOpen: false, armed: null, anim: true }); toast("Demo reset"); commit(); },
+    reset() { store.wipe(); S = seedToday(); Object.assign(S, webSeed(S.day)); Object.assign(V, { day: now().day, rday: now().day, type: "all", doneOpen: false, armed: null, anim: true }); toast("Demo reset"); commit(); },
   };
   /* ---------- manual order sheet ---------- */
   const getItems = () => S.menu.flatMap((c) => c.items.filter((i) => !i.off).map((i) => ({ id: i.id, n: i.name.replace(/\s*\((V|V avail\.)\)/, ""), p: i.sizes && i.sizes.length ? i.sizes[0].price : i.price })));
@@ -1089,6 +1211,14 @@
       if (i.sizes && i.sizes.length) i.sizes.forEach((z, k) => { z.price = num(f["sz" + k].value); }); else i.price = num(f.price.value);
       V.edit = null; V.flash = null; toast(`${cleanN(i.name)} is live on your website`); commit(); return;
     }
+    const w = e.target.closest("[data-wf]");
+    if (w) {
+      e.preventDefault(); const k = w.dataset.wf, v = (n) => (w[n] ? w[n].value.trim() : "");
+      if (k === "banner") { S.banner.text = v("t"); if (S.banner.text && !S.banner.on) S.banner.on = true; toast(S.banner.text ? "Announcement is live on your website" : "Announcement cleared"); }
+      else if (k === "special") { if (!v("a")) { w.a.focus(); return toast("Give the special a name"); } S.specials.push({ id: "s" + Date.now(), title: v("a"), when: v("b"), detail: v("c") }); toast(`${v("a")} is live on your website`); }
+      else if (k === "event") { if (!v("a") || !v("b")) { (v("a") ? w.b : w.a).focus(); return toast("Add a name and a date"); } S.wev.push({ id: "w" + Date.now(), title: v("a"), date: v("b"), time: v("c") }); toast(`${v("a")} is on your Events page`); }
+      V.anim = false; commit(); return;
+    }
     const f = e.target.closest(".nform"); if (!f) return; e.preventDefault();
     const x = POOLS()[f.dataset.k].find((y) => y.id === f.dataset.id); if (x) x.note = f.n.value.trim(); V.noteFor = null; commit();
   });
@@ -1137,7 +1267,7 @@
   }, true);
   document.addEventListener("keydown", (e) => {
     if (!e.target.classList || !e.target.classList.contains("tab")) return;
-    if (e.key === "ArrowRight" || e.key === "ArrowLeft") { const o = ["orders", "res", "ev", "menu", "money"], i = o.indexOf(V.tab) + (e.key === "ArrowRight" ? 1 : 4), t = $("#t-" + o[i % 5]); t.click(); t.focus(); }
+    if (e.key === "ArrowRight" || e.key === "ArrowLeft") { const o = ["orders", "res", "ev", "menu", "web", "money"], i = o.indexOf(V.tab) + (e.key === "ArrowRight" ? 1 : 5), t = $("#t-" + o[i % 6]); t.click(); t.focus(); }
   });
 
   render();

@@ -1,3 +1,4 @@
+import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
@@ -181,13 +182,12 @@ export default function MenuPage() {
             >
               Order Delivery
             </a>
-            <a
-              href="https://thaipearlasheville.com/reservations"
-              target="_blank" rel="noopener noreferrer"
+            <Link
+              href="/reserve"
               className="border border-[#180E06]/40 hover:border-[#180E06] text-[#180E06] px-10 py-4 font-sans text-[11px] tracking-[0.22em] uppercase transition-colors text-center"
             >
               Reserve a Table
-            </a>
+            </Link>
           </div>
         </div>
       </div>

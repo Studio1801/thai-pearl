@@ -10,6 +10,12 @@ import { lazy, Suspense, useEffect } from 'react';
 import Home from '@/pages/home';
 import MenuPage from '@/pages/menu';
 import OrderStatusPage from '@/pages/order-status';
+import ReservePage from '@/pages/reserve';
+import MealPrepPage from '@/pages/meal-prep';
+import CateringPage from '@/pages/catering';
+import EventsPage from '@/pages/events';
+import JobsPage from '@/pages/jobs';
+import PressPage from '@/pages/press';
 
 // The owner dashboard is its own bundle so guests never download it.
 const Dashboard = lazy(() => import('@/pages/dashboard'));
@@ -31,6 +37,14 @@ function Router() {
       <Switch>
         <Route path="/" component={Home} />
         <Route path="/menu" component={MenuPage} />
+        <Route path="/reserve" component={ReservePage} />
+        <Route path="/meal-prep" component={MealPrepPage} />
+        <Route path="/catering">{() => <CateringPage key="catering" />}</Route>
+        <Route path="/parties">{() => <CateringPage key="party" initial="party" />}</Route>
+        <Route path="/events" component={EventsPage} />
+        <Route path="/specials" component={EventsPage} />
+        <Route path="/jobs" component={JobsPage} />
+        <Route path="/press" component={PressPage} />
         <Route path="/order/:id">{(params) => <OrderStatusPage params={params as { id: string }} />}</Route>
         <Route path="/dashboard">
           <Suspense fallback={<div className="min-h-screen bg-[#180E06]" />}>

@@ -5,8 +5,10 @@ import { useNow } from "@/lib/live";
 import { useSaveSettings } from "./api";
 import { Btn, Chips, SectionTitle, Switch, TextField, useToast } from "./ui";
 
-type Draft = Pick<Settings, "banner" | "hours" | "proteins" | "phone">;
-const pickDraft = (s: Settings): Draft => structuredClone({ banner: s.banner, hours: s.hours, proteins: s.proteins, phone: s.phone });
+type Draft = Pick<Settings, "banner" | "hours" | "proteins" | "phone"> & { specials: NonNullable<Settings["specials"]>; events: NonNullable<Settings["events"]> };
+const pickDraft = (s: Settings): Draft =>
+  structuredClone({ banner: s.banner, hours: s.hours, proteins: s.proteins, phone: s.phone, specials: s.specials ?? [], events: s.events ?? [] });
+const newId = () => Math.random().toString(36).slice(2, 10);
 
 export function RestaurantTab({ site }: { site: Settings }) {
   const save = useSaveSettings();
@@ -110,6 +112,58 @@ export function RestaurantTab({ site }: { site: Settings }) {
       </section>
 
       <section>
+        <SectionTitle title="Specials" hint="Shown on the Events and specials page and on the home page. Lunch deals, happy hour, a dish of the week." />
+        <ul className="space-y-4">
+          {draft.specials.map((s, i) => {
+            const set = (change: Partial<typeof s>) => setDraft({ ...draft, specials: draft.specials.map((x, j) => (j === i ? { ...x, ...change } : x)) });
+            return (
+              <li key={s.id} className="bg-white rounded-lg border border-[#E4D7C3] p-4 space-y-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <TextField label="Name" value={s.title} onChange={(v) => set({ title: v })} placeholder="Happy hour" maxLength={80} />
+                  <TextField label="When" value={s.when} onChange={(v) => set({ when: v })} placeholder="Weekdays, 3 to 5 PM" maxLength={80} />
+                </div>
+                <TextField label="Details" value={s.detail} onChange={(v) => set({ detail: v })} multiline placeholder="$5 Thai iced tea and half-price spring rolls" maxLength={300} />
+                <button onClick={() => setDraft({ ...draft, specials: draft.specials.filter((_, j) => j !== i) })} className="font-sans text-sm text-[#8A7060] py-1">
+                  Remove this special
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+        <button onClick={() => setDraft({ ...draft, specials: [...draft.specials, { id: newId(), title: "", detail: "", when: "" }] })} className="mt-3 font-sans text-sm font-semibold text-[#C4281A] py-2">
+          + Add a special
+        </button>
+      </section>
+
+      <section>
+        <SectionTitle title="Events on the website" hint="Holidays, live music, tasting nights. Past dates drop off the website by themselves." />
+        <ul className="space-y-4">
+          {draft.events.map((ev, i) => {
+            const set = (change: Partial<typeof ev>) => setDraft({ ...draft, events: draft.events.map((x, j) => (j === i ? { ...x, ...change } : x)) });
+            return (
+              <li key={ev.id} className="bg-white rounded-lg border border-[#E4D7C3] p-4 space-y-3">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <TextField label="Name" value={ev.title} onChange={(v) => set({ title: v })} placeholder="Live music night" maxLength={80} />
+                  <TextField label="Date" type="date" value={ev.date} onChange={(v) => set({ date: v })} />
+                  <TextField label="Time" value={ev.time} onChange={(v) => set({ time: v })} placeholder="6 to 9 PM" maxLength={40} />
+                </div>
+                <TextField label="Details" value={ev.detail} onChange={(v) => set({ detail: v })} multiline maxLength={300} />
+                <button onClick={() => setDraft({ ...draft, events: draft.events.filter((_, j) => j !== i) })} className="font-sans text-sm text-[#8A7060] py-1">
+                  Remove this event
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+        <button
+          onClick={() => setDraft({ ...draft, events: [...draft.events, { id: newId(), title: "", date: new Date().toISOString().slice(0, 10), time: "", detail: "" }] })}
+          className="mt-3 font-sans text-sm font-semibold text-[#C4281A] py-2"
+        >
+          + Add an event
+        </button>
+      </section>
+
+      <section>
         <SectionTitle title="Hours" hint="Shown on the website, and online pickup follows them." />
         <ul className="divide-y divide-[#E4D7C3]">
           {draft.hours.map((d, i) => (
@@ -193,6 +247,8 @@ export function RestaurantTab({ site }: { site: Settings }) {
                       ...site,
                       ...draft,
                       proteins: draft.proteins.filter((p) => p.label.trim()).map((p) => ({ label: p.label.trim(), price: Number(p.price) || 0 })),
+                      specials: draft.specials.filter((s) => s.title.trim()),
+                      events: draft.events.filter((e) => e.title.trim() && /^\d{4}-\d{2}-\d{2}$/.test(e.date)),
                     },
                     "Saved. It's live on the website.",
                   )

@@ -2,13 +2,14 @@ import { useEffect, useState, type FormEvent } from "react";
 import logo from "@assets/thai-pearl/logo.png";
 import { clock, liveStatus, formatTime } from "@shared/model";
 import { useNow } from "@/lib/live";
-import { checkPin, pinStore, useOrders, useSaveSettings, useSettings } from "@/dashboard/api";
+import { checkPin, pinStore, useOrders, useRequests, useSaveSettings, useSettings } from "@/dashboard/api";
 import { OrdersTab, chime } from "@/dashboard/orders-tab";
 import { MenuTab } from "@/dashboard/menu-tab";
 import { RestaurantTab } from "@/dashboard/restaurant-tab";
+import { RequestsTab } from "@/dashboard/requests-tab";
 import { Btn, ToastHost, useToast } from "@/dashboard/ui";
 
-type Tab = "orders" | "menu" | "restaurant";
+type Tab = "orders" | "requests" | "menu" | "restaurant";
 
 export default function Dashboard() {
   const [authed, setAuthed] = useState(() => !!pinStore.get());
@@ -82,9 +83,12 @@ function Shell() {
   const { data: site, isError } = useSettings();
   const { data: orderData } = useOrders();
   const waiting = orderData?.orders.filter((o) => o.status === "new").length ?? 0;
+  const { data: reqData } = useRequests();
+  const asks = reqData?.requests.filter((r) => r.status === "new" && r.kind !== "newsletter").length ?? 0;
 
   const tabs: { id: Tab; label: string; badge?: number }[] = [
     { id: "orders", label: "Orders", badge: waiting },
+    { id: "requests", label: "Requests", badge: asks },
     { id: "menu", label: "Menu" },
     { id: "restaurant", label: "Restaurant" },
   ];
@@ -101,7 +105,7 @@ function Shell() {
           </div>
           {site && <OrderingControl />}
         </div>
-        <nav className="max-w-6xl mx-auto px-3 md:px-6 flex gap-1 mt-3">
+        <nav className="max-w-6xl mx-auto px-3 md:px-6 flex gap-1 mt-3 overflow-x-auto no-scrollbar">
           {tabs.map((t) => (
             <button
               key={t.id}
@@ -130,6 +134,8 @@ function Shell() {
           <p className="font-sans text-sm text-[#8A7060]">{isError ? "Can't reach the website right now. Retrying..." : "Loading..."}</p>
         ) : tab === "orders" ? (
           <OrdersTab />
+        ) : tab === "requests" ? (
+          <RequestsTab />
         ) : tab === "menu" ? (
           <MenuTab site={site} />
         ) : (

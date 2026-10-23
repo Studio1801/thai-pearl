@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback } from "react";
-import type { Order, OrderStatus, Settings } from "@shared/model";
+import type { GuestRequest, Order, OrderStatus, RequestStatus, Settings } from "@shared/model";
 import { restaurantNow } from "@shared/model";
 import { fetchSite } from "@/lib/live";
 
@@ -103,6 +103,34 @@ export function useSetOrderStatus() {
         throw e;
       } finally {
         qc.invalidateQueries({ queryKey: ["orders"] });
+      }
+    },
+    [qc],
+  );
+}
+
+export function useRequests() {
+  return useQuery({
+    queryKey: ["requests"],
+    queryFn: () => ownerFetch<{ requests: GuestRequest[] }>("/api/requests"),
+    refetchInterval: 10_000,
+    refetchIntervalInBackground: true,
+  });
+}
+
+export function useSetRequestStatus() {
+  const qc = useQueryClient();
+  return useCallback(
+    async (id: string, status: RequestStatus) => {
+      const prev = qc.getQueryData<{ requests: GuestRequest[] }>(["requests"]);
+      if (prev) qc.setQueryData(["requests"], { requests: prev.requests.map((r) => (r.id === id ? { ...r, status } : r)) });
+      try {
+        await ownerFetch<GuestRequest>("/api/requests", { method: "PATCH", body: JSON.stringify({ id, status }) });
+      } catch (e) {
+        if (prev) qc.setQueryData(["requests"], prev);
+        throw e;
+      } finally {
+        qc.invalidateQueries({ queryKey: ["requests"] });
       }
     },
     [qc],

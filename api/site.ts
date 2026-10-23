@@ -2,7 +2,7 @@
 // GET  /api/site  -> everything the public website shows (menu, hours, banner, ordering state)
 // PUT  /api/site  -> dashboard saves changes (needs the PIN)
 
-import type { Category, DayHours, Settings, Size } from "../shared/model";
+import type { Category, DayHours, Settings, SiteEvent, Size, Special } from "../shared/model";
 import { slug } from "../shared/model";
 import { SETTINGS_KEY, body, fail, isOwner, json, loadSettings } from "./_lib/http";
 import { update } from "./_lib/store";
@@ -89,5 +89,25 @@ function sanitize(s: Settings): Omit<Settings, "updatedAt"> | string {
       .slice(0, 10)
       .map((p) => ({ label: str(p.label, 24) || "Protein", price: num(p.price, 0, 99) })),
     menu,
+    specials: (Array.isArray(s.specials) ? s.specials : SEED.specials ?? []).slice(0, 20).map(
+      (x): Special => ({
+        id: str(x.id, 40) || crypto.randomUUID().slice(0, 8),
+        title: str(x.title, 80) || "Special",
+        detail: str(x.detail, 300),
+        when: str(x.when, 80),
+      }),
+    ),
+    events: (Array.isArray(s.events) ? s.events : SEED.events ?? [])
+      .filter((x) => typeof x?.date === "string" && /^\d{4}-\d{2}-\d{2}$/.test(x.date))
+      .slice(0, 40)
+      .map(
+        (x): SiteEvent => ({
+          id: str(x.id, 40) || crypto.randomUUID().slice(0, 8),
+          date: x.date,
+          title: str(x.title, 80) || "Event",
+          time: str(x.time, 40),
+          detail: str(x.detail, 300),
+        }),
+      ),
   };
 }

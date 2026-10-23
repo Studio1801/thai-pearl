@@ -1,3 +1,4 @@
+import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { MapPin, Phone, Clock, Instagram } from "lucide-react";
 import exteriorImg from "@assets/thai-pearl/exterior.png";
@@ -89,22 +90,18 @@ export function Contact() {
               Yes, we're dog-friendly on the patio.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
-              <a
-                href="https://thaipearlasheville.com/reservations"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/reserve"
                 className="bg-[#E8920E] hover:bg-[#c87a0c] text-white px-8 py-4 font-sans font-bold text-[11px] tracking-[0.25em] uppercase transition-colors text-center"
               >
                 Reserve a Table
-              </a>
-              <a
-                href="https://thaipearlasheville.com/catering"
-                target="_blank"
-                rel="noopener noreferrer"
+              </Link>
+              <Link
+                href="/catering"
                 className="border border-white/20 hover:border-[#E8920E]/50 text-white/50 hover:text-white px-8 py-4 font-sans text-[11px] tracking-[0.22em] uppercase transition-all text-center"
               >
                 Catering
-              </a>
+              </Link>
             </div>
 
             {/* Thai welcome */}
