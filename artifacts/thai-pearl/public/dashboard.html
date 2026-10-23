@@ -292,6 +292,25 @@
   .efacts b.g { color: var(--green); } .efacts b.w { color: #B8860B; }
   .dsum { margin: 6px 0 0; color: var(--muted); font-size: 15px; }
   @media (max-width: 640px) { .efacts { grid-template-columns: repeat(2, 1fr); row-gap: 12px; } .efacts div:nth-child(3) { padding-left: 0; border-left: 0; } .efacts div:nth-child(2) { padding-left: 12px; } .estats { grid-template-columns: 1fr 1fr; row-gap: 14px; } .estats div:nth-child(3) { border-left: 0; } }
+  .rsum { margin-top: 22px; background: var(--card); border-radius: 28px; padding: 26px 28px; box-shadow: var(--shadow); }
+  .rsum small { color: var(--muted); font-size: 14px; }
+  .rtopline { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+  .meter { margin-top: 22px; } .mtr { height: 8px; border-radius: 4px; background: var(--wash); overflow: hidden; } .mtr i { display: block; height: 100%; border-radius: 4px; background: var(--ink); transition: width 1s var(--ease); }
+  .meter p { margin: 8px 0 0; font-size: 14px; color: var(--ink-2); display: flex; } .meter p span { margin-left: auto; color: var(--muted); }
+  .rspark { display: flex; align-items: flex-end; gap: 5px; height: 56px; margin-top: 22px; } .rspark span { flex: 1; height: 100%; display: flex; align-items: flex-end; } .rspark i { display: block; width: 100%; border-radius: 5px 5px 3px 3px; background: rgba(22, 20, 18, 0.1); } .rspark .pk i { background: var(--ink); }
+  .raxis { display: flex; gap: 5px; margin-top: 6px; font-size: 11px; color: var(--muted); } .raxis span { flex: 1; text-align: center; }
+  .rfacts { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); } .rfacts div + div { padding-left: 18px; border-left: 1px solid var(--line); } .rfacts b { display: block; font-size: 20px; font-weight: 600; letter-spacing: -0.03em; }
+  .rsec { margin-top: 34px; } .rsec .h3 { margin: 0; display: flex; align-items: baseline; gap: 12px; } .rsec .h3 span { font-size: 14px; font-weight: 400; color: var(--muted); letter-spacing: 0; }
+  .rlist { display: flex; flex-direction: column; gap: 12px; margin-top: 14px; }
+  .rcard { display: flex; gap: 22px; padding: 22px 24px; }
+  .rtime { flex-shrink: 0; width: 74px; display: flex; flex-direction: column; align-items: flex-start; } .rtime b { font-size: 34px; font-weight: 600; letter-spacing: -0.05em; line-height: 1; } .rtime small { color: var(--muted); font-size: 13px; margin-top: 4px; }
+  .rbody { flex: 1; min-width: 0; }
+  .rhead { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; } .rhead .c-name { margin: 0; font-size: 22px; }
+  .party { flex-shrink: 0; display: inline-flex; align-items: baseline; gap: 5px; padding: 5px 12px; border-radius: 14px; background: var(--wash); } .party b { font-size: 18px; font-weight: 600; } .party small { font-size: 12px; color: var(--muted); } .needs .party { background: rgba(22, 20, 18, 0.07); }
+  .rtags { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 0; } .rtags span { font-size: 12px; color: var(--ink-2); padding: 3px 10px; border-radius: 10px; background: rgba(22, 20, 18, 0.05); }
+  .rcard .c-act { margin-top: 18px; } .rcard .c-foot { margin-top: 14px; }
+  @media (max-width: 640px) { .rcard { flex-direction: column; gap: 12px; padding: 20px; } .rtime { flex-direction: row; align-items: baseline; gap: 6px; width: auto; } .rtime b { font-size: 30px; } .rsum { padding: 22px; } }
+  .sheet select { flex: 1; min-width: 0; font: inherit; font-size: 16px; padding: 13px 14px; border: 0; border-radius: 12px; background: var(--wash); outline: none; }
   .legend { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 16px; font-size: 13px; color: var(--muted); }
   .legend i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 7px; } .legend .g { background: var(--green); } .legend .o { background: var(--deliv); } .legend .y { background: #E0B01D; } .legend .r { margin-left: auto; color: var(--ink-2); }
   .dayh { margin: 34px 0 0; font-size: 24px; letter-spacing: -0.04em; }
@@ -468,7 +487,7 @@
 (() => {
   const MENU = [{"id":"appetizers","name":"Appetizers","items":[{"id":"edamame-v","name":"Edamame (V)","price":8,"desc":"Steamed whole soybeans with sea salt and garlic"},{"id":"fresh-rolls-2","name":"Fresh Rolls (2)","price":9,"desc":"Shrimp, cilantro, red onion, mint, romaine, cabbage, carrot, Thai basil in rice paper with hoisin and peanuts"},{"id":"thai-pearl-spring-rolls-3","name":"Thai Pearl Spring Rolls (3)","price":9,"desc":"Fried spring rolls with Thai-seasoned minced chicken, mozzarella cheese, and sweet chili sauce"},{"id":"thai-fried-shrimp","name":"Thai Fried Shrimp","price":14,"desc":"Butter-fried jumbo shrimp marinated in Thai Pearl house sauce"},{"id":"thai-onion-rings-v-avail","name":"Thai Onion Rings (V avail.)","price":13,"desc":"Battered fried yellow onions seasoned with Thai larb seasoning, served with Sriracha mayo"},{"id":"thai-fries","name":"Thai Fries","price":9,"desc":"Hand-cut fries tossed in chili lime seasoning with homemade spicy mayo"},{"id":"crispy-tofu-with-sweet-chili-v","name":"Crispy Tofu with Sweet Chili (V)","price":9,"desc":"Lightly breaded organic non-GMO tofu, fried and topped with sweet chili sauce, Thai basil, and crushed peanuts"},{"id":"grilled-chicken-satay-3","name":"Grilled Chicken Satay (3)","price":14,"desc":"Chicken marinated in turmeric brown sauce, served with peanut sauce and cucumber salad"},{"id":"shrimp-rangoon-4","name":"Shrimp Rangoon (4)","price":9,"desc":"Shrimp mixed with cream cheese, wrapped in wonton skin, with sweet chili sauce"}]},{"id":"salads","name":"Thai Salads","items":[{"id":"thai-pearl-house-salad-v-avail","name":"Thai Pearl House Salad (V avail.)","price":9,"desc":"Romaine, cabbage, carrot, tomato, red onion, bean sprout, peanut, Thai basil, scallion, cilantro, mint, chili-lime dressing"},{"id":"green-papaya-salad-v-avail","name":"Green Papaya Salad (V avail.)","price":14,"sizes":[{"label":"Classic","price":14},{"label":"E-San style","price":15}],"desc":"Shredded unripe papaya, carrot, fresh garlic, tomato, crushed peanuts with Thai chili-lime-fish sauce dressing"},{"id":"larb-salad","name":"Larb Salad","price":15,"desc":"Minced chicken with Thai seasoning, roasted rice, red onion, Thai basil, mint, scallion, cilantro with lime and fish sauce dressing"},{"id":"clear-noodle-salad","name":"Clear Noodle Salad","price":16,"desc":"Minced chicken with clear mung bean noodles, red onion, tomato, carrot, cilantro, peanuts with sweet chili and lime dressing"},{"id":"grilled-beef-salad","name":"Grilled Beef Salad","price":17,"desc":"Grilled marinated beef strips with lettuce, cabbage, carrot, tomato, red onion, bean sprout, Thai basil, mint, chili-lime dressing"}]},{"id":"soups","name":"Soups and Noodle Soups","items":[{"id":"tom-yum","name":"Tom Yum","price":8,"sizes":[{"label":"Cup","price":8},{"label":"Bowl","price":15}],"desc":"Tomato, galangal, lemongrass, kaffir lime leaf, mushroom, carrot, snap pea, onion, cilantro, scallion"},{"id":"tom-kha","name":"Tom Kha","price":9,"sizes":[{"label":"Cup","price":9},{"label":"Bowl","price":16}],"desc":"Coconut milk, galangal, kaffir lime leaf, lemongrass, onion, mushroom, carrot, snap pea, cilantro, scallion"},{"id":"ginger-rice-soup-v-avail","name":"Ginger Rice Soup (V avail.)","price":7,"sizes":[{"label":"Cup","price":7},{"label":"Bowl","price":13}],"desc":"Jasmine rice, fresh ginger, scallion, cilantro, crispy garlic oil"},{"id":"chicken-noodle-soup","name":"Chicken Noodle Soup","price":18,"desc":"Rice noodles, carrot, scallion, bean sprouts, Asian greens, cabbage, crispy garlic, crushed peanuts, cilantro"},{"id":"clear-soup","name":"Clear Soup","price":8,"sizes":[{"label":"Cup","price":8},{"label":"Bowl","price":15}],"desc":"Choice of meat, broccoli, carrot, mushrooms and Asian greens, topped with cilantro, scallions, and garlic oil","protein":true},{"id":"thai-street-noodle-soup","name":"Thai Street Noodle Soup","price":18,"desc":"Clear noodles, sprouts, Asian greens, cabbage, carrot, basil, scallion, cilantro, peanuts, crispy garlic oil with lime"},{"id":"ba-mee-noodles-gf-avail","name":"Ba Mee Noodles (GF avail.)","price":18,"desc":"Egg noodles with Asian greens, cabbage, sprouts, carrot, crushed peanuts, scallion, cilantro, brown sauce, garlic oil"},{"id":"yen-ta-fo-pink-noodle-soup","name":"Yen Ta Fo Pink Noodle Soup","price":18,"desc":"Wide rice noodles in red tofu and bean paste broth with sprouts, Asian greens, cabbage, carrot, scallion, cilantro, crushed peanuts, crispy garlic oil, and lime"}]},{"id":"noodles","name":"Noodle Dishes","items":[{"id":"thai-pearl-pad-thai","name":"Thai Pearl Pad Thai","price":17,"desc":"Stir-fried rice noodles in our old-school Pad Thai sauce with egg, onion, scallion, cabbage, bean sprouts, crushed peanuts","protein":true},{"id":"drunken-noodles-issan","name":"Drunken Noodles Issan","price":20,"desc":"Stir-fried egg noodles (or GF rice noodles) in Thai basil sauce with onion, bell pepper, garlic, carrot, peppercorn, snap pea, mushroom, broccoli, and Thai basil","protein":true},{"id":"pad-see-ew","name":"Pad See-Ew","price":18,"desc":"Wide rice noodles stir-fried in sweet black soy sauce with egg, onion, carrot, cabbage, broccoli, and Asian greens","protein":true},{"id":"pad-woon-sen-noodles","name":"Pad Woon-Sen Noodles","price":19,"desc":"Clear bean thread noodles stir-fried in brown sauce with egg, onion, garlic, tomato, snap pea, bell pepper, carrot, mushroom, broccoli, cabbage, scallion","protein":true}]},{"id":"stir-fry","name":"Stir Frys with Jasmine Rice","items":[{"id":"eggplant-basil","name":"Eggplant Basil","price":21,"desc":"Japanese eggplant, carrot, mushroom, onion, garlic, snap pea, bell pepper, Thai basil in basil sauce","protein":true},{"id":"thai-style-fresh-basil","name":"Thai Style Fresh Basil","price":20,"desc":"Onion, garlic, snap pea, carrot, sweet bell pepper, and Thai basil in basil sauce","protein":true},{"id":"pad-khing-fresh-ginger","name":"Pad Khing 'Fresh Ginger'","price":19,"desc":"Fresh ginger root with onion, bell pepper, snap pea, carrot, mushroom, scallion, broccoli, and cabbage","protein":true},{"id":"pineapple-fried-rice","name":"Pineapple Fried Rice","price":19,"desc":"Stir-fried Jasmine rice with pineapple, egg, onion, carrot, tomato, and scallion","protein":true},{"id":"mixed-vegetable","name":"Mixed Vegetable","price":19,"desc":"Broccoli, carrot, mushroom, snap pea, bean sprout, cabbage, and Asian greens in brown sauce","protein":true},{"id":"thai-fried-rice","name":"Thai Fried Rice","price":18,"desc":"Stir-fried Jasmine rice with egg, garlic, onion, tomato, carrot, Asian green, scallion","protein":true},{"id":"broccoli-and-meat","name":"Broccoli and Meat","price":18,"desc":"Your choice of protein stir-fried with sweet onion and broccoli in brown sauce, topped with garlic","protein":true}]},{"id":"chef-specials","name":"Chef Specials","items":[{"id":"pad-ped-spicy-stir-fry","name":"Pad Ped 'Spicy Stir Fry'","price":28,"desc":"Shrimp and Pork with Japanese eggplant, carrot, mushroom, snap pea, bell pepper, bamboo, and peppercorn in red curry paste sauce with Jasmine rice"},{"id":"secret-wife-stir-fry","name":"Secret Wife Stir Fry","price":26,"desc":"Your choice of protein with lemongrass, kaffir lime leaf, Thai basil, carrot, mushroom, onion, bell pepper, snap pea, and yellow curry powder in brown sauce with Jasmine rice","protein":true},{"id":"seafood-basil-fried-rice","name":"Seafood Basil Fried Rice","price":28,"desc":"Stir-fried Jasmine rice with shrimp, mussels, calamari, Thai basil, egg, broccoli, carrot, mushroom, and onion in basil sauce"},{"id":"wild-ginger-curry-noodles","name":"Wild Ginger Curry Noodles","price":28,"desc":"Your choice of protein stir-fried with aromatics, broccoli, Asian greens, bell peppers, and green beans with wide noodles, finished with green curry and topped with bean sprouts and basil","protein":true},{"id":"thai-pearl-cashew-nut-stir-fry","name":"Thai Pearl Cashew Nut Stir Fry","price":27,"desc":"Your choice of protein stir-fried with garlic, onions, pineapple, carrots, mushrooms, bell peppers, broccoli, and cashew nuts","protein":true}]},{"id":"curries","name":"Curries","items":[{"id":"red-curry","name":"Red Curry","price":23,"desc":"Coconut milk with dry chili paste, peppercorn, mushroom, bell pepper, bamboo shoots, carrot, onion, broccoli, snap pea, and Thai basil","protein":true},{"id":"green-curry","name":"Green Curry","price":22,"desc":"Our famous curry with chili paste, coconut milk, onion, Japanese eggplant, carrot, broccoli, bell pepper, mushroom, snap pea, and Thai basil","protein":true},{"id":"pineapple-curry","name":"Pineapple Curry","price":23,"desc":"Sweet red curry with coconut milk, pineapple, mushroom, snap pea, tomato, carrot, bell pepper, onion, broccoli, and Thai basil","protein":true},{"id":"vegan-curry","name":"Vegan Curry","price":20,"desc":"Curry of the day with onion, Thai herbs, chili paste, bell pepper, kaffir lime leaf, carrot, broccoli, Thai basil, mushroom, snap peas, and Asian greens"},{"id":"paneang-curry","name":"Paneang Curry","price":21,"desc":"A sweeter curry made with coconut milk, Thai herbs, chili paste, onion, bell pepper, kaffir lime leaf, carrot, broccoli, Thai basil, mushroom, snap pea, topped with crushed peanuts","protein":true},{"id":"massaman-curry","name":"Massaman Curry","price":20,"desc":"Curry of tamarind, cumin, turmeric, and coconut milk with carrots, onion, and potato, topped with crushed peanuts and crispy onion","protein":true}]},{"id":"kids","name":"Kids Menu","items":[{"id":"kids-noodles","name":"Kids Noodles","price":10,"desc":"Chicken, onion, egg, broccoli, and carrot"},{"id":"kids-fried-rice","name":"Kids Fried Rice","price":10,"desc":"Chicken, onion, egg, broccoli, and carrot"}]},{"id":"sides","name":"Sides","items":[{"id":"white-rice","name":"White Rice","price":3},{"id":"fried-rice","name":"Fried Rice","price":6},{"id":"noodles","name":"Noodles","price":3,"desc":"Rice, wide rice, egg, or clear noodles"},{"id":"soup-broth","name":"Soup Broth","price":4,"desc":"Chicken or Vegetable"},{"id":"thai-fried-egg","name":"Thai Fried Egg","price":3},{"id":"extra-curry-sauce","name":"Extra Curry Sauce","price":7,"desc":"Green, Red, Paneang, Massaman, or Vegan"},{"id":"sauces","name":"Sauces","price":1.5,"desc":"Sweet Chili, Hoisin, Sriracha mayo, or Peanut Satay"}]}];
   const TZ = "America/New_York";
-  const KEY = "tp-kitchen-v6";
+  const KEY = "tp-kitchen-v7";
   const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const $ = (s, r = document) => r.querySelector(s);
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -565,7 +584,7 @@
     const out = [];
     for (let i = 0; i < n; i++) {
       const first = pick(r, FIRST), last = pick(r, LAST);
-      out.push({ id: `r${day}-${i}`, day, at: 720 + 15 * Math.floor(r() < 0.3 ? r() * 8 : 20 + r() * 14), party: pick(r, [2, 2, 2, 3, 4, 4, 5, 6]), name: `${first} ${last}`, phone: `(828) 555-${String(1000 + Math.floor(r() * 8999))}`, note: r() < 0.4 ? pick(r, RNOTES) : "", status: "confirmed" });
+      out.push({ id: `r${day}-${i}`, day, at: 720 + 15 * Math.floor(r() < 0.3 ? r() * 8 : 20 + r() * 14), party: pick(r, [2, 2, 2, 3, 4, 4, 5, 6]), name: `${first} ${last}`, phone: `(828) 555-${String(1000 + Math.floor(r() * 8999))}`, note: r() < 0.4 ? pick(r, RNOTES) : "", status: "confirmed", table: pick(r, ["Table 2", "Table 4", "Table 5", "Booth 1", "Booth 3", "Patio 2", "Table 7"]), src: pick(r, ["Website", "Website", "Phone", "Phone call"]) });
     }
     out.sort((a, b) => a.at - b.at);
     return out;
@@ -696,22 +715,41 @@
            ${fin.length ? `<details class="done" id="doneList" ${V.doneOpen ? "open" : ""}><summary>Done <span>${fin.length}</span></summary><div class="list">${rowsOf(fin)}</div></details>` : ""}`}`;
   }
 
+  const CAP = 64;
+  const hrLabel = (h) => `${h % 12 || 12}${h < 12 ? "a" : "p"}`;
+  function resCard(x) {
+    const hm = clockStr(x.at).split(" ");
+    return `<article class="card rcard ${x.status === "new" ? "needs" : ""} ${V.fresh === x.id ? "arrive" : ""} ${V.flash === x.id ? "flash" : ""}" ${vt(x.id)}>
+      <div class="rtime"><b class="num">${hm[0]}</b><small>${hm[1]}</small></div>
+      <div class="rbody">
+        <div class="rhead"><h3 class="c-name">${esc(x.name)}</h3><span class="party"><b class="num">${x.party}</b><small>${x.party === 1 ? "guest" : "guests"}</small></span></div>
+        <p class="rtags"><span>${esc(x.table || "Table 4")}</span><span>${esc(x.src || "Website")}</span></p>
+        ${noteBox("r", x)}
+        ${x.status === "new" ? `<div class="c-act"><button class="btn big" data-act="confirm" ${attr("r", x.id)}>Confirm table</button><button class="link ${V.armed === x.id ? "armed" : ""}" data-act="decline" ${attr("r", x.id)}>${V.armed === x.id ? "Tap again" : "Decline"}</button></div>`
+          : `<div class="c-act"><span class="ok">${CHECK}Confirmed</span><span class="sp"></span><a class="link" href="tel:${x.phone.replace(/\D/g, "")}">Call</a></div>`}
+        <p class="c-foot">${esc(x.phone)}</p>
+      </div></article>`;
+  }
   function resView() {
     const { day: T } = now(), d = V.rday, days = [...Array(7)].map((_, k) => addDays(T, k));
-    const list = S.res.filter((x) => x.day === d && x.status !== "declined").sort((a, b) => (a.status === "new" ? 0 : 1) - (b.status === "new" ? 0 : 1) || a.at - b.at);
-    const nNew = list.filter((x) => x.status === "new").length;
-    const guests = list.filter((x) => x.status === "confirmed").reduce((t, x) => t + x.party, 0);
-    return `${head(d, T, "Today")}
-      <p class="chips">${needChip(nNew, "booking")}<span>${list.filter((x) => x.status === "confirmed").length} tables, ${guests} guests</span></p>
+    const list = S.res.filter((x) => x.day === d && x.status !== "declined").sort((a, b) => a.at - b.at);
+    const nNew = list.filter((x) => x.status === "new").length, guests = list.reduce((t, x) => t + x.party, 0), avg = list.length ? guests / list.length : 0;
+    const hrs = [11, 12, 13, 14, 15, 16, 17, 18, 19, 20], by = hrs.map((h) => list.filter((x) => Math.floor(x.at / 60) === h).reduce((t, x) => t + x.party, 0)), mx = Math.max(1, ...by), pk = by.indexOf(Math.max(...by));
+    const pct = Math.min(100, Math.round((guests / CAP) * 100)), lunch = list.filter((x) => x.at < 900), dinner = list.filter((x) => x.at >= 900);
+    const sec = (name, arr) => (arr.length ? `<div class="rsec"><h2 class="h3">${name} <span>${arr.length} ${arr.length === 1 ? "booking" : "bookings"} &middot; ${arr.reduce((t, x) => t + x.party, 0)} guests</span></h2><div class="rlist">${arr.map(resCard).join("")}</div></div>` : "");
+    return `${head(d, T)}
+      <p class="chips">${needChip(nNew, "booking")}</p>
       ${strip(days, d, "rday", (x) => S.res.some((r) => r.day === x && r.status === "new"), T)}
-      <div class="tools"><span></span><button class="link" data-act="test" data-k="r">Send a test booking</button></div>
-      ${list.length ? `<div class="stack">${list.map((x) => `<article class="card ${x.status === "new" ? "needs" : ""} ${V.fresh === x.id ? "arrive" : ""} ${V.flash === x.id ? "flash" : ""}" ${vt(x.id)}>
-        <div class="c-top"><div><h3 class="c-name">${esc(x.name)}</h3><p class="when" style="margin-top:10px">${clockStr(x.at).replace(" ", "<small>")}</small></p></div><p class="c-total num">${x.party}<small style="font-size:15px;color:var(--muted);font-weight:400;letter-spacing:0"> guests</small></p></div>
-        ${noteBox("r", x)}
-        ${x.status === "new" ? confirmRow("r", x, "Confirm table") : `<div class="c-act"><span class="ok">${CHECK}Confirmed</span></div>`}<p class="c-foot">${esc(x.phone)}</p></article>`).join("")}</div>`
-        : `<p class="none">No reservations for this day.</p>`}`;
+      <div class="rsum">
+        <div class="rtopline"><div><small>Guests expected</small><p class="mbig num"><span data-cu="${guests}" data-f="int">${guests}</span><em>across ${list.length} ${list.length === 1 ? "table" : "tables"}</em></p></div><button class="btn" data-act="radd">+ Add booking</button></div>
+        <div class="meter"><div class="mtr"><i style="width:${pct}%"></i></div><p><b>${pct}%</b>&nbsp;of ${CAP} seats booked <span>${Math.max(0, CAP - guests)} left</span></p></div>
+        <div class="rspark" aria-hidden="true">${by.map((v, i) => `<span class="${i === pk && v ? "pk" : ""}"><i style="height:${Math.max(5, (v / mx) * 100)}%"></i></span>`).join("")}</div>
+        <div class="raxis">${hrs.map((h) => `<span>${hrLabel(h)}</span>`).join("")}</div>
+        <div class="rfacts"><div><small>Busiest</small><b>${list.length ? hrLabel(hrs[pk]).replace("a", " AM").replace("p", " PM") : "None"}</b></div><div><small>Average party</small><b>${list.length ? avg.toFixed(1) : "0"}</b></div><div><small>Largest party</small><b>${list.length ? Math.max(...list.map((x) => x.party)) : 0}</b></div></div>
+      </div>
+      ${list.length ? sec("Lunch", lunch) + sec("Dinner", dinner) : `<p class="none">No reservations for this day.</p>`}
+      <div class="tools"><span></span><button class="link" data-act="test" data-k="r">Send a test booking</button></div>`;
   }
-
   const shortT = (m) => `${Math.floor(m / 60) % 12 || 12}${m % 60 ? ":" + String(m % 60).padStart(2, "0") : ""}${m < 720 ? "a" : "p"}`;
   const estOf = (x) => x.guests * (x.type === "catering" ? 19 : 34);
   const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -909,6 +947,12 @@
       const c = $("#view .card.needs"); if (c) c.scrollIntoView({ behavior: calm ? "auto" : "smooth", block: "center" });
     },
     mphoto(el) { V.photoFor = el.dataset.id; fileIn.click(); },
+    radd() { openRes(); },
+    rparty(el) { M.party = Math.min(40, Math.max(1, M.party + +el.dataset.d)); $("#rParty").textContent = M.party; },
+    rsave() {
+      const { day } = now(), d = V.rday, x = { id: "r" + Date.now(), day: d, at: +$("#rTime").value, party: M.party, name: $("#rName").value.trim() || "Walk-in", phone: $("#rPhone").value.trim() || "No phone", note: $("#mNote").value.trim(), status: "confirmed", table: "Table " + (1 + Math.floor(Math.random() * 8)), src: "Added by you" };
+      S.res.push(x); V.flash = x.id; closeSheet(); toast(`Booked ${x.name} for ${clockStr(x.at)}`); commit();
+    },
     mcat(el) { V.cat = el.dataset.v; V.edit = null; commit(); },
     medit(el) { V.edit = el.dataset.id; V.armed = null; commit(); },
     madd(el) { V.edit = "new:" + el.dataset.v; commit(); setTimeout(() => { const i = $(".mform input"); if (i) i.focus(); window.scrollTo({ top: 0, behavior: "smooth" }); }, 80); },
@@ -976,6 +1020,17 @@
   function sheetItems() {
     $("#mMenu").innerHTML = getItems().filter((i) => !M.search || i.n.toLowerCase().includes(M.search) || M.q[i.id]).map((i) => `<div class="mi"><span>${esc(i.n)}<small>${money2(i.p)}</small></span><span class="step">${M.q[i.id] ? `<button data-act="step" data-id="${i.id}" data-d="-1" aria-label="Remove one">&minus;</button><b>${M.q[i.id]}</b>` : ""}<button data-act="step" data-id="${i.id}" data-d="1" aria-label="Add one">+</button></span></div>`).join("");
     $("#mTot").textContent = money2(mTotal());
+  }
+  function openRes() {
+    M = { party: 2 };
+    const times = []; for (let m = 690; m <= 1230; m += 30) times.push(m);
+    $("#sheet").innerHTML = `<h2>New booking</h2>
+      <div class="f"><input id="rName" placeholder="Name" autocomplete="off"><input id="rPhone" placeholder="Phone" inputmode="tel" autocomplete="off"></div>
+      <div class="f"><select id="rTime" aria-label="Time">${times.map((m) => `<option value="${m}" ${m === 1110 ? "selected" : ""}>${clockStr(m)}</option>`).join("")}</select>
+        <div class="mi" style="flex:1;border:0;justify-content:space-between;padding:0 6px"><span>Guests</span><span class="step"><button data-act="rparty" data-d="-1" aria-label="Fewer">&minus;</button><b id="rParty">2</b><button data-act="rparty" data-d="1" aria-label="More">+</button></span></div></div>
+      <textarea id="mNote" placeholder="Add a note"></textarea>
+      <div class="c-act"><button class="btn big" data-act="rsave">Add booking</button><button class="link" data-act="close">Cancel</button></div>`;
+    $("#scrim").classList.add("on"); $("#scrim").setAttribute("aria-hidden", "false"); setTimeout(() => $("#rName").focus(), 300);
   }
   function closeSheet() { $("#scrim").classList.remove("on"); $("#scrim").setAttribute("aria-hidden", "true"); }
   function saveManual() {
